@@ -96,12 +96,12 @@ fun LandPage() {
             )
         )
         Image(
-            painter = painterResource(id = R.drawable.land_page), // Replace with your image name
-            contentDescription = "LandPage_image", // Provide a description for accessibility
+            painter = painterResource(id = R.drawable.land_page),
+            contentDescription = "LandPage_image",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp),
-            contentScale = ContentScale.Crop // Optional: to control how the image is scaled
+            contentScale = ContentScale.Crop
         )
         Button(
             onClick = {
@@ -114,11 +114,11 @@ fun LandPage() {
                     shape = RoundedCornerShape(50)
                 )
                 .shadow(
-                    elevation = 8.dp, // Shadow elevation
-                    shape = RoundedCornerShape(50), // Shape of the shadow
-                    clip = false // Set to true to clip the content to the shape
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(50),
+                    clip = false
                 ),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make button background transparent
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
         ) {
             Text(
                 text = "Create Account",
@@ -139,11 +139,11 @@ fun LandPage() {
                     shape = RoundedCornerShape(50)
                 )
                 .shadow(
-                    elevation = 8.dp, // Shadow elevation
-                    shape = RoundedCornerShape(50), // Shape of the shadow
-                    clip = false // Set to true to clip the content to the shape
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(50),
+                    clip = false
                 ),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent) // Make button background transparent
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
         ) {
             Text(
                 text = "Sign in",
@@ -155,10 +155,10 @@ fun LandPage() {
 }
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun Preview() {
-    StudyFlashTheme {
-        LandPage()
-    }
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun Preview() {
+//    StudyFlashTheme {
+//        LandPage()
+//    }
+//}

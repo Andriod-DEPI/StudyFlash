@@ -30,6 +30,13 @@ val SignikaFamily = FontFamily(
     Font(R.font.signika_regular, FontWeight.Normal)
 )
 
+val ReadexProFamily = FontFamily(
+    Font(R.font.readexpro_medium, FontWeight.Medium)
+)
+val RedRoseFamily = FontFamily(
+    Font(R.font.redrose_bold, FontWeight.Bold)
+)
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
