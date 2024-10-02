@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -87,7 +89,21 @@ fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, onArrowClick: (
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .border(BorderStroke(2.dp, TopBarBg))
+            .drawBehind {
+                // Draw the top border
+                drawLine(
+                    color = TopBarBg,
+                    start = Offset(0f, 0f),
+                    end = Offset(size.width, 0f),
+                    strokeWidth = 2.dp.toPx()
+                )
+                // Draw the bottom border
+                drawLine(
+                    color = TopBarBg,
+                    start = Offset(0f, size.height),
+                    end = Offset(size.width, size.height),
+                    strokeWidth = 2.dp.toPx()
+                )}
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
