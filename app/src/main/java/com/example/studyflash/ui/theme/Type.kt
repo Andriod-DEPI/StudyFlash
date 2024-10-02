@@ -36,6 +36,9 @@ val ReadexProFamily = FontFamily(
 val RedRoseFamily = FontFamily(
     Font(R.font.redrose_bold, FontWeight.Bold)
 )
+val RedHatFamily = FontFamily(
+    Font(R.font.redhattext_semibold, FontWeight.SemiBold)
+)
 
     /* Other default text styles to override
     titleLarge = TextStyle(

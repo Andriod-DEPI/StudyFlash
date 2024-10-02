@@ -255,10 +255,10 @@ fun CircularSubjectIndicator(progress: Float, color: Color, subject: String) {
 }
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun Preview() {
-    StudyFlashTheme {
-        HomePage()
-    }
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun Preview() {
+//    StudyFlashTheme {
+//        HomePage()
+//    }
+//}
