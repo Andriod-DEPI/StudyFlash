@@ -3,6 +3,7 @@ package com.example.studyflash.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -61,7 +62,7 @@ fun IndividualCardScreen() {
                 .size(50.dp)
                 .fillMaxWidth()
                 .align(Alignment.Start)
-                .padding(horizontal = 5.dp)
+                .padding(horizontal = 5.dp).clickable {  }
         )
         Spacer(modifier = Modifier.height(50.dp))
         Row {
@@ -69,7 +70,7 @@ fun IndividualCardScreen() {
                 painter = painterResource(id = R.drawable.previous_card_icon),
                 contentDescription = "Go to Previous Card",
                 modifier = Modifier
-                    .height(400.dp).weight(1f)
+                    .height(400.dp).weight(1f).clickable {  }
             )
             Box(
                 Modifier
@@ -108,7 +109,7 @@ fun IndividualCardScreen() {
                 painter = painterResource(id = R.drawable.next_card_icon),
                 contentDescription = "Go to Previous Card",
                 modifier = Modifier
-                    .height(400.dp).weight(1f)
+                    .height(400.dp).weight(1f).clickable {  }
             )
         }
         Spacer(modifier = Modifier.height(80.dp))
@@ -118,14 +119,14 @@ fun IndividualCardScreen() {
                 contentDescription = "Not Memorized Card",
                 modifier = Modifier
                     .size(100.dp)
-                    .weight(1f)
+                    .weight(1f).clickable {  }
             )
             Image(
                 painter = painterResource(id = R.drawable.right_icon),
                 contentDescription = "Not Memorized Card",
                 modifier = Modifier
                     .size(100.dp)
-                    .weight(1f)
+                    .weight(1f).clickable {  }
             )
 
         }
