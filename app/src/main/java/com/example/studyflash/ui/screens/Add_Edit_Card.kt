@@ -87,7 +87,8 @@ fun Add_Edit_Card_Screen() {
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier.shadow(elevation = 10.dp, shape = RectangleShape, clip = false)) {
+        Box(modifier = Modifier
+            .shadow(elevation = 10.dp, spotColor = Color.Black, shape = RectangleShape, clip = false).padding(5.dp)  ) {
             Column(
                 modifier = Modifier
                     .width(300.dp)
@@ -98,7 +99,7 @@ fun Add_Edit_Card_Screen() {
             ) {
                 Spacer(modifier = Modifier.height(35.dp))
                 Text(
-                    text = "New Card",
+                    text = "Card",
                     modifier = Modifier.fillMaxWidth(),
                     color = PrimaryColor,
                     fontSize = 20.sp,
@@ -161,7 +162,8 @@ fun Add_Edit_Card_Screen() {
                 Button(onClick = {
                     val card = Card(1, CardTitle, CardContent, colors[selectedColor], strokeColors[selectedColor], false )
                     Log.d("abc", "Add_Edit_Card: $card ")
-                }, Modifier.width(200.dp), colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
+                }, Modifier.width(200.dp).shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
+                    , colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
                     Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
                     
                 }

@@ -32,6 +32,6 @@ val PurpleStroke = Color(0xFFB28CB8)
 val Brown = Color (0xFFDCC1A2)
 val BrownStroke = Color(0xFF8A7153)
 
-val add_edit_border = Color(0xFF583F97)
-val add_edit_bck = Color(0xBAF4F4F4)
+val add_edit_border = Color(0xFF8773B9)
+val add_edit_bck = Color(0xD5F4F4F4)
 val add_edit_txtField_bck = Color(0xFFE7DDFF)
