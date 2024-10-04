@@ -54,9 +54,9 @@ import com.example.studyflash.ui.theme.YellowStroke
 fun CardsListScreen(){
     val cards = listOf(
         Card(1,"Title1", "content 1", Green, DarkGreen, false ),
-        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
+        Card(2,"Title2", "content 2", Yellow, YellowStroke , true ),
 
-        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
+        Card(3,"Title3", "content 1", Pink, PinkStroke, true ),
         Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
 
         Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
@@ -69,7 +69,7 @@ fun CardsListScreen(){
         Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
 
         Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
-        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
+        Card(6,"Title6", "content 2", Blue, BlueStroke, true ),
 
     )
     Column (Modifier.background(BackgroundColor)) {
