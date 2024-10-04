@@ -127,11 +127,6 @@ fun Add_Edit_Card_Screen() {
                 )
                 Spacer(modifier = Modifier.height(50.dp))
 
-
-
-
-
-
                 var selectedColor by remember {
                     mutableStateOf(1)
                 }
