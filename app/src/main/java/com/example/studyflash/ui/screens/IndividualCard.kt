@@ -36,19 +36,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
+import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.ui.composables.CardItem
 import com.example.studyflash.ui.theme.BackgroundColor
+import com.example.studyflash.ui.theme.Blue
+import com.example.studyflash.ui.theme.BlueStroke
+import com.example.studyflash.ui.theme.Brown
+import com.example.studyflash.ui.theme.BrownStroke
 import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
+import com.example.studyflash.ui.theme.Pink
+import com.example.studyflash.ui.theme.PinkStroke
 import com.example.studyflash.ui.theme.PrimaryColor
-data class Card(val id:Int, val title:String, val content:String, val color:Color, val cardStroke:Color, var isChecked:Boolean)
+import com.example.studyflash.ui.theme.Purple
+import com.example.studyflash.ui.theme.PurpleStroke
+import com.example.studyflash.ui.theme.Yellow
+import com.example.studyflash.ui.theme.YellowStroke
+
 @Preview(showSystemUi = true)
 @Composable
 fun IndividualCardScreen() {
     val cards = listOf(
         Card(1,"Title1", "content 1", Green, DarkGreen, false ),
-        Card(2,"Title2", "content 2", Color.Cyan, Color.Blue, false )
+        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
 
-    )
+        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
+        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
+
+        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
+        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
+
+
+        )
     IndividualCardContent(cards)
 }
 
@@ -97,40 +116,8 @@ fun IndividualCardContent(cards:List<Card>){
                         }
                     }
             )
-            Box(
-                Modifier
-                    .width(256.dp)
-                    .height(400.dp)
-                    .background(color = CardColor, shape = RoundedCornerShape(16.dp))
-                    .border(
-                        3.dp,
-                        CardStroke, shape = RoundedCornerShape(16.dp)
-                    )
-                    .weight(4f)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(25.dp)
-                ) {
-                    Text(
-                        text = cards[index].title,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        fontSize = 30.sp,
-                        color = DarkGreen,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    Text(
-                        text = cards[index].content,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 18.sp,
-                        modifier = Modifier.fillMaxSize()
-                    )
-
-                }
-            }
+            CardItem(cards[index], Modifier  .width(256.dp)
+                .height(400.dp).weight(4f))
             Image(
                 painter = painterResource(id = R.drawable.next_card_icon),
                 contentDescription = "Go to Previous Card",
@@ -138,7 +125,7 @@ fun IndividualCardContent(cards:List<Card>){
                     .height(400.dp)
                     .weight(1f)
                     .clickable {
-                        if (index < cards.size-1) {
+                        if (index < cards.size - 1) {
                             index++
                         }
                     }
@@ -154,7 +141,7 @@ fun IndividualCardContent(cards:List<Card>){
                     .weight(1f)
                     .clickable {
                         cards[index].isChecked = false
-                        if (index < cards.size-1) {
+                        if (index < cards.size - 1) {
                             index++
                         }
                     }
@@ -165,8 +152,9 @@ fun IndividualCardContent(cards:List<Card>){
                 modifier = Modifier
                     .size(100.dp)
                     .weight(1f)
-                    .clickable { cards[index].isChecked = true
-                        if (index < cards.size-1) {
+                    .clickable {
+                        cards[index].isChecked = true
+                        if (index < cards.size - 1) {
                             index++
                         }
                     }
