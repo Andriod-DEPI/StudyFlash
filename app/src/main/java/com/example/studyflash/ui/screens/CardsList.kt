@@ -62,6 +62,14 @@ fun CardsListScreen(){
         Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
         Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
 
+        Card(1,"Title1", "content 1", Green, DarkGreen, false ),
+        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
+
+        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
+        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
+
+        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
+        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
 
     )
     Column (Modifier.background(BackgroundColor)) {
@@ -78,7 +86,7 @@ fun CardsListScreen(){
         }
 
       Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-          .padding(PaddingValues(5.dp, 0.dp, 5.dp, 5.dp))
+          .padding(5.dp)
           .fillMaxWidth()){
           Button(onClick = { /*TODO*/ }, Modifier
               .height(50.dp), shape = RoundedCornerShape(20.dp), colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor) )
@@ -92,9 +100,6 @@ fun CardsListScreen(){
           }
           FloatingActionButton(onClick = { /*TODO*/ } , containerColor = PrimaryColor, contentColor = BackgroundColor) {
               Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
-
-
-              
           }
       }
     }
