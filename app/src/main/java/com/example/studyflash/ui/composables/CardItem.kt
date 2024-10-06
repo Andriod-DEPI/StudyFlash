@@ -19,11 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.theme.DarkGreen
 
 @Composable
-fun CardItem(card:Card, boxModifier:Modifier){
+fun CardItem(card: Card, boxModifier:Modifier){
     Box(
         boxModifier
             .background(color = card.color, shape = RoundedCornerShape(16.dp))

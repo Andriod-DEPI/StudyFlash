@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 @Composable
@@ -37,7 +37,7 @@ fun preview(){
 
 
 @Composable
-fun CardListItem(card:Card){
+fun CardListItem(card: Card){
     Box(
         Modifier
             .width(180.dp)

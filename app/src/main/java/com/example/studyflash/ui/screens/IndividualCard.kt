@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
