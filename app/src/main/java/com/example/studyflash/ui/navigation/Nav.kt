@@ -34,7 +34,7 @@ fun NavHost(
         }
 
 
-        
+
         composable("addCategory") {
             Add_Edit_Category()
         }
