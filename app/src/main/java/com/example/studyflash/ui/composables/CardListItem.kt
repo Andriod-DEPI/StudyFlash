@@ -32,12 +32,12 @@ import com.example.studyflash.ui.theme.Green
 @Composable
 @Preview (showSystemUi = true)
 fun preview(){
-    CardListItem(card = (  Card(1,"Title1", "content 1", Green, DarkGreen, true )))
+    CardListItem(card = (  Card(1,"Title1", "content 1", Green, DarkGreen, true )),{})
 }
 
 
 @Composable
-fun CardListItem(card: Card){
+fun CardListItem(card: Card, onCardClick:()->Unit){
     Box(
         Modifier
             .width(180.dp)

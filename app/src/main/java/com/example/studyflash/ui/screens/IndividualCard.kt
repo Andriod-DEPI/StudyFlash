@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
@@ -53,9 +54,8 @@ import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
 import com.example.studyflash.ui.theme.YellowStroke
 
-@Preview(showSystemUi = true)
 @Composable
-fun IndividualCardScreen() {
+fun IndividualCardScreen(navController: NavController, cardID:Int?) {
     val cards = listOf(
         Card(1,"Title1", "content 1", Green, DarkGreen, false ),
         Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),

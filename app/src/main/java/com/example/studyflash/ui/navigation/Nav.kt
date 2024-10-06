@@ -36,24 +36,33 @@ fun NavHost(
 
 
         composable("addCategory") {
-            Add_Edit_Category()
+            Add_Edit_Category(navController, 0)
         }
-        composable("addCard") {
-            Add_Edit_Card_Screen()
+
+
+        composable("addCard/{catId}",arguments = listOf(
+            navArgument("categId") {
+                NavType.IntType
+            }
+        )) {
+            val catID = it.arguments?.getInt("categId")
+            Add_Edit_Card_Screen(navController, catID)
         }
         composable("editCategory/{catId}", arguments = listOf(
             navArgument("categId") {
                 NavType.IntType
             }
         )) {
-            Add_Edit_Category()
+            val catID = it.arguments?.getInt("categId")
+            Add_Edit_Category(navController, catID)
         }
         composable("editCard/{cardId}",arguments = listOf(
             navArgument("cardId") {
                 NavType.IntType
             }
         )) {
-            Add_Edit_Card_Screen()
+            val cardID = it.arguments?.getInt("cardId")
+            Add_Edit_Card_Screen(navController, cardID)
         }
 
         composable("individual Card/{cardId}", arguments = listOf(
@@ -61,14 +70,16 @@ fun NavHost(
                 NavType.IntType
             }
         )) {
-            IndividualCardScreen()
+            val cardID = it.arguments?.getInt("cardId")
+            IndividualCardScreen(navController, cardID)
         }
         composable("Cards List/{categId}", arguments = listOf(
             navArgument("categId") {
                 NavType.IntType
             }
         )) {
-            CardsListScreen()
+            val catID = it.arguments?.getInt("categId")
+            CardsListScreen(navController, catID)
         }
     }
 }
