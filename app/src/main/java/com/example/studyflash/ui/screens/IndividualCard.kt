@@ -53,32 +53,21 @@ import com.example.studyflash.ui.theme.Purple
 import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
 import com.example.studyflash.ui.theme.YellowStroke
+import com.example.studyflash.viewmodels.CardViewModel
 
 @Composable
 fun IndividualCardScreen(navController: NavController, cardID:Int?) {
-    val cards = listOf(
-        Card(1,"Title1", "content 1", Green, DarkGreen, false ),
-        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
-
-        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
-        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
-
-        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
-        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
-
-
-        )
-    IndividualCardContent(cards)
+    val CardsViewModel = CardViewModel()
+    val cards = CardsViewModel.cards
+    IndividualCardContent(cards,cardID, {navController.popBackStack()})
 }
 
 @Composable
-fun IndividualCardContent(cards:List<Card>){
+fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
+    val card = cards.find { it.id == cardID }
     var index by rememberSaveable {
-        mutableStateOf(0)
+        mutableStateOf(cards.indexOf(card))
     }
-
-    var CardColor = cards[index].color
-    var CardStroke = cards[index].cardStroke
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -100,7 +89,9 @@ fun IndividualCardContent(cards:List<Card>){
                 .fillMaxWidth()
                 .align(Alignment.Start)
                 .padding(horizontal = 5.dp)
-                .clickable { }
+                .clickable {
+                    onBackclick()
+                }
         )
         Spacer(modifier = Modifier.height(50.dp))
         Row {
