@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,9 +25,7 @@ import com.example.studyflash.R
 
 @Preview(showBackground = true)
 @Composable
-fun TopBar(
-    onEnergyClick: () -> Unit = {}
-){
+fun TopBar (){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +37,9 @@ fun TopBar(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Row (
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
 //        modifier = Modifier.fillMaxWidth(),
 //        horizontalArrangement = Arrangement.spacedBy(16.dp) // Distribute columns evenly
             horizontalArrangement = Arrangement.SpaceBetween
@@ -50,7 +49,7 @@ fun TopBar(
                 Text(
                     text = "StudyFlash",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp,
+                    fontSize = 32.sp,
                     letterSpacing = 1.sp,
                     color = Color(0xFFFFFFFF),
 //                modifier = Modifier.weight(1f)
@@ -64,36 +63,30 @@ fun TopBar(
                     modifier = Modifier
                         .background(
                             color = Color(0xFFFF873D), // Orange color
-                            shape = RoundedCornerShape(15.dp) // Rounded corners
+                            shape = RoundedCornerShape(20.dp) // Rounded corners
                         )
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ){
                     Column(
                     modifier = Modifier.align(Alignment.CenterVertically)
                     ) {
-                        IconButton(
-                            onClick = onEnergyClick,
+                        Icon(
+                            painter = painterResource(id = R.drawable.energy),   // Use Icon directly
+                            contentDescription = "Energy Icon",
+                            tint = Color(0xFFFFF1D6),
                             modifier = Modifier
-                            .size(22.dp)
+                                .size(25.dp)
                                 .padding(start = 2.dp)
-//                            .background(Color(0XFF6A31F7), RectangleShape)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.energy),   // Use Icon inside IconButton
-                                contentDescription = "Energy Icon",
-                                tint = Color(0xFFFFF1D6),
-//                    modifier = Modifier.size(400.dp)
-                            )
-                        }
+                        )
                     }
                     Column(
                         modifier = Modifier.align(Alignment.CenterVertically)
-                            
+
                     ) {
                         Text(
                             text = "30",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 17.sp,
+                            fontSize = 24.sp,
                             letterSpacing = 1.sp,
                             color = Color(0xFFFFF1D6),
 //                modifier = Modifier.weight(1f)

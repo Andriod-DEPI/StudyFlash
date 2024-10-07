@@ -47,7 +47,7 @@ fun TopNavBar(
         ) {
             IconButton(onClick = onHomeClick,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(30.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
             ) {
                 Icon(
@@ -63,12 +63,12 @@ fun TopNavBar(
         ) {
             IconButton(onClick = onCategoriesClick,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(35.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
 
                 ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.notebook),   // Use Icon inside IconButton
+                    painter = painterResource(id = R.drawable.categories),   // Use Icon inside IconButton
                     contentDescription = "Home Icon",
                     tint = Color(0xEDF5FFFF),
 //                    modifier = Modifier.background(Color(0XFF6A31F7), RectangleShape
@@ -80,7 +80,7 @@ fun TopNavBar(
         ) {
             IconButton(onClick = onProfileClick,
                 modifier = Modifier
-                    .size(44.dp)
+                    .size(30.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
                 ) {
                 Icon(

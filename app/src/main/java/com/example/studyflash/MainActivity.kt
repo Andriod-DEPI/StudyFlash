@@ -17,7 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.ui.screens.HomeScreen
 import com.example.studyflash.ui.screens.LandingPage
-import com.example.studyflash.ui.screens.Add_Edit_Card_Screen
 import com.example.studyflash.ui.theme.StudyFlashTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavGraph(navController = navController,
                         modifier = Modifier.padding(innerPadding))
-            Add_Edit_Card_Screen()
+//            Add_Edit_Card_Screen()
 //            StudyFlashTheme {
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(
