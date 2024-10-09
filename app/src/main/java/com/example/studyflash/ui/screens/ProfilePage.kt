@@ -1,6 +1,5 @@
 package com.example.studyflash.ui.screens
 
-import TopNavBar
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -51,7 +50,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.ui.components.TopBar
 import com.example.studyflash.ui.theme.GradientColor
 import com.example.studyflash.ui.theme.LightBlue
 import com.example.studyflash.ui.theme.LightGreen
@@ -67,7 +69,7 @@ import com.example.studyflash.ui.theme.WordingBtn
 
 
 @Composable
-fun ProfilePage() {
+fun ProfilePage(navController: NavController) {
 
     var isDarkMode by remember { mutableStateOf(false) }
 
@@ -75,7 +77,7 @@ fun ProfilePage() {
         .fillMaxSize()
         .background(Wording)
     ) {
-        TopNavBar()
+        TopBar()
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(top=14.dp,end=16.dp),
@@ -119,7 +121,7 @@ fun ProfilePage() {
 
         Button(
             onClick = {
-                // exit the program
+                navController.navigate("landPage")
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -366,6 +368,6 @@ fun ArrowIcon(isLeft: Boolean) {
 @Composable
 fun Preview() {
     StudyFlashTheme {
-        ProfilePage()
+        ProfilePage(navController = rememberNavController())
     }
 }

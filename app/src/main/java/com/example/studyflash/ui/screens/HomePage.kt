@@ -1,9 +1,6 @@
 package com.example.studyflash.ui.screens
 
-import TopNavBar
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,17 +31,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.studyflash.ui.components.TopBar
 import com.example.studyflash.ui.theme.*
 
 
 @Composable
-fun HomePage() {
+fun HomePage(navController: NavHostController) {
 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Wording)
     ) {
-        TopNavBar()
+
+        TopBar()
         
         Text(
             text = "Welcome back, Sandy!",
@@ -66,9 +67,7 @@ fun HomePage() {
             onCardClick = { clickedItem ->
                 println("Clicked on: $clickedItem")
             },
-            onArrowClick = {
-                println("Arrow clicked!")
-            }
+            navController
         )
 
         val subjects = listOf(
@@ -84,7 +83,7 @@ fun HomePage() {
 }
 
 @Composable
-fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, onArrowClick: () -> Unit) {
+fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,7 +129,7 @@ fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, onArrowClick: (
             tint = TopBarBg,
             modifier = Modifier
                 .size(48.dp)
-                .clickable { onArrowClick() } // navigate to categories
+                .clickable { navController.navigate("categories") } // navigate to categories screen
         )
     }
 }
@@ -146,7 +145,7 @@ fun CardItem(
         modifier = Modifier
             .size(100.dp, 150.dp)
             .padding(8.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }, // NEEDS TO BE FIXED
         shape = RoundedCornerShape(20),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
@@ -255,10 +254,10 @@ fun CircularSubjectIndicator(progress: Float, color: Color, subject: String) {
 }
 
 
-//@Preview(showSystemUi = true)
-//@Composable
-//fun Preview() {
-//    StudyFlashTheme {
-//        HomePage()
-//    }
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewHome() {
+    StudyFlashTheme {
+        HomePage(navController= rememberNavController())
+    }
+}

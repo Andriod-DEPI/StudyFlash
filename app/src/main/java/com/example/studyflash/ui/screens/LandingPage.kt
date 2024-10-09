@@ -1,4 +1,5 @@
 package com.example.studyflash.ui.screens
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 import com.example.studyflash.ui.theme.GradientColor
 import com.example.studyflash.ui.theme.SignikaFamily
@@ -57,7 +60,7 @@ fun TopLayer() {
           text = "StudyFlash",
             modifier = Modifier.offset(y = (-12).dp),
             style = TextStyle(
-                fontSize = 32.sp,
+                fontSize = 37.sp,
                 fontFamily = YrsaFamily,
                 fontWeight = FontWeight.Bold,
                 color = Wording,
@@ -67,7 +70,7 @@ fun TopLayer() {
 }
 
 @Composable
-fun LandPage() {
+fun LandPage(navController: NavHostController) {
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -106,6 +109,7 @@ fun LandPage() {
         Button(
             onClick = {
                 // got to signup page
+                navController.navigate("SignIn")
             },
             modifier = Modifier
                 .padding(start = 100.dp, top = 50.dp)
@@ -129,7 +133,8 @@ fun LandPage() {
 
         Button(
             onClick = {
-                // got to log in page
+                // got to login page
+                navController.navigate("logIn")
             },
             modifier = Modifier
                 .padding(start = 100.dp, top = 20.dp)
@@ -155,10 +160,11 @@ fun LandPage() {
 }
 
 
-//@Preview(showSystemUi = true)
-//@Composable
-//fun Preview() {
-//    StudyFlashTheme {
-//        LandPage()
-//    }
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewLandPage() {
+    StudyFlashTheme {
+        LandPage(navController = rememberNavController())
+    }
+}
+
