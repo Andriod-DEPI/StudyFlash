@@ -17,7 +17,7 @@ import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.ProfileScreen
 
 @Composable
-fun NavHost(
+fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
