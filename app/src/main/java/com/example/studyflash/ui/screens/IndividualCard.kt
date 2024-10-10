@@ -131,7 +131,9 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        // update in firebase
                         cards[index].isChecked = false
+
                         if (index < cards.size - 1) {
                             index++
                         }
@@ -144,10 +146,13 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        // update in firebase
                         cards[index].isChecked = true
+                        
                         if (index < cards.size - 1) {
                             index++
                         }
+                        // increase user's score
                     }
             )
 
