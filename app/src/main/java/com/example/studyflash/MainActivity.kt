@@ -16,10 +16,11 @@ class MainActivity : ComponentActivity() {
             StudyFlashTheme {
                 // Create a NavController instance
                 val navController = rememberNavController()
-
                 // Pass it to the NavHostGraph Composable
                 NavHostGraph(navController = navController)
+
             }
         }
     }
 }
+

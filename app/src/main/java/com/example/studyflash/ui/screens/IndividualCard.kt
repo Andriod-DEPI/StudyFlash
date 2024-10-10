@@ -35,8 +35,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
@@ -52,33 +53,21 @@ import com.example.studyflash.ui.theme.Purple
 import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
 import com.example.studyflash.ui.theme.YellowStroke
+import com.example.studyflash.viewmodels.CardViewModel
 
-@Preview(showSystemUi = true)
 @Composable
-fun IndividualCardScreen() {
-    val cards = listOf(
-        Card(1,"Title1", "content 1", Green, DarkGreen, false ),
-        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
-
-        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
-        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
-
-        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
-        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
-
-
-        )
-    IndividualCardContent(cards)
+fun IndividualCardScreen(navController: NavController, cardID:Int?) {
+    val CardsViewModel = CardViewModel()
+    val cards = CardsViewModel.cards
+    IndividualCardContent(cards,cardID, {navController.popBackStack()})
 }
 
 @Composable
-fun IndividualCardContent(cards:List<Card>){
+fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
+    val card = cards.find { it.id == cardID }
     var index by rememberSaveable {
-        mutableStateOf(0)
+        mutableStateOf(cards.indexOf(card))
     }
-
-    var CardColor = cards[index].color
-    var CardStroke = cards[index].cardStroke
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -100,7 +89,9 @@ fun IndividualCardContent(cards:List<Card>){
                 .fillMaxWidth()
                 .align(Alignment.Start)
                 .padding(horizontal = 5.dp)
-                .clickable { }
+                .clickable {
+                    onBackclick()
+                }
         )
         Spacer(modifier = Modifier.height(50.dp))
         Row {
@@ -140,7 +131,9 @@ fun IndividualCardContent(cards:List<Card>){
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        // update in firebase
                         cards[index].isChecked = false
+
                         if (index < cards.size - 1) {
                             index++
                         }
@@ -153,10 +146,13 @@ fun IndividualCardContent(cards:List<Card>){
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        // update in firebase
                         cards[index].isChecked = true
+                        
                         if (index < cards.size - 1) {
                             index++
                         }
+                        // increase user's score
                     }
             )
 

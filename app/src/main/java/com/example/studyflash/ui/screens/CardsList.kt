@@ -33,8 +33,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
@@ -49,9 +50,12 @@ import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
 import com.example.studyflash.ui.theme.YellowStroke
 
-@Preview(showSystemUi = true)
 @Composable
-fun CardsListScreen(){
+fun CardsListScreen(navController: NavController, catID:Int? ){
+
+    //get category id
+
+
     val cards = listOf(
         Card(1,"Title1", "content 1", Green, DarkGreen, false ),
         Card(2,"Title2", "content 2", Yellow, YellowStroke , true ),
@@ -81,14 +85,14 @@ fun CardsListScreen(){
             modifier = Modifier.weight(1f)
         ) {
             items(cards){
-                CardListItem(it)
+                CardListItem(it, { navController.navigate("individual Card/${it.id}") })
             }
         }
 
       Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
           .padding(5.dp)
           .fillMaxWidth()){
-          Button(onClick = { /*TODO*/ }, Modifier
+          Button(onClick = { navController.navigate("") }, Modifier
               .height(50.dp), shape = RoundedCornerShape(20.dp), colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor) )
           {
             Row {
@@ -98,7 +102,8 @@ fun CardsListScreen(){
 
             }
           }
-          FloatingActionButton(onClick = { /*TODO*/ } , containerColor = PrimaryColor, contentColor = BackgroundColor) {
+
+          FloatingActionButton(onClick = { navController.navigate("addCard/$catID")  } , containerColor = PrimaryColor, contentColor = BackgroundColor) {
               Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
           }
       }

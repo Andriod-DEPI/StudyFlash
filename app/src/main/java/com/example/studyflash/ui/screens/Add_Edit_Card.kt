@@ -45,8 +45,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
@@ -66,9 +67,9 @@ import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun Add_Edit_Card_Screen() {
+fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
 
     var CardTitle by remember {
         mutableStateOf("Card Title")
@@ -160,8 +161,8 @@ fun Add_Edit_Card_Screen() {
                 }
                 Spacer(modifier = Modifier.height(50.dp))
                 Button(onClick = {
-                    val card = Card(1, CardTitle, CardContent, colors[selectedColor], strokeColors[selectedColor], false )
-                    Log.d("abc", "Add_Edit_Card: $card ")
+                    //add / edit card in firebase using card viewmodel
+                  navController.popBackStack("Cards List", false)
                 }, Modifier.width(200.dp).shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
                     , colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
                     Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)

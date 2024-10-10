@@ -26,18 +26,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
-import com.example.studyflash.ui.classes.Card
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 @Composable
 @Preview (showSystemUi = true)
 fun preview(){
-    CardListItem(card = (  Card(1,"Title1", "content 1", Green, DarkGreen, true )))
+    CardListItem(card = (  Card(1,"Title1", "content 1", Green, DarkGreen, true )),{})
 }
 
 
 @Composable
-fun CardListItem(card:Card){
+fun CardListItem(card: Card, onCardClick:()->Unit){
     Box(
         Modifier
             .width(180.dp)

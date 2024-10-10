@@ -1,4 +1,4 @@
-package com.example.studyflash.ui.classes
+package com.example.studyflash.classes
 
 import androidx.compose.ui.graphics.Color
 

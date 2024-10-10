@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.BackgroundColor
@@ -57,9 +58,9 @@ import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun Add_Edit_Category() {
+fun Add_Edit_Category(navController: NavController, catID:Int?) {
 
     var CategoryName by remember {
         mutableStateOf("Category Name")
@@ -146,7 +147,9 @@ fun Add_Edit_Category() {
                 Spacer(modifier = Modifier.height(50.dp))
                 Button(
                     onClick = {
-                      
+                        // add/edit category using Category Viewmodel
+                        //back to categories list page
+                      navController.popBackStack("", false)
                     },
                     Modifier.width(200.dp).shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp)),
                     colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor), shape = RoundedCornerShape(20.dp)
