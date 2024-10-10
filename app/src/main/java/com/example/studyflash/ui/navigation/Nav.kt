@@ -47,7 +47,7 @@ fun NavHostGraph(
         }
 
 
-        composable("addCard/{catId}",arguments = listOf(
+        composable("addCard/{categId}",arguments = listOf(
             navArgument("categId") {
                 NavType.IntType
             }
@@ -55,7 +55,7 @@ fun NavHostGraph(
             val catID = it.arguments?.getInt("categId")
             Add_Edit_Card_Screen(navController, catID)
         }
-        composable("editCategory/{catId}", arguments = listOf(
+        composable("editCategory/{categId}", arguments = listOf(
             navArgument("categId") {
                 NavType.IntType
             }
