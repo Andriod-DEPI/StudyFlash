@@ -68,4 +68,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation (libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material)
+    implementation (libs.androidx.activity.compose)
+    implementation (libs.ui)
+    implementation (libs.ui.tooling)
+    implementation (libs.androidx.foundation)
+    implementation (libs.material3)
 }

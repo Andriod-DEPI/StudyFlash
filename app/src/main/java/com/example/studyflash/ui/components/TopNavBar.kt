@@ -1,16 +1,20 @@
 package com.example.studyflash.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,31 +43,46 @@ fun TopNavBar(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-//            modifier = Modifier.weight(1f)
+            modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onHomeClick) {
+            IconButton(onClick = onHomeClick,
+                modifier = Modifier
+                    .size(30.dp)
+                    .background(Color(0XFF6A31F7), RectangleShape)
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.home_light),   // Use Icon inside IconButton
                     contentDescription = "Home Icon",
-                    tint = Color(0xEDF5FFFF)
+                    tint = Color(0xEDF5FFFF),
+//                    modifier = Modifier.size(400.dp)
                 )
             }
         }
         Column(
-//            modifier = Modifier.weight(1f)
+            modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onHomeClick) {
+            IconButton(onClick = onCategoriesClick,
+                modifier = Modifier
+                    .size(35.dp)
+                    .background(Color(0XFF6A31F7), RectangleShape)
+
+                ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.categories_light),   // Use Icon inside IconButton
+                    painter = painterResource(id = R.drawable.categories),   // Use Icon inside IconButton
                     contentDescription = "Home Icon",
-                    tint = Color(0xEDF5FFFF)
+                    tint = Color(0xEDF5FFFF),
+//                    modifier = Modifier.background(Color(0XFF6A31F7), RectangleShape
                 )
             }
         }
         Column(
-//            modifier = Modifier.weight(1f)
+            modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onHomeClick) {
+            IconButton(onClick = onProfileClick,
+                modifier = Modifier
+                    .size(30.dp)
+                    .background(Color(0XFF6A31F7), RectangleShape)
+                ) {
                 Icon(
                     painter = painterResource(id = R.drawable.profile_light),  // Use Icon inside IconButton
                     contentDescription = "Home Icon",

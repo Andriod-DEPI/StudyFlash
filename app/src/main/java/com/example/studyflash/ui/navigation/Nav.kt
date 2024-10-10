@@ -12,29 +12,36 @@ import com.example.studyflash.ui.screens.Add_Edit_Card_Screen
 import com.example.studyflash.ui.screens.Add_Edit_Category
 import com.example.studyflash.ui.screens.CardsListScreen
 import com.example.studyflash.ui.screens.CategoriesScreen
-import com.example.studyflash.ui.screens.HomeScreen
+import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
-import com.example.studyflash.ui.screens.ProfileScreen
+import com.example.studyflash.ui.screens.LandPage
+import com.example.studyflash.ui.screens.LogIn
+import com.example.studyflash.ui.screens.SignIn
+
+
 
 @Composable
 fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(navController)
+    NavHost(navController = navController, startDestination = "landPage") {
+
+        composable("logIn") {
+            LogIn(navController = navController)
+        }
+        composable("SignIn") {
+            SignIn(navController = navController)
+        }
+        composable("landPage") {
+            LandPage(navController = navController)
+        }
+        composable("homePage") {
+            HomePage(navController = navController)
         }
         composable("categories") {
             CategoriesScreen(navController)
         }
-        composable("profile") {
-            ProfileScreen(navController)
-        }
-
-
-
         composable("addCategory") {
             Add_Edit_Category(navController, 0)
         }
