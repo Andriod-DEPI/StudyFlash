@@ -107,8 +107,11 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                         }
                     }
             )
-            CardItem(cards[index], Modifier  .width(256.dp)
-                .height(400.dp).weight(4f))
+            CardItem(cards[index],
+                Modifier
+                    .width(256.dp)
+                    .height(400.dp)
+                    .weight(4f))
             Image(
                 painter = painterResource(id = R.drawable.next_card_icon),
                 contentDescription = "Go to Previous Card",
@@ -148,7 +151,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                     .clickable {
                         // update in firebase
                         cards[index].isChecked = true
-                        
+
                         if (index < cards.size - 1) {
                             index++
                         }
@@ -158,5 +161,21 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
 
         }
 
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun previewIndividualCard(){
+    val cards = listOf(
+        Card(1,"Title1", "content 1", Green, DarkGreen, false ),
+        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
+        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
+        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
+        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
+        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
+    )
+    IndividualCardContent(cards = cards, cardID = 1 ) {
+        
     }
 }

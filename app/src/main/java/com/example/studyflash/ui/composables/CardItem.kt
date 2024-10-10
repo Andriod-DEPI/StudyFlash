@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.classes.Card
+import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.DarkGreen
+import com.example.studyflash.ui.theme.Green
 
 @Composable
 fun CardItem(card: Card, boxModifier:Modifier){
@@ -44,11 +46,13 @@ fun CardItem(card: Card, boxModifier:Modifier){
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
                 color = card.cardStroke,
+                fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = card.content,
+                fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp,
                 modifier = Modifier.fillMaxSize(),
@@ -58,4 +62,11 @@ fun CardItem(card: Card, boxModifier:Modifier){
         }
     }
 
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun cradPreview(){
+    val card = Card(1,"Title", "content", Green, DarkGreen,false)
+    CardItem(card = card, boxModifier = Modifier)
 }
