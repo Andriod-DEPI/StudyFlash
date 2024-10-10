@@ -4,16 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.studyflash.ui.navigation.NavHost
-import com.example.studyflash.ui.screens.Add_Edit_Card_Screen
-import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.theme.StudyFlashTheme
 
 class MainActivity : ComponentActivity() {
