@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.ui.composables.ChooseColor
+import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
 import com.example.studyflash.ui.theme.BlueStroke
@@ -92,6 +93,7 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                     modifier = Modifier.fillMaxWidth(),
                     color = PrimaryColor,
                     fontSize = 20.sp,
+                    fontFamily = AlexandriaFamily,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -102,7 +104,9 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                         .width(250.dp)
                         .background(color = add_edit_txtField_bck)
                         .padding(8.dp), textStyle = TextStyle(
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        fontFamily = AlexandriaFamily,
+                        fontWeight = FontWeight.Normal,
                     )
                 )
                 Spacer(modifier = Modifier.height(60.dp))

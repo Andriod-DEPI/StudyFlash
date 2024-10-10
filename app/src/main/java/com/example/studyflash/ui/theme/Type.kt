@@ -40,6 +40,12 @@ val RedHatFamily = FontFamily(
     Font(R.font.redhattext_semibold, FontWeight.SemiBold)
 )
 
+val AlexandriaFamily = FontFamily(
+    Font(R.font.alexandria_regular, FontWeight.Normal),
+    Font(R.font.alexandria_bold, FontWeight.Bold),
+    Font(R.font.alexandria_semi_bold, FontWeight.SemiBold)
+)
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

@@ -3,6 +3,7 @@ package com.example.studyflash.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
+import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 @Composable
@@ -41,13 +42,15 @@ fun CardListItem(card: Card, onCardClick:()->Unit){
     Box(
         Modifier
             .width(180.dp)
-            .height(228.dp)
-            .padding(10.dp)
+            .height(215.dp)
+            .padding(0.dp)
             .background(color = card.color, shape = RoundedCornerShape(16.dp))
             .border(
                 3.dp,
                 card.cardStroke, shape = RoundedCornerShape(16.dp)
-            )
+            ).clickable {
+                onCardClick()
+            }
 
     ) {
         Column(
@@ -65,6 +68,7 @@ fun CardListItem(card: Card, onCardClick:()->Unit){
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
                 color = card.cardStroke,
+                fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.Bold,
             )
 

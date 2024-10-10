@@ -46,9 +46,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.ChooseColor
+import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
 import com.example.studyflash.ui.theme.BlueStroke
@@ -89,7 +91,13 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier
-            .shadow(elevation = 10.dp, spotColor = Color.Black, shape = RectangleShape, clip = false).padding(5.dp)  ) {
+            .shadow(
+                elevation = 10.dp,
+                spotColor = Color.Black,
+                shape = RectangleShape,
+                clip = false
+            )
+            .padding(5.dp)  ) {
             Column(
                 modifier = Modifier
                     .width(300.dp)
@@ -104,6 +112,7 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
                     modifier = Modifier.fillMaxWidth(),
                     color = PrimaryColor,
                     fontSize = 20.sp,
+                    fontFamily = AlexandriaFamily,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
@@ -113,8 +122,11 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
                         .clip(RoundedCornerShape(8.dp))
                         .width(250.dp)
                         .background(color = add_edit_txtField_bck)
-                        .padding(8.dp), textStyle = TextStyle(
-                        fontSize = 16.sp
+                        .padding(8.dp),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                            fontFamily = AlexandriaFamily,
+                            fontWeight = FontWeight.Normal,
                     )
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -124,7 +136,9 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
                         .width(250.dp)
                         .background(color = add_edit_txtField_bck)
                         .padding(8.dp), textStyle = TextStyle(
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        fontFamily = AlexandriaFamily,
+                        fontWeight = FontWeight.Normal,
                     )
                 )
                 Spacer(modifier = Modifier.height(50.dp))
@@ -163,7 +177,10 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
                 Button(onClick = {
                     //add / edit card in firebase using card viewmodel
                   navController.popBackStack("Cards List", false)
-                }, Modifier.width(200.dp).shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
+                },
+                    Modifier
+                        .width(200.dp)
+                        .shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
                     , colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
                     Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
                     
@@ -174,4 +191,10 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
     }
 
 
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun preview(){
+    Add_Edit_Card_Screen(navController = rememberNavController(), null)
 }
