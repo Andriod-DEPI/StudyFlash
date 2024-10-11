@@ -3,17 +3,19 @@ package com.example.studyflash.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.studyflash.ui.screens.Add_Edit_Card_Screen
+import com.example.studyflash.ui.screens.Add_Edit_Category
+import com.example.studyflash.ui.screens.CardsListScreen
 import com.example.studyflash.ui.screens.CategoriesScreen
 import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
 import com.example.studyflash.ui.screens.LogIn
 import com.example.studyflash.ui.screens.SignIn
-import com.example.studyflash.ui.screens.HomeScreen
-import com.example.studyflash.ui.screens.LandingPage
-import com.example.studyflash.ui.screens.ProfileScreen
 
 
 @Composable
@@ -27,9 +29,6 @@ fun NavGraph(
         }
         composable("SignIn") {
             SignIn(navController = navController)
-        }
-        composable("landing") {
-            LandingPage(navController)
         }
         composable("homePage") {
             HomePage(navController = navController)
