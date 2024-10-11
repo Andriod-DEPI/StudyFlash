@@ -53,7 +53,7 @@ fun NavHostGraph(
             }
         )) {
             val catID = it.arguments?.getInt("categId")
-            Add_Edit_Card_Screen(navController, catID)
+            Add_Edit_Card_Screen(navController, catID, null)
         }
         composable("editCategory/{categId}", arguments = listOf(
             navArgument("categId") {
@@ -63,22 +63,30 @@ fun NavHostGraph(
             val catID = it.arguments?.getInt("categId")
             Add_Edit_Category(navController, catID)
         }
-        composable("editCard/{cardId}",arguments = listOf(
+        composable("editCard/{catId}/{cardId}",arguments = listOf(
+            navArgument("catId") {
+                NavType.IntType
+            },
             navArgument("cardId") {
                 NavType.IntType
             }
         )) {
             val cardID = it.arguments?.getInt("cardId")
-            Add_Edit_Card_Screen(navController, cardID)
+            val catId = it.arguments?.getInt("catId")
+            Add_Edit_Card_Screen(navController, catId ,cardID)
         }
 
-        composable("individual Card/{cardId}", arguments = listOf(
+        composable("individual Card/{catId}/{cardId}", arguments = listOf(
+            navArgument("catId") {
+                NavType.IntType
+            },
             navArgument("cardId") {
                 NavType.IntType
             }
         )) {
+            val catId = it.arguments?.getInt("catId")
             val cardID = it.arguments?.getInt("cardId")
-            IndividualCardScreen(navController, cardID)
+            IndividualCardScreen(navController,catId, cardID)
         }
         composable("Cards List/{categId}", arguments = listOf(
             navArgument("categId") {

@@ -16,7 +16,9 @@ class CardCategoryRepoImpl @Inject constructor(private val firestore: FirebaseFi
     }
 
     override suspend fun addCategory(category: Category) {
-        firestore.collection("Categories").document(category.id.toString()).set(category).await()
+        val newCatRef=firestore.collection("Categories").document()
+        val newCat = category.copy(id = newCatRef.id.toInt())
+        newCatRef.set(newCat).await()
     }
 
     override suspend fun updateCategory(category: Category) {
@@ -28,7 +30,9 @@ class CardCategoryRepoImpl @Inject constructor(private val firestore: FirebaseFi
     }
 
     override suspend fun addCard(card: Card) {
-        firestore.collection("Cards").document(card.id.toString()).set(card).await()
+        val newCardRef=firestore.collection("Cards").document()
+        val newCard = card.copy(id = newCardRef.id.toInt())
+        newCardRef.set(newCard).await()
     }
 
     override suspend fun updateCard(card: Card) {

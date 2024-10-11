@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
@@ -60,16 +63,36 @@ import com.example.studyflash.ui.theme.YellowStroke
 import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
-fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
+fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
+
+    var isEdit = false
+    if(cardID!=null){
+        isEdit = true
+    }
+
+
+    val viewModel:CategoryCardViewModel = hiltViewModel()
+    viewModel.loadCategories()
+    viewModel.loadCardsForCategory(catID!!)
+   var title = "Card Title"
+    var content = "Card Content"
+    var CurrentCard: Card? = null
+    if(isEdit){
+        val cards by viewModel.Cards.collectAsState()
+         CurrentCard = cards.find { it.id == cardID }
+        title = CurrentCard!!.title
+        content = CurrentCard.content
+    }
 
     var CardTitle by remember {
-        mutableStateOf("Card Title")
+        mutableStateOf(title)
     }
     var CardContent by remember {
-        mutableStateOf("Card Content")
+        mutableStateOf(content)
     }
     Image(
         painter = painterResource(id = R.drawable.add_edit_bck),
@@ -168,6 +191,13 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
                 Spacer(modifier = Modifier.height(50.dp))
                 Button(onClick = {
                     //add / edit card in firebase using card viewmodel
+                    if(isEdit){
+                        val newCard = CurrentCard!!.copy(title = CardTitle, content = CardContent, colorID = selectedColor)
+                        viewModel.updateCard(newCard)
+                    }else {
+                        val newCard = Card(0, catID, CardTitle, CardContent, selectedColor, false)
+                        viewModel.addCard(newCard)
+                    }
                   navController.popBackStack("Cards List", false)
                 },
                     Modifier
@@ -188,5 +218,5 @@ fun Add_Edit_Card_Screen(navController: NavController, cardID:Int?) {
 @Preview(showSystemUi = true)
 @Composable
 fun preview(){
-    Add_Edit_Card_Screen(navController = rememberNavController(), null)
+    Add_Edit_Card_Screen(navController = rememberNavController(), null,null)
 }
