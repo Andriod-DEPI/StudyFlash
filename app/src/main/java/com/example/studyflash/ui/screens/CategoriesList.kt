@@ -1,6 +1,7 @@
 package com.example.studyflash.ui.screens
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,24 +21,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.studyflash.R
 import com.example.studyflash.viewmodels.Category
 
 val items = listOf(
-    Category("Math", numberOfCards = 10, numberOfCompleted = 5),
-    Category("Science", numberOfCards = 15, numberOfCompleted = 8),
-    Category("History", numberOfCards = 20, numberOfCompleted = 12),
-    Category("Art", numberOfCards = 5, numberOfCompleted = 2)
+    Category("Math", numberOfCards = 10, numberOfCompleted = 5, id = 1),
+    Category("Science", numberOfCards = 15, numberOfCompleted = 8, id = 2),
+    Category("History", numberOfCards = 20, numberOfCompleted = 12, id =3),
+    Category("Art", numberOfCards = 5, numberOfCompleted = 2, id = 4)
 )
 
-@Preview
+//@Preview
 @Composable
-fun CategoriesList() {
+fun CategoriesList(navController: NavHostController) {
     LazyColumn {
         items(items){
             item ->
@@ -47,6 +49,21 @@ fun CategoriesList() {
                     .fillMaxWidth()
                     .padding(10.dp)
                     .height(70.dp)
+//                    .clickable {
+//                        navController.navigate("Cards List/${item.id}")
+//                    }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = {
+                                // Handle normal tap to navigate to Cards List
+                                navController.navigate("Cards List/${item.id}")
+                            },
+                            onLongPress = {
+                                // Handle long press to navigate to Edit Category
+                                navController.navigate("editCategory/${item.id}")
+                            }
+                        )
+                    }
             ){
                 Row(modifier = Modifier.padding(15.dp)) {
                     Column (

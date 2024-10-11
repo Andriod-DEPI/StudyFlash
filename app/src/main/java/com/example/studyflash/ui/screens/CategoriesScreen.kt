@@ -27,7 +27,7 @@ fun CategoriesScreen(navController: NavHostController) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Add your action here
+                    navController.navigate("addCategory")
                 },
                 containerColor = Color(0xFF6A31F7), // FAB background color
                 contentColor = Color.White           // Icon color inside FAB
@@ -49,9 +49,9 @@ fun CategoriesScreen(navController: NavHostController) {
 //                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                     modifier = Modifier
 //                        .padding(paddingValues)
-                        .padding(top = 20.dp, start = 20.dp)
+                        .padding(top = 10.dp, start = 20.dp)
                 )
-                CategoriesList()
+                CategoriesList(navController)
             }
         }
 

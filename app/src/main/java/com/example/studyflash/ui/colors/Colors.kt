@@ -15,7 +15,7 @@ import com.example.studyflash.ui.theme.Yellow
 import com.example.studyflash.ui.theme.YellowStroke
 
 enum class Colors (val id:Int, val color: Color, val strokeColor: Color){
-GreenColor(1, Green, GreenStroke),
+    GreenColor(1, Green, GreenStroke),
     YellowColor(2,Yellow, YellowStroke),
     BlueColor(3, Blue, BlueStroke),
     PinkColor(4, Pink, PinkStroke),

@@ -34,12 +34,16 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -51,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 import com.example.studyflash.ui.components.TopBar
@@ -69,7 +74,7 @@ import com.example.studyflash.ui.theme.WordingBtn
 
 
 @Composable
-fun ProfilePage(navController: NavController) {
+fun ProfilePage(navController: NavHostController) {
 
     var isDarkMode by remember { mutableStateOf(false) }
 
@@ -77,7 +82,7 @@ fun ProfilePage(navController: NavController) {
         .fillMaxSize()
         .background(Wording)
     ) {
-        TopBar()
+        TopBar(navController)
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(top=14.dp,end=16.dp),
@@ -254,7 +259,7 @@ fun ScoreDisplay(score: Int) {
 
 @Composable
 fun BarChartWithPagination(subjects: List<Subject>) {
-    var currentPage by remember { androidx.compose.runtime.mutableIntStateOf(0) }
+    var currentPage by remember { mutableIntStateOf(0) }
     val itemsPerPage = 5
     val totalPages = (subjects.size + itemsPerPage - 1) / itemsPerPage // Total number of pages
 
@@ -319,9 +324,9 @@ fun DrawScope.drawBar(percentage: Float, color: Color, offsetX: Float) {
     // Draw a rounded rectangle with rounded top corners and flat bottom corners
     drawRoundRect(
         color = color,
-        topLeft = androidx.compose.ui.geometry.Offset(offsetX, size.height - barHeight),
-        size = androidx.compose.ui.geometry.Size(barWidth, barHeight),
-        cornerRadius = androidx.compose.ui.geometry.CornerRadius(cornerRadius, cornerRadius)
+        topLeft = Offset(offsetX, size.height - barHeight),
+        size = Size(barWidth, barHeight),
+        cornerRadius = CornerRadius(cornerRadius, cornerRadius)
     )
 }
 
