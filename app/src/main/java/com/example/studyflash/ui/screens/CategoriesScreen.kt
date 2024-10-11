@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -14,20 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.ui.components.TopBar
 
-
 @Composable
-fun CategoriesScreen(navController: NavController) {
+fun CategoriesScreen(navController: NavHostController) {
     Text(text = "Categories Screen")
     Scaffold (
-        topBar = { TopBar() },
+        topBar = { TopBar(navController = navController) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Add your action here
+                    navController.navigate("addCategory")
                 },
                 containerColor = Color(0xFF6A31F7), // FAB background color
                 contentColor = Color.White           // Icon color inside FAB
@@ -42,13 +42,17 @@ fun CategoriesScreen(navController: NavController) {
         content = { paddingValues ->
             // Main content of the screen goes here
             // paddingValues is passed in to adjust the content to avoid overlap with other elements
-            Text(
-                text ="Categories",
-                fontSize = 24.sp,
+            Column (modifier = Modifier.padding(paddingValues)){
+                Text(
+                    text = "Categories",
+                    fontSize = 24.sp,
 //                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                modifier = Modifier.padding(paddingValues)
-                    .padding(top = 20.dp, start = 20.dp)
-            )
+                    modifier = Modifier
+//                        .padding(paddingValues)
+                        .padding(top = 10.dp, start = 20.dp)
+                )
+                CategoriesList(navController)
+            }
         }
 
     )

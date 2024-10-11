@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.studyflash.ui.screens.Add_Edit_Card_Screen
 import com.example.studyflash.ui.screens.Add_Edit_Category
@@ -16,30 +15,34 @@ import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
 import com.example.studyflash.ui.screens.LogIn
+import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.SignIn
 
 
 @Composable
-fun NavHostGraph(
+fun NavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    NavHost(navController = navController, startDestination = "Cards List/0") {
 
+    NavHost(navController = navController, startDestination = "landPage") {
         composable("logIn") {
             LogIn(navController = navController)
         }
         composable("SignIn") {
             SignIn(navController = navController)
         }
-        composable("landPage") {
-            LandPage(navController = navController)
-        }
         composable("homePage") {
             HomePage(navController = navController)
         }
         composable("categories") {
             CategoriesScreen(navController)
+        }
+        composable("profile") {
+            ProfilePage(navController)
+        }
+        composable("landPage") {
+            LandPage(navController = navController)
         }
         composable("addCategory") {
             Add_Edit_Category(navController, null)

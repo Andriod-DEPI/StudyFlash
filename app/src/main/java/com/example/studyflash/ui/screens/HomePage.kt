@@ -34,7 +34,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.ui.components.TopBar
-import com.example.studyflash.ui.theme.*
+import com.example.studyflash.ui.theme.BlueCircle
+import com.example.studyflash.ui.theme.GoldenCircle
+import com.example.studyflash.ui.theme.GreenCircle
+import com.example.studyflash.ui.theme.LightBlue
+import com.example.studyflash.ui.theme.LightBlueText
+import com.example.studyflash.ui.theme.LightGreen
+import com.example.studyflash.ui.theme.LightGreenText
+import com.example.studyflash.ui.theme.LightOrange
+import com.example.studyflash.ui.theme.LightOrangeText
+import com.example.studyflash.ui.theme.PurpleCircle
+import com.example.studyflash.ui.theme.ReadexProFamily
+import com.example.studyflash.ui.theme.RedRoseFamily
+import com.example.studyflash.ui.theme.RoseCircle
+import com.example.studyflash.ui.theme.StudyFlashTheme
+import com.example.studyflash.ui.theme.TopBarBg
+import com.example.studyflash.ui.theme.Wording
 
 
 @Composable
@@ -45,7 +60,7 @@ fun HomePage(navController: NavHostController) {
         .background(Wording)
     ) {
 
-        TopBar()
+        TopBar(navController)
         
         Text(
             text = "Welcome back, Sandy!",

@@ -17,15 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.studyflash.R
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun TopBar (){
+fun TopBar (navController: NavHostController){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -100,7 +100,7 @@ fun TopBar (){
 //            modifier = Modifier // Align TopNavBar to the end (right)
 //                .padding(end = 16.dp)
         ) {
-            TopNavBar()
+            TopNavBar(navController = navController)
         }
     }
 
