@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,13 +21,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -41,16 +35,11 @@ import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.BlueStroke
 import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.BrownStroke
 import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.PinkStroke
 import com.example.studyflash.ui.theme.PrimaryColor
 import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.ui.theme.YellowStroke
 
 @Composable
 fun CardsListScreen(
@@ -59,24 +48,24 @@ fun CardsListScreen(
     //get category by id
 
     val category = Category(
-        1, "Technology", Green, DarkGreen, listOf(
-            Card(1, "Title1", "content 1", Green, DarkGreen, false),
-            Card(2, "Title2", "content 2", Yellow, YellowStroke, true),
+        1, "Technology", 1, listOf(
+            Card(1, "Title1", "content 1", 1, false),
+            Card(2, "Title2", "content 2", 2, true),
 
-            Card(3, "Title3", "content 1", Pink, PinkStroke, true),
-            Card(4, "Title4", "content 2", Brown, BrownStroke, false),
+            Card(3, "Title3", "content 1", 3, true),
+            Card(4, "Title4", "content 2", 4, false),
 
-            Card(5, "Title5", "content 1", Purple, PurpleStroke, false),
-            Card(6, "Title6", "content 2", Blue, BlueStroke, false),
+            Card(5, "Title5", "content 1", 5, false),
+            Card(6, "Title6", "content 2", 6, false),
 
-            Card(1, "Title1", "content 1", Green, DarkGreen, false),
-            Card(2, "Title2", "content 2", Yellow, YellowStroke, false),
+            Card(1, "Title1", "content 1", 1, false),
+            Card(2, "Title2", "content 2", 2, false),
 
-            Card(3, "Title3", "content 1", Pink, PinkStroke, false),
-            Card(4, "Title4", "content 2", Brown, BrownStroke, false),
+            Card(3, "Title3", "content 1", 3, false),
+            Card(4, "Title4", "content 2", 4, false),
 
-            Card(5, "Title5", "content 1", Purple, PurpleStroke, false),
-            Card(6, "Title6", "content 2", Blue, BlueStroke, true),
+            Card(5, "Title5", "content 1", 5, false),
+            Card(6, "Title6", "content 2", 6, true),
         ), 3
     )
     val cards = category.cards

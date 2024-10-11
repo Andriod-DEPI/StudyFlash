@@ -20,18 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.classes.Card
+import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.theme.AlexandriaFamily
-import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 
 @Composable
 fun CardItem(card: Card, boxModifier:Modifier){
     Box(
         boxModifier
-            .background(color = card.color, shape = RoundedCornerShape(16.dp))
+            .background(color = Colors.getColorById(card.colorID).color, shape = RoundedCornerShape(16.dp))
             .border(
                 3.dp,
-                card.cardStroke, shape = RoundedCornerShape(16.dp)
+                Colors.getColorById(card.colorID).strokeColor, shape = RoundedCornerShape(16.dp)
             )
 
     ) {
@@ -45,7 +45,7 @@ fun CardItem(card: Card, boxModifier:Modifier){
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
-                color = card.cardStroke,
+                color = Colors.getColorById(card.colorID).strokeColor,
                 fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.Bold
             )
@@ -67,6 +67,6 @@ fun CardItem(card: Card, boxModifier:Modifier){
 @Preview(showSystemUi = true)
 @Composable
 fun cradPreview(){
-    val card = Card(1,"Title", "content", Green, DarkGreen,false)
+    val card = Card(1, "Title", "content", 1, false)
     CardItem(card = card, boxModifier = Modifier)
 }
