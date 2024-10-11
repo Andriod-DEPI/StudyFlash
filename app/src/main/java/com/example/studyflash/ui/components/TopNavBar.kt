@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.studyflash.R
 
 
@@ -28,16 +29,20 @@ import com.example.studyflash.R
 //}
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 //unit means a function that returns void
 fun TopNavBar(
-    onHomeClick: () -> Unit = {},
-    onProfileClick: () -> Unit = {},
-    onCategoriesClick: () -> Unit = {},
+    navController: NavHostController,
+//    onHomeClick: () -> Unit = { navController.navigate("home")},
+//    onProfileClick: () -> Unit = { navController.navigate("categories")},
+//    onCategoriesClick: () -> Unit = { navController.navigate("profile")},
 ){
+    Log.d("NavController", "navController: $navController")
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
 //        modifier = Modifier.fillMaxWidth(),
 //        horizontalArrangement = Arrangement.spacedBy(16.dp) // Distribute columns evenly
         horizontalArrangement = Arrangement.SpaceBetween
@@ -45,7 +50,7 @@ fun TopNavBar(
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onHomeClick,
+            IconButton(onClick = { navController.navigate("home") },
                 modifier = Modifier
                     .size(30.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
@@ -61,7 +66,7 @@ fun TopNavBar(
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onCategoriesClick,
+            IconButton(onClick = { navController.navigate("categories") },
                 modifier = Modifier
                     .size(35.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
@@ -78,7 +83,7 @@ fun TopNavBar(
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = onProfileClick,
+            IconButton(onClick = {navController.navigate("profile")},
                 modifier = Modifier
                     .size(30.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)

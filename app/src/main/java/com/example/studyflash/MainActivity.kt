@@ -11,12 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.studyflash.ui.screens.HomeScreen
-import com.example.studyflash.ui.screens.LandingPage
+import com.example.studyflash.ui.navigation.NavGraph
 import com.example.studyflash.ui.theme.StudyFlashTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,17 +21,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StudyFlashTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
                     NavGraph(navController = navController,
-                        modifier = Modifier.padding(innerPadding))
-//            Add_Edit_Card_Screen()
-//            StudyFlashTheme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
+                    modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -58,17 +47,17 @@ fun GreetingPreview() {
     }
 }
 
-@Composable
-fun NavGraph(navController: NavHostController, modifier: Modifier){
-    NavHost(
-        navController = navController,
-        startDestination = "landing"
-    ) {
-        composable("landing") {
-            LandingPage(navController = navController)
-        }
-        composable("home") {
-            HomeScreen(navController = navController)
-        }
-    }
-}
+//@Composable
+//fun NavGraph(navController: NavHostController, modifier: Modifier){
+//    NavHost(
+//        navController = navController,
+//        startDestination = "landing"
+//    ) {
+//        composable("landing") {
+//            LandingPage(navController = navController)
+//        }
+//        composable("home") {
+//            HomeScreen(navController = navController)
+//        }
+//    }
+//}
