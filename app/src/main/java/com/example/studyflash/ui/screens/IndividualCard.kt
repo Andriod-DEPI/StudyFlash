@@ -27,18 +27,11 @@ import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
-import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.Green
-import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.viewmodels.CardViewModel
 
 @Composable
 fun IndividualCardScreen(navController: NavController, cardID:Int?) {
-    val CardsViewModel = CardViewModel()
-    val cards = CardsViewModel.cards
+
+    val cards = emptyList<Card>()
     IndividualCardContent(cards,cardID, {navController.popBackStack()})
 }
 
@@ -148,12 +141,12 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
 @Composable
 fun previewIndividualCard(){
     val cards = listOf(
-        Card(1, "Title1", "content 1", 1, false),
-        Card(2, "Title2", "content 2", 2, false),
-        Card(3, "Title3", "content 1", 3, false),
-        Card(4, "Title4", "content 2", 4, false),
-        Card(5, "Title5", "content 1", 5, false),
-        Card(6, "Title6", "content 2", 6, false),
+        Card(1,1, "Title1", "content 1", 1, false),
+        Card(2,1, "Title2", "content 2", 2, false),
+        Card(3,1, "Title3", "content 1", 3, false),
+        Card(4,1, "Title4", "content 2", 4, false),
+        Card(5,1, "Title5", "content 1", 5, false),
+        Card(6,1, "Title6", "content 2", 6, false),
     )
     IndividualCardContent(cards = cards, cardID = 1 ) {
         

@@ -22,7 +22,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.example.studyflash.ui.theme.Green
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,12 +33,7 @@ import com.example.studyflash.classes.Category
 import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
-import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.Pink
 import com.example.studyflash.ui.theme.PrimaryColor
-import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.Yellow
 
 @Composable
 fun CardsListScreen(
@@ -49,23 +43,23 @@ fun CardsListScreen(
 
     val category = Category(
         1, "Technology", 1, listOf(
-            Card(1, "Title1", "content 1", 1, false),
-            Card(2, "Title2", "content 2", 2, true),
+            Card(1,1, "Title1", "content 1", 1, false),
+            Card(2,1, "Title2", "content 2", 2, true),
 
-            Card(3, "Title3", "content 1", 3, true),
-            Card(4, "Title4", "content 2", 4, false),
+            Card(3,1, "Title3", "content 1", 3, true),
+            Card(4,1, "Title4", "content 2", 4, false),
 
-            Card(5, "Title5", "content 1", 5, false),
-            Card(6, "Title6", "content 2", 6, false),
+            Card(5,1, "Title5", "content 1", 5, false),
+            Card(6,1, "Title6", "content 2", 6, false),
 
-            Card(1, "Title1", "content 1", 1, false),
-            Card(2, "Title2", "content 2", 2, false),
+            Card(1,1, "Title1", "content 1", 1, false),
+            Card(2,1, "Title2", "content 2", 2, false),
 
-            Card(3, "Title3", "content 1", 3, false),
-            Card(4, "Title4", "content 2", 4, false),
+            Card(3,1, "Title3", "content 1", 3, false),
+            Card(4,1, "Title4", "content 2", 4, false),
 
-            Card(5, "Title5", "content 1", 5, false),
-            Card(6, "Title6", "content 2", 6, true),
+            Card(5,1, "Title5", "content 1", 5, false),
+            Card(6,1, "Title6", "content 2", 6, true),
         ), 3
     )
     val cards = category.cards

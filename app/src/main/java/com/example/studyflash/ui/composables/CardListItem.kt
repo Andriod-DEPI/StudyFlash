@@ -29,11 +29,11 @@ import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.theme.AlexandriaFamily
-import com.example.studyflash.ui.theme.Green
+
 @Composable
 @Preview (showSystemUi = true)
 fun preview(){
-    CardListItem(card = (  Card(1, "Title1", "content 1", 1, true)),{})
+    CardListItem(card = (  Card(1,1, "Title1", "content 1", 1, true)),{})
 }
 
 
