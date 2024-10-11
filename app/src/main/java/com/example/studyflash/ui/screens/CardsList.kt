@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
@@ -34,12 +35,15 @@ import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.PrimaryColor
+import com.example.studyflash.viewmodels.CategoryCardViewModel
+
 
 @Composable
 fun CardsListScreen(
     navController: NavController, catID: Int?
 ) {
     //get category by id
+    val viewModel:CategoryCardViewModel = hiltViewModel()
 
     val category = Category(
         1, "Technology", 1, listOf(
