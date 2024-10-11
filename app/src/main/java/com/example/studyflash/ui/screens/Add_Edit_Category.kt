@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.classes.Category
 import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
@@ -48,13 +51,24 @@ import com.example.studyflash.ui.theme.PrimaryColor
 import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
 fun Add_Edit_Category(navController: NavController, catID:Int?) {
+    val viewModel:CategoryCardViewModel = hiltViewModel()
+    viewModel.loadCategories()
+    val categories by viewModel.Categories.collectAsState()
+    var category: Category? = null
+    if(catID!=null){
+        category = categories.find { it.id==catID }
+
+    }
+    var catName:String = "Category Name"
+        if(category!=null){catName=category.name}
 
     var CategoryName by remember {
-        mutableStateOf("Category Name")
+        mutableStateOf(catName)
     }
     Image(
         painter = painterResource(id = R.drawable.add_edit_bck),
@@ -141,6 +155,13 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                 Button(
                     onClick = {
                         // add/edit category using Category Viewmodel
+                  if(category!=null){
+                      val newCategory = category.copy(name = CategoryName, colorID = selectedColor)
+                      viewModel.updateCategory(newCategory)
+                  }else{
+                      val newCategory = Category(0,CategoryName, selectedColor, mutableListOf(), 0)
+                      viewModel.addCategory(newCategory)
+                  }
                         //back to categories list page
 //                      navController.popBackStack("", false)
                       navController.navigate("categories")

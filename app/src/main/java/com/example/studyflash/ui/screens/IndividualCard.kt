@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -23,20 +24,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 @Composable
-fun IndividualCardScreen(navController: NavController, cardID:Int?) {
-
-    val cards = emptyList<Card>()
-    IndividualCardContent(cards,cardID, {navController.popBackStack()})
+fun IndividualCardScreen(navController: NavController, catId:Int?, cardID:Int?) {
+    val viewModel: CategoryCardViewModel = hiltViewModel()
+    viewModel.loadCategories()
+    viewModel.loadCardsForCategory(catId!!)
+    val cards by viewModel.Cards.collectAsState()
+    IndividualCardContent(cards,cardID,{navController.popBackStack()}, onUpdateCard = viewModel::updateCard)
 }
 
 @Composable
-fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
+fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, onUpdateCard:(Card)->Unit){
     val card = cards.find { it.id == cardID }
     var index by rememberSaveable {
         mutableStateOf(cards.indexOf(card))
@@ -109,6 +114,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                     .clickable {
                         // update in firebase
                         cards[index].isChecked = false
+                        onUpdateCard(cards[index])
 
                         if (index < cards.size - 1) {
                             index++
@@ -124,6 +130,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
                     .clickable {
                         // update in firebase
                         cards[index].isChecked = true
+                        onUpdateCard(cards[index])
 
                         if (index < cards.size - 1) {
                             index++
@@ -148,7 +155,7 @@ fun previewIndividualCard(){
         Card(5,1, "Title5", "content 1", 5, false),
         Card(6,1, "Title6", "content 2", 6, false),
     )
-    IndividualCardContent(cards = cards, cardID = 1 ) {
+    IndividualCardContent(cards = cards, cardID = 1 , {}) {
         
     }
 }
