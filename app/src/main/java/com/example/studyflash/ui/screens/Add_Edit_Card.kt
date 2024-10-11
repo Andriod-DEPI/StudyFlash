@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -68,7 +69,7 @@ import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 @Composable
 fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
-
+    var id = 10
     var isEdit = false
     if(cardID!=null){
         isEdit = true
@@ -195,8 +196,10 @@ fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
                         val newCard = CurrentCard!!.copy(title = CardTitle, content = CardContent, colorID = selectedColor)
                         viewModel.updateCard(newCard)
                     }else {
-                        val newCard = Card(0, catID, CardTitle, CardContent, selectedColor, false)
+                        val newCard = Card(id++, catID, CardTitle, CardContent, selectedColor, false)
+                        Log.d("TAG", "Add_Edit_Card_Screen: $newCard")
                         viewModel.addCard(newCard)
+
                     }
                   navController.popBackStack("Cards List", false)
                 },

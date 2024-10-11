@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,14 +45,16 @@ import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 @Composable
 fun CardsListScreen(
-    navController: NavController, catID: Int?
+    navController: NavController, catID: Int
 ) {
     //get category by id
     val viewModel:CategoryCardViewModel = hiltViewModel()
     viewModel.loadCategories()
     val categories by viewModel.Categories.collectAsState()
-    val category = categories.find { it.id == catID }!!
-        viewModel.loadCardsForCategory(category.id)
+    Log.d("abc", "CardsListScreen: cats $categories ")
+    val category = categories.find { it.id == catID }
+    Log.d("abc", "CardsListScreen: category $category ")
+    viewModel.loadCardsForCategory(category!!.id)
     val cards by viewModel.Cards.collectAsState()
     Column(Modifier.background(BackgroundColor)) {
         SelectedCategory(category = category)

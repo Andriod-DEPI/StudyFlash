@@ -2,7 +2,9 @@ package com.example.studyflash.module
 
 import com.example.studyflash.repositories.CardCategoryRepoImpl
 import com.example.studyflash.repositories.CardCategoryRepository
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +17,7 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirestore():FirebaseFirestore{
-        return FirebaseFirestore.getInstance()
+        return Firebase.firestore
     }
 
     @Provides

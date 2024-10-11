@@ -7,4 +7,5 @@ data class Card(
     val content: String,
     var colorID: Int,
     var isChecked: Boolean
-)
+) { constructor() : this(0, 1,"","", 0,false)
+}

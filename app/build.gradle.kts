@@ -86,37 +86,18 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     // When using Kotlin.
     kapt(libs.androidx.hilt.compiler)
-    implementation (libs.androidx.ui.v150)
-    implementation (libs.androidx.navigation.compose.v253)
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-
-    //lifecycle
-    // ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    // ViewModel utilities for Compose
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    // LiveData
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    // Lifecycles only (without ViewModel or LiveData)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Lifecycle utilities for Compose
-    implementation(libs.androidx.lifecycle.runtime.compose)
-
+    implementation (libs.androidx.hilt.navigation.compose)
     // Saved state module for ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
 
     //firebase
-    implementation(platform(libs.firebase.bom))
+    implementation (platform(libs.firebase.bom)) // Example of the latest version
 
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-
-    // Add the dependency for the Firebase SDK for Google Analytics
-    implementation(libs.firebase.analytics)
     //  Add the dependencies for Firebase Authentication and Cloud Firestore
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-
-
+    // required to avoid crash on Android 12 API 31
+    implementation (libs.androidx.work.runtime.ktx)
 }
 kapt {
     correctErrorTypes = true

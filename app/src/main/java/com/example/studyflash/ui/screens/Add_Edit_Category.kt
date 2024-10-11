@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -76,8 +77,11 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
         category = categories.find { it.id==catID }
 
     }
-    var catName:String = "Category Name"
-        if(category!=null){catName=category.name}
+    var catName = "Category Name"
+
+    if(category!=null){
+        catName=category.name
+    }
 
     var CategoryName by remember {
         mutableStateOf(catName)
@@ -171,11 +175,13 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                       val newCategory = category.copy(name = CategoryName, colorID = selectedColor)
                       viewModel.updateCategory(newCategory)
                   }else{
-                      val newCategory = Category(0,CategoryName, selectedColor, mutableListOf(), 0)
+                      val newCategory = Category(2,CategoryName, selectedColor, mutableListOf(), 0)
                       viewModel.addCategory(newCategory)
+
                   }
                         //back to categories list page
-                      navController.popBackStack("", false)
+//                      navController.popBackStack("", false)
+                        navController.navigate("addCard/${1}")
                     },
                     Modifier
                         .width(200.dp)
