@@ -44,19 +44,7 @@ import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
-import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.BlueStroke
-import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.BrownStroke
-import com.example.studyflash.ui.theme.GreenStroke
-import com.example.studyflash.ui.theme.Green
-import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.PinkStroke
 import com.example.studyflash.ui.theme.PrimaryColor
-import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.PurpleStroke
-import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.ui.theme.YellowStroke
 import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
@@ -154,7 +142,8 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                     onClick = {
                         // add/edit category using Category Viewmodel
                         //back to categories list page
-                      navController.popBackStack("", false)
+//                      navController.popBackStack("", false)
+                      navController.navigate("categories")
                     },
                     Modifier
                         .width(200.dp)

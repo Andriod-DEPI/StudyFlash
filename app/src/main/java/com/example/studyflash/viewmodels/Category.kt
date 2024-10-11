@@ -3,7 +3,8 @@ package com.example.studyflash.viewmodels
 data class Category(
     val name: String,
     val numberOfCards: Int,
-    val numberOfCompleted: Int
+    val numberOfCompleted: Int,
+    val id: Int
 )
 
 //val items = listOf(

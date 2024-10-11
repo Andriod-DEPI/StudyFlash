@@ -15,6 +15,7 @@ import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
 import com.example.studyflash.ui.screens.LogIn
+import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.SignIn
 
 
@@ -35,6 +36,9 @@ fun NavGraph(
         }
         composable("categories") {
             CategoriesScreen(navController)
+        }
+        composable("profile") {
+            ProfilePage(navController)
         }
         composable("landPage") {
             LandPage(navController = navController)
