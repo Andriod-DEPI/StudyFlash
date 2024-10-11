@@ -24,6 +24,7 @@ fun NavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+
     NavHost(navController = navController, startDestination = "landPage") {
         composable("logIn") {
             LogIn(navController = navController)
@@ -44,58 +45,58 @@ fun NavGraph(
             LandPage(navController = navController)
         }
         composable("addCategory") {
-            Add_Edit_Category(navController, 0)
+            Add_Edit_Category(navController, null)
         }
 
 
-        composable("addCard/{categId}",arguments = listOf(
+        composable("addCard/{categId}", arguments = listOf(
             navArgument("categId") {
-                NavType.IntType
+               type = NavType.IntType
             }
-        )) {
-            val catID = it.arguments?.getInt("categId")
-            Add_Edit_Card_Screen(navController, catID, null)
+        )) {backStack->
+            val catID = backStack.arguments?.getInt("categId")
+            catID?.let { Add_Edit_Card_Screen(navController, catID, null) }
         }
         composable("editCategory/{categId}", arguments = listOf(
             navArgument("categId") {
-                NavType.IntType
+                type = NavType.IntType
             }
         )) {
             val catID = it.arguments?.getInt("categId")
             Add_Edit_Category(navController, catID)
         }
-        composable("editCard/{catId}/{cardId}",arguments = listOf(
+        composable("editCard/{catId}/{cardId}", arguments = listOf(
             navArgument("catId") {
-                NavType.IntType
+                type = NavType.IntType
             },
             navArgument("cardId") {
-                NavType.IntType
+                type = NavType.IntType
             }
         )) {
             val cardID = it.arguments?.getInt("cardId")
             val catId = it.arguments?.getInt("catId")
-            Add_Edit_Card_Screen(navController, catId ,cardID)
+            Add_Edit_Card_Screen(navController, catId, cardID)
         }
 
         composable("individual Card/{catId}/{cardId}", arguments = listOf(
             navArgument("catId") {
-                NavType.IntType
+               type = NavType.IntType
             },
             navArgument("cardId") {
-                NavType.IntType
+               type=  NavType.IntType
             }
         )) {
             val catId = it.arguments?.getInt("catId")
             val cardID = it.arguments?.getInt("cardId")
-            IndividualCardScreen(navController,catId, cardID)
+            IndividualCardScreen(navController, catId, cardID)
         }
         composable("Cards List/{categId}", arguments = listOf(
             navArgument("categId") {
-                NavType.IntType
+                type = NavType.IntType
             }
-        )) {
-            val catID = it.arguments?.getInt("categId")
-            CardsListScreen(navController, catID)
+        )) {backStack->
+            val catID = backStack.arguments?.getInt("categId")
+            catID?.let { CardsListScreen(navController, catID) }
         }
     }
 }

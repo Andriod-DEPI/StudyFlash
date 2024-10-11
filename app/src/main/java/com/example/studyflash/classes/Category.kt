@@ -6,4 +6,7 @@ data class Category(
     val colorID: Int,
     val cards: List<Card>,
     val progress: Int
-)
+){
+    // No-argument constructor for Firestore
+    constructor() : this(0, "", 0, listOf(), 0)
+}
