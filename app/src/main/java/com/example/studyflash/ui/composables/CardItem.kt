@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.theme.AlexandriaFamily
-import com.example.studyflash.ui.theme.Green
 
 @Composable
 fun CardItem(card: Card, boxModifier:Modifier){
@@ -67,6 +66,6 @@ fun CardItem(card: Card, boxModifier:Modifier){
 @Preview(showSystemUi = true)
 @Composable
 fun cradPreview(){
-    val card = Card(1, "Title", "content", 1, false)
+    val card = Card(1,1, "Title", "content", 1, false)
     CardItem(card = card, boxModifier = Modifier)
 }

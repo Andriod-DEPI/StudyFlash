@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049853751245",
+    "project_id": "android-app-adcf9",
+    "storage_bucket": "android-app-adcf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049853751245:android:90b437fd2eca5a3b0f5e84",
+        "android_client_info": {
+          "package_name": "com.example.studyflash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjsCq2qGqgz2Om78TMMaR7BwfC2b6ywrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
