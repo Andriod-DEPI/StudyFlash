@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
+import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.theme.AlexandriaFamily
-import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 @Composable
 @Preview (showSystemUi = true)
 fun preview(){
-    CardListItem(card = (  Card(1,"Title1", "content 1", Green, DarkGreen, true )),{})
+    CardListItem(card = (  Card(1, "Title1", "content 1", 1, true)),{})
 }
 
 
@@ -44,10 +44,10 @@ fun CardListItem(card: Card, onCardClick:()->Unit){
             .width(180.dp)
             .height(215.dp)
             .padding(0.dp)
-            .background(color = card.color, shape = RoundedCornerShape(16.dp))
+            .background(color = Colors.getColorById(card.colorID).color, shape = RoundedCornerShape(16.dp))
             .border(
                 3.dp,
-                card.cardStroke, shape = RoundedCornerShape(16.dp)
+                Colors.getColorById(card.colorID).strokeColor, shape = RoundedCornerShape(16.dp)
             ).clickable {
                 onCardClick()
             }
@@ -67,7 +67,7 @@ fun CardListItem(card: Card, onCardClick:()->Unit){
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
-                color = card.cardStroke,
+                color = Colors.getColorById(card.colorID).strokeColor,
                 fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.Bold,
             )

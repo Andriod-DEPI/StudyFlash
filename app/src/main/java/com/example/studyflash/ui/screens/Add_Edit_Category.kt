@@ -38,7 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
@@ -46,7 +48,7 @@ import com.example.studyflash.ui.theme.Blue
 import com.example.studyflash.ui.theme.BlueStroke
 import com.example.studyflash.ui.theme.Brown
 import com.example.studyflash.ui.theme.BrownStroke
-import com.example.studyflash.ui.theme.DarkGreen
+import com.example.studyflash.ui.theme.GreenStroke
 import com.example.studyflash.ui.theme.Green
 import com.example.studyflash.ui.theme.Pink
 import com.example.studyflash.ui.theme.PinkStroke
@@ -78,7 +80,13 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier
-            .shadow(elevation = 10.dp, spotColor = Color.Black, shape = RectangleShape, clip = false).padding(5.dp)  ) {
+            .shadow(
+                elevation = 10.dp,
+                spotColor = Color.Black,
+                shape = RectangleShape,
+                clip = false
+            )
+            .padding(5.dp)  ) {
             Column(
                 modifier = Modifier
                     .width(300.dp)
@@ -115,23 +123,16 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                     mutableStateOf(1)
                 }
 
-                val colors = listOf(Green, Yellow, Blue, Pink, Purple, Brown)
-                val strokeColors = listOf(
-                    DarkGreen,
-                    YellowStroke,
-                    BlueStroke,
-                    PinkStroke,
-                    PurpleStroke,
-                    BrownStroke
-                )
+                val colors = listOf(Colors.GreenColor, Colors.YellowColor, Colors.BlueColor, Colors.PinkColor, Colors.PurpleColor, Colors.BrownColor)
+
                 Row(
                     horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier
                         .fillMaxWidth()
                         .padding(30.dp, 0.dp)
                 ) {
                     for (i in 0..2) {
-                        ChooseColor(color = colors[i], i, i == selectedColor) {
-                            selectedColor = i
+                        ChooseColor(color = colors[i].color, colors[i].id, colors[i].id == selectedColor) {
+                            selectedColor = colors[i].id
                         }
                     }
 
@@ -143,8 +144,8 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                         .padding(30.dp, 0.dp)
                 ) {
                     for (i in 3..5) {
-                        ChooseColor(color = colors[i], i, i == selectedColor) {
-                            selectedColor = i
+                        ChooseColor(color = colors[i].color, colors[i].id, colors[i].id == selectedColor) {
+                            selectedColor = colors[i].id
                         }
                     }
                 }
@@ -155,7 +156,9 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                         //back to categories list page
                       navController.popBackStack("", false)
                     },
-                    Modifier.width(200.dp).shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp)),
+                    Modifier
+                        .width(200.dp)
+                        .shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp)),
                     colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor), shape = RoundedCornerShape(20.dp)
                 ) {
                     Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
@@ -165,4 +168,10 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
 
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun prev(){
+    Add_Edit_Category(navController = rememberNavController(), catID =null )
 }

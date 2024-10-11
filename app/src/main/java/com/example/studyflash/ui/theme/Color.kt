@@ -44,8 +44,9 @@ val RoseCircle = Color(0xFFC18187)
 val PrimaryColor = Color(0xFF6A31F7)
 val BackgroundColor = Color(0xFFEDF5FF)
 
+// pastel colors
 val Green = Color(0xFFA8D5B2)
-val DarkGreen = Color(0xFF5B8263)
+val GreenStroke = Color(0xFF5B8263)
 
 val Yellow = Color(0xFFF9DEBE)
 val YellowStroke = Color(0xFFBEA68A)
@@ -62,6 +63,7 @@ val PurpleStroke = Color(0xFFB28CB8)
 val Brown = Color (0xFFDCC1A2)
 val BrownStroke = Color(0xFF8A7153)
 
+    //add_edit
 val add_edit_border = Color(0xFF8773B9)
 val add_edit_bck = Color(0xD5F4F4F4)
 val add_edit_txtField_bck = Color(0xFFE7DDFF)

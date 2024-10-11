@@ -85,6 +85,13 @@ dependencies {
     // When using Kotlin.
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
+    // ViewModel and LiveData
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0")
+
+    // Hilt ViewModel
+    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt ("androidx.hilt:hilt-compiler:1.0.0")
 
 }
 kapt {

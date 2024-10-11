@@ -1,12 +1,9 @@
 package com.example.studyflash.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,34 +19,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.ui.composables.CardItem
-import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.BlueStroke
 import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.BrownStroke
-import com.example.studyflash.ui.theme.DarkGreen
 import com.example.studyflash.ui.theme.Green
 import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.PinkStroke
-import com.example.studyflash.ui.theme.PrimaryColor
 import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.PurpleStroke
 import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.ui.theme.YellowStroke
 import com.example.studyflash.viewmodels.CardViewModel
 
 @Composable
@@ -168,12 +148,12 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit){
 @Composable
 fun previewIndividualCard(){
     val cards = listOf(
-        Card(1,"Title1", "content 1", Green, DarkGreen, false ),
-        Card(2,"Title2", "content 2", Yellow, YellowStroke , false ),
-        Card(3,"Title3", "content 1", Pink, PinkStroke, false ),
-        Card(4,"Title4", "content 2", Brown, BrownStroke, false ),
-        Card(5,"Title5", "content 1", Purple, PurpleStroke, false ),
-        Card(6,"Title6", "content 2", Blue, BlueStroke, false ),
+        Card(1, "Title1", "content 1", 1, false),
+        Card(2, "Title2", "content 2", 2, false),
+        Card(3, "Title3", "content 1", 3, false),
+        Card(4, "Title4", "content 2", 4, false),
+        Card(5, "Title5", "content 1", 5, false),
+        Card(6, "Title6", "content 2", 6, false),
     )
     IndividualCardContent(cards = cards, cardID = 1 ) {
         
