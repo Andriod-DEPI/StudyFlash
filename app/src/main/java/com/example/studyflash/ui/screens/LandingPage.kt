@@ -37,6 +37,7 @@ import com.example.studyflash.ui.theme.TopBarBg
 import com.example.studyflash.ui.theme.Wording
 import com.example.studyflash.ui.theme.WordingBtn
 import com.example.studyflash.ui.theme.YrsaFamily
+import androidx.navigation.NavHostController
 
 @Composable
 fun TopLayer() {
