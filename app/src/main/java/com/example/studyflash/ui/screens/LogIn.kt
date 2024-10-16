@@ -1,7 +1,7 @@
 package com.example.studyflash.ui.screens
 
+import LoginViewModel
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.*
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,25 +37,20 @@ import androidx.compose.ui.unit.sp
 import com.example.studyflash.R.drawable.background
 import com.example.studyflash.R.drawable.profile
 import com.example.studyflash.ui.components.LoginTextfield
-import com.google.firebase.auth.FirebaseAuth
 
-@Preview (showSystemUi = true)
+// UI Function
 @Composable
-fun Loginscreen() {
+fun LoginScreenContent(
+    email: String,
+    password: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: (String, String) -> Unit,
+    loginErrorMessage: String = ""
+) {
     Surface {
-        val uniColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black
-        val auth = FirebaseAuth.getInstance()
-
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var loginErrorMessage by remember { mutableStateOf("") }
-
-        Column(modifier = Modifier.fillMaxSize())
-        {
-
-            Box(
-                contentAlignment = Alignment.TopCenter
-                ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(contentAlignment = Alignment.TopCenter) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = background),
@@ -73,18 +67,17 @@ fun Loginscreen() {
                 )
                 Text(
                     text = "Login",
-                    modifier = Modifier
-                        .offset(y = 320.dp),
+                    modifier = Modifier.offset(y = 320.dp),
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
-                    fontSize = 50.sp,
+                    fontSize = 50.sp
+                )
 
-                    )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .offset(y=750.dp),
+                        .offset(y = 750.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -93,7 +86,6 @@ fun Loginscreen() {
                                 style = SpanStyle(
                                     color = Color.Black,
                                     fontSize = 14.sp,
-//                            fontFamily = Roboto,
                                     fontWeight = FontWeight.Normal
                                 )
                             ) {
@@ -103,45 +95,47 @@ fun Loginscreen() {
                                 style = SpanStyle(
                                     color = Color.Black,
                                     fontSize = 14.sp,
-//                            fontFamily = Roboto,
                                     fontWeight = FontWeight.Medium
                                 )
                             ) {
-                                append(" ")
-                                append("Create new account")
+                                append(" Create new account")
                             }
                         }
                     )
-
-
                 }
+
                 Column(
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize().offset(y=430.dp)
                         .padding(horizontal = 30.dp)
                 ) {
-
                     LoginTextfield(
-                        label = "UserName",
-                        trailing = " ",
-                        modifier = Modifier.fillMaxWidth().offset(y = 420.dp),
-                        value = email,
-                        onValueChange = { email = it }
+                        label = "Email",
+                        trailing = "",
+                        value = email,  // Bind email state to TextField
+                        onValueChange = { newEmail -> onEmailChange(newEmail) } // Update email state using callback
                     )
-                    Spacer(modifier = Modifier.width(15.dp))
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    // Password TextField
                     LoginTextfield(
                         label = "Password",
-                        trailing = "Show",
-                        modifier = Modifier.fillMaxWidth().offset(y = 430.dp),
-                        value = password,
-                        onValueChange = { password = it }
+                        trailing = "Forgot?",
+                        value = password,  // Bind password state to TextField
+                        onValueChange = { newPassword -> onPasswordChange(newPassword) } // Update password state using callback
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
+
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    // Login Button
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 30.dp).offset(y = 430.dp),
+                            .padding(vertical = 30.dp)
+                            .offset(y = 230.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
@@ -149,38 +143,64 @@ fun Loginscreen() {
                                 .width(230.dp)
                                 .height(80.dp)
                                 .padding(12.dp),
-
-                            onClick = {
-
-                                auth.signInWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            loginErrorMessage = "Login successful!"
-                                            println("Login successful!")
-                                        } else {
-                                            loginErrorMessage = "Login failed: ${task.exception?.message}"
-                                            println("Login failed: ${task.exception?.message}")
-                                        }
-                                    }
-
-                            },
+                            onClick = { onLoginClick(email, password) },  // Trigger login on button click
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isSystemInDarkTheme()) Color(0xFFAC81F1) else Color(
-                                    0xFFAC81F1
-                                ),
-                                contentColor = androidx.compose.ui.graphics.Color.White
+                                containerColor = if (isSystemInDarkTheme()) Color(0xFFAC81F1) else Color(0xFFAC81F1),
+                                contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(size = 17.dp)
                         ) {
                             Text(text = "Login")
                         }
                     }
-            }
 
-
-
-
+                    // Show error message if login fails
+                    if (loginErrorMessage.isNotEmpty()) {
+                        Text(
+                            text = loginErrorMessage,
+                            color = Color.Red,
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                    }
+                }
             }
         }
+    }
+}
 
-    }}
+// Preview function for the UI
+@Preview(showSystemUi = true)
+@Composable
+fun LoginscreenPreview() {
+    val emailState = remember { mutableStateOf("test@example.com") }
+    val passwordState = remember { mutableStateOf("password123") }
+
+    LoginScreenContent(
+        email = "test@example.com",
+        password = "password123",
+        onEmailChange = { newEmail -> emailState.value = newEmail },
+        onPasswordChange = { newPassword -> passwordState.value = newPassword },
+        onLoginClick = { _, _ -> },
+        loginErrorMessage = ""
+    )
+}
+
+// Use this in the actual screen logic to pass real Firebase login functionality
+@Composable
+fun Loginscreen(viewModel: LoginViewModel) {
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    val loginErrorMessage = viewModel.loginErrorMessage.value
+
+    LoginScreenContent(
+        email = email.value,
+        password = password.value,
+        onEmailChange = { newEmail -> email.value = newEmail },  // Update email state
+        onPasswordChange = { newPassword -> password.value = newPassword },  // Update password state
+        onLoginClick = { emailValue, passwordValue ->
+            viewModel.login(emailValue, passwordValue)
+        },
+        loginErrorMessage = loginErrorMessage
+    )
+}
+

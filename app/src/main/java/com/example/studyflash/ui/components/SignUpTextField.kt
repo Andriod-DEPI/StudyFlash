@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.components
 
+
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,22 +20,24 @@ import com.example.studyflash.ui.theme.focusedTextFieldText
 import com.example.studyflash.ui.theme.textFieldContainer
 import com.example.studyflash.ui.theme.unfocusedTextFieldText
 
+
+
+
 @Composable
-fun LoginTextfield(
+
+fun SignUpTextField(
     modifier: Modifier = Modifier,
     label: String,
     trailing: String,
-    value: String,  // Add value to hold the current text
-    onValueChange: (String) -> Unit  // Add onValueChange callback to update the text
-) {
+
+
+    ){
     val uniColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black
 
     TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        value = value,  // Bind the current value to the TextField
-        onValueChange = onValueChange,  // Update the state when the user types
+        modifier = modifier.fillMaxWidth().padding(16.dp),
+        value = "",
+        onValueChange = {},
         label = {
             Text(
                 text = label,
@@ -43,20 +46,28 @@ fun LoginTextfield(
                 color = uniColor
             )
         },
+
         colors = TextFieldDefaults.colors(
             unfocusedPlaceholderColor = MaterialTheme.colorScheme.unfocusedTextFieldText,
             focusedPlaceholderColor = MaterialTheme.colorScheme.focusedTextFieldText,
             unfocusedContainerColor = MaterialTheme.colorScheme.textFieldContainer,
             focusedContainerColor = MaterialTheme.colorScheme.textFieldContainer,
         ),
+
         trailingIcon = {
-            TextButton(onClick = { /*TODO*/ }) {
+
+            TextButton(onClick = { /*TODO*/})
+            {
                 Text(
                     text = trailing,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),
                     color = uniColor
                 )
+
+
             }
         }
+
     )
 }
+

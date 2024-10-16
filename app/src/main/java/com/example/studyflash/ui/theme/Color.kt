@@ -67,3 +67,24 @@ val BrownStroke = Color(0xFF8A7153)
 val add_edit_border = Color(0xFF8773B9)
 val add_edit_bck = Color(0xD5F4F4F4)
 val add_edit_txtField_bck = Color(0xFFE7DDFF)
+
+//Text field
+val textfield = Color(0xFFD0DDFC)
+
+val ColorScheme.focusedTextFieldText
+
+    @Composable
+    get() = if (isSystemInDarkTheme()) textfield else textfield
+
+val ColorScheme.unfocusedTextFieldText
+
+    @Composable
+    get() = if (isSystemInDarkTheme())  textfield else textfield
+
+val ColorScheme.textFieldContainer
+
+    @Composable
+    get() = if (isSystemInDarkTheme())  textfield else textfield
+
+
+
