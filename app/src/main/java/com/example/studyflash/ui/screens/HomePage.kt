@@ -135,9 +135,7 @@ fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, navController: 
                     else -> LightBlueText
                 },
                 text = item,
-                onClick = { onCardClick(item) } // navigate to cards list page
-            )
-        }
+                navController= navController)} // navigate to cards list pag
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = "Next",
@@ -154,13 +152,13 @@ fun CardItem(
     backgroundColor: Color,
     backgroundTextColor: Color,
     text: String,
-    onClick: () -> Unit
+    navController: NavHostController
 ) {
     Card(
         modifier = Modifier
             .size(100.dp, 150.dp)
             .padding(8.dp)
-            .clickable { onClick() }, // NEEDS TO BE FIXED
+            .clickable { navController.navigate("Cards List/1") }, // NEEDS TO BE FIXED
         shape = RoundedCornerShape(20),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
