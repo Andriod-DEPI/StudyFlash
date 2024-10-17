@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -37,6 +38,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R.drawable.signup
 import com.example.studyflash.ui.components.SignUpTextField
+import com.google.firebase.auth.FirebaseAuth
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
@@ -45,6 +48,8 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
+        val auth = FirebaseAuth.getInstance()
+        val context = LocalContext.current
 
         Column(modifier = Modifier.fillMaxSize()) {
             val uniColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black
@@ -157,7 +162,21 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                 .height(80.dp)
                                 .padding(12.dp),
                             onClick = {
-                                // Add signup logic here
+                                if (password == confirmPassword) {
+                                    auth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+                                                // Sign-up successful
+                                                Toast.makeText(context, "Sign-up successful", Toast.LENGTH_SHORT).show()
+                                                // Navigate to the next screen or update UI
+                                            } else {
+                                                // Sign-up failed
+                                                Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                } else {
+                                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFAC81F1),
