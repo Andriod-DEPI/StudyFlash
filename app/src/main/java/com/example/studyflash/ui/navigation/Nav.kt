@@ -26,11 +26,17 @@ fun NavGraph(
 ) {
 
     NavHost(navController = navController, startDestination = "landPage") {
-        composable("logIn") {
-            LogIn(navController = navController)
+       composable("logIn") {
+            // Create or retrieve an instance of LoginViewModel
+            val loginViewModel: LoginViewModel = viewModel()
+
+            // Pass the NavController to Loginscreen
+            Loginscreen(viewModel = loginViewModel, navController = navController)
         }
-        composable("SignIn") {
-            SignIn(navController = navController)
+        composable("signUp") {
+            SignupScreen(
+                navController = navController,
+                onSignInClick = { navController.navigate("logIn") })
         }
         composable("homePage") {
             HomePage(navController = navController)
