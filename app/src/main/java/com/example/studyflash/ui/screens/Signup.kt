@@ -1,10 +1,10 @@
 package com.example.studyflash.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +17,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,22 +33,23 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R.drawable.signup
-import com.example.studyflash.R.drawable.user
 import com.example.studyflash.ui.components.SignUpTextField
 
-@Preview (showSystemUi = true)
 @Composable
-fun SignupScreen() {
+fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
     Surface {
+        var username by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var confirmPassword by remember { mutableStateOf("") }
 
-        Column(modifier = Modifier.fillMaxSize())
-        {
+        Column(modifier = Modifier.fillMaxSize()) {
             val uniColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black
 
-            Box(
-                contentAlignment = Alignment.TopCenter
-            ) {
+            Box(contentAlignment = Alignment.TopCenter) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = signup),
@@ -55,7 +60,7 @@ fun SignupScreen() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .offset(y=720.dp),
+                        .offset(y = 720.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -64,7 +69,6 @@ fun SignupScreen() {
                                 style = SpanStyle(
                                     color = Color.Black,
                                     fontSize = 14.sp,
-//                            fontFamily = Roboto,
                                     fontWeight = FontWeight.Normal
                                 )
                             ) {
@@ -73,28 +77,30 @@ fun SignupScreen() {
                         }
                     )
                 }
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .offset(y=750.dp),
+                        .offset(y = 750.dp),
                     contentAlignment = Alignment.Center
-                ){
+                ) {
                     Text(
                         text = buildAnnotatedString {
                             withStyle(
                                 style = SpanStyle(
                                     color = Color.Black,
                                     fontSize = 14.sp,
-//                            fontFamily = Roboto,
                                     fontWeight = FontWeight.Medium
                                 )
                             ) {
                                 append(" ")
                                 append("Sign in")
                             }
-                        }
+                        },
+                                modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
                     )
                 }
+
                 Column(
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
@@ -108,40 +114,41 @@ fun SignupScreen() {
                         color = Color.White,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 30.sp,
-
-                        )
+                    )
 
                     SignUpTextField(
-                        label = "UserName",
+                        label = "Username",
                         trailing = " ",
-                        modifier = Modifier.fillMaxWidth().offset(y = 210.dp),
-
-
+                        value = username,
+                        onValueChange = { username = it },
+                        modifier = Modifier.fillMaxWidth().offset(y = 210.dp)
                     )
                     SignUpTextField(
                         label = "E-Mail",
                         trailing = " ",
-                        modifier = Modifier.fillMaxWidth().offset(y = 220.dp),
-
+                        value = email,
+                        onValueChange = { email = it },
+                        modifier = Modifier.fillMaxWidth().offset(y = 220.dp)
                     )
                     SignUpTextField(
                         label = "Password",
                         trailing = " ",
-                        modifier = Modifier.fillMaxWidth().offset(y = 230.dp),
-
+                        value = password,
+                        onValueChange = { password = it },
+                        modifier = Modifier.fillMaxWidth().offset(y = 230.dp)
                     )
-                    Spacer(modifier = Modifier.width(15.dp))
                     SignUpTextField(
                         label = "Confirm Password",
                         trailing = " ",
-                        modifier = Modifier.fillMaxWidth().offset(y = 230.dp),
-
+                        value = confirmPassword,
+                        onValueChange = { confirmPassword = it },
+                        modifier = Modifier.fillMaxWidth().offset(y = 240.dp)
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 30.dp).offset(y = 210.dp),
+                            .padding(vertical = 30.dp)
+                            .offset(y = 210.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
@@ -149,13 +156,12 @@ fun SignupScreen() {
                                 .width(230.dp)
                                 .height(80.dp)
                                 .padding(12.dp),
-
-                            onClick = {/*TODO*/ },
+                            onClick = {
+                                // Add signup logic here
+                            },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isSystemInDarkTheme()) Color(0xFFAC81F1) else Color(
-                                    0xFFAC81F1
-                                ),
-                                contentColor = androidx.compose.ui.graphics.Color.White
+                                containerColor = Color(0xFFAC81F1),
+                                contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(size = 17.dp)
                         ) {
@@ -163,11 +169,15 @@ fun SignupScreen() {
                         }
                     }
                 }
-
-
-
-
             }
         }
+    }
+}
 
-    }}
+@Preview(showBackground = true)
+@Composable
+fun SignupScreenPreview() {
+    // Create a mock NavHostController
+    val navController = rememberNavController()
+    SignupScreen(navController = navController, onSignInClick = {})
+}
