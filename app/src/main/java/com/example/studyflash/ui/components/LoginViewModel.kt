@@ -1,3 +1,5 @@
+package com.example.studyflash.viewmodels
+
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
 import com.google.firebase.auth.FirebaseAuth
