@@ -1,7 +1,8 @@
 package com.example.studyflash.ui.screens
 
-import LoginViewModel
+import com.example.studyflash.viewmodels.LoginViewModel
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.studyflash.R.drawable.background
 import com.example.studyflash.R.drawable.profile
 import com.example.studyflash.ui.components.LoginTextfield
@@ -46,7 +48,8 @@ fun LoginScreenContent(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLoginClick: (String, String) -> Unit,
-    loginErrorMessage: String = ""
+    loginErrorMessage: String = "",
+    onCreateAccountClick: () -> Unit
 ) {
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -100,7 +103,9 @@ fun LoginScreenContent(
                             ) {
                                 append(" Create new account")
                             }
-                        }
+                        },
+                        modifier = Modifier.clickable { onCreateAccountClick() }  // Trigger navigation
+
                     )
                 }
 
@@ -135,7 +140,7 @@ fun LoginScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 30.dp)
-                            .offset(y = 230.dp),
+                            .offset(y = 220.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
@@ -180,14 +185,14 @@ fun LoginscreenPreview() {
         password = "password123",
         onEmailChange = { newEmail -> emailState.value = newEmail },
         onPasswordChange = { newPassword -> passwordState.value = newPassword },
-        onLoginClick = { _, _ -> },
-        loginErrorMessage = ""
+        onLoginClick = { _, _ -> /* Do nothing in preview */ }, // Mock action for preview
+        loginErrorMessage = "",
+        onCreateAccountClick = {}
     )
 }
-
 // Use this in the actual screen logic to pass real Firebase login functionality
 @Composable
-fun Loginscreen(viewModel: LoginViewModel) {
+fun Loginscreen(viewModel: LoginViewModel, navController: NavHostController) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val loginErrorMessage = viewModel.loginErrorMessage.value
@@ -200,7 +205,9 @@ fun Loginscreen(viewModel: LoginViewModel) {
         onLoginClick = { emailValue, passwordValue ->
             viewModel.login(emailValue, passwordValue)
         },
-        loginErrorMessage = loginErrorMessage
+        loginErrorMessage = loginErrorMessage,
+        onCreateAccountClick = {
+            navController.navigate("signUp") // Navigate to Signup screen
+        }
     )
 }
-
