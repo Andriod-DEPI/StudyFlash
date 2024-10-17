@@ -140,7 +140,7 @@ fun LoginScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 30.dp)
-                            .offset(y = 220.dp),
+                            .offset(y = -30.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
