@@ -21,13 +21,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
 import com.example.studyflash.classes.Category
@@ -35,7 +36,6 @@ import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.PrimaryColor
-import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
@@ -43,7 +43,7 @@ fun CardsListScreen(
     navController: NavController, catID: Int?
 ) {
     //get category by id
-    val viewModel:CategoryCardViewModel = hiltViewModel()
+//    val viewModel:CategoryCardViewModel = hiltViewModel()
 
     val category = Category(
         1, "Technology", 1, listOf(
@@ -90,7 +90,7 @@ fun CardsListScreen(
         ) {
             Button(
                 onClick = {
-              navController.navigate("")
+                    navController.navigate("quiz")
                 },
                 Modifier
                     .height(50.dp),
@@ -122,4 +122,9 @@ fun CardsListScreen(
             }
         }
     }
+}
+@Preview
+@Composable
+fun PreviewCardsListScreen() {
+    CardsListScreen(navController = rememberNavController(), catID = 1)
 }
