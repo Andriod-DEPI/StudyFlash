@@ -84,15 +84,15 @@ fun ProfilePage(navController: NavHostController) {
     ) {
         TopBar(navController)
 
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(top=14.dp,end=16.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ThemeToggleButton(isDarkMode = isDarkMode) {
-                isDarkMode = !isDarkMode
-            }
-        }
+//        Row(
+//            modifier = Modifier.fillMaxWidth().padding(top=14.dp,end=16.dp),
+//            horizontalArrangement = Arrangement.End,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            ThemeToggleButton(isDarkMode = isDarkMode) {
+//                isDarkMode = !isDarkMode
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(6.dp))
         ProfileItem(

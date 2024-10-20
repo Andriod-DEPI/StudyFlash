@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,12 +22,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
@@ -40,33 +47,42 @@ import com.example.studyflash.ui.theme.PrimaryColor
 
 @Composable
 fun CardsListScreen(
-    navController: NavController, catID: Int?
+    navController: NavController, catID: Int
 ) {
     //get category by id
 //    val viewModel:CategoryCardViewModel = hiltViewModel()
 
-    val category = Category(
-        1, "Technology", 1, listOf(
-            Card(1,1, "Title1", "content 1", 1, false),
-            Card(2,1, "Title2", "content 2", 2, true),
+//     val category = Category(
+//         1, "Technology", 1, listOf(
+//             Card(1,1, "Title1", "content 1", 1, false),
+//             Card(2,1, "Title2", "content 2", 2, true),
 
-            Card(3,1, "Title3", "content 1", 3, true),
-            Card(4,1, "Title4", "content 2", 4, false),
+//             Card(3,1, "Title3", "content 1", 3, true),
+//             Card(4,1, "Title4", "content 2", 4, false),
 
-            Card(5,1, "Title5", "content 1", 5, false),
-            Card(6,1, "Title6", "content 2", 6, false),
+//             Card(5,1, "Title5", "content 1", 5, false),
+//             Card(6,1, "Title6", "content 2", 6, false),
 
-            Card(1,1, "Title1", "content 1", 1, false),
-            Card(2,1, "Title2", "content 2", 2, false),
+//             Card(1,1, "Title1", "content 1", 1, false),
+//             Card(2,1, "Title2", "content 2", 2, false),
 
-            Card(3,1, "Title3", "content 1", 3, false),
-            Card(4,1, "Title4", "content 2", 4, false),
+//             Card(3,1, "Title3", "content 1", 3, false),
+//             Card(4,1, "Title4", "content 2", 4, false),
 
-            Card(5,1, "Title5", "content 1", 5, false),
-            Card(6,1, "Title6", "content 2", 6, true),
-        ), 3
-    )
-    val cards = category.cards
+//             Card(5,1, "Title5", "content 1", 5, false),
+//             Card(6,1, "Title6", "content 2", 6, true),
+//         ), 3
+//     )
+//    val cards = category.cards
+
+    val viewModel:CategoryCardViewModel = hiltViewModel()
+    viewModel.loadCategories()
+    val categories by viewModel.Categories.collectAsState()
+    Log.d("abc", "CardsListScreen: cats $categories ")
+    val category = categories.find { it.id == catID }
+    Log.d("abc", "CardsListScreen: category $category ")
+    viewModel.loadCardsForCategory(category!!.id)
+    val cards by viewModel.Cards.collectAsState()
     Column(Modifier.background(BackgroundColor)) {
         SelectedCategory(category = category)
         LazyVerticalGrid(
@@ -89,6 +105,7 @@ fun CardsListScreen(
                 .fillMaxWidth()
         ) {
             Button(
+                // navigate to quiz page
                 onClick = {
                     navController.navigate("quiz")
                 },

@@ -17,5 +17,5 @@ interface CardCategoryRepository {
     suspend fun deleteCategory(categoryId: Int)
     suspend fun addCard(card: Card)
     suspend fun updateCard(card: Card)
-    suspend fun deleteCard(cardId: Int)
+    suspend fun deleteCard(cardId: Int, categoryId: Int)
 }

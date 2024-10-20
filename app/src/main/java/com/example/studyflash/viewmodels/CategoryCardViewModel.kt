@@ -54,7 +54,7 @@ class CategoryCardViewModel @Inject constructor(private val repository: CardCate
         loadCardsForCategory(card.categoryID)
     }
     fun deleteCard(cardId:Int, categryID: Int)=viewModelScope.launch {
-        repository.deleteCard(cardId)
+        repository.deleteCard(cardId,categryID)
         loadCardsForCategory(categryID)
     }
 }
