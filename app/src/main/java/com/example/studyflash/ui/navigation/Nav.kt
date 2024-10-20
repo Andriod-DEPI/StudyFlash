@@ -16,6 +16,7 @@ import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
 import com.example.studyflash.ui.screens.LogIn
 import com.example.studyflash.ui.screens.ProfilePage
+import com.example.studyflash.ui.screens.QuizScreen
 import com.example.studyflash.ui.screens.SignIn
 
 
@@ -52,6 +53,9 @@ fun NavGraph(
         }
         composable("addCategory") {
             Add_Edit_Category(navController, null)
+        }
+        composable("quiz"){
+            QuizScreen()
         }
 
 
