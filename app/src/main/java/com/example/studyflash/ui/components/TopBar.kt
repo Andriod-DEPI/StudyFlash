@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 
 
@@ -56,45 +58,7 @@ fun TopBar (navController: NavHostController){
                     modifier = Modifier.padding(top = 10.dp)
                 )
             }
-            Column (
-                modifier = Modifier.padding(start = 20.dp, top = 10.dp)
-            ){
-                Row (
-                    modifier = Modifier
-                        .background(
-                            color = Color(0xFFFF873D), // Orange color
-                            shape = RoundedCornerShape(20.dp) // Rounded corners
-                        )
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ){
-                    Column(
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.energy),   // Use Icon directly
-                            contentDescription = "Energy Icon",
-                            tint = Color(0xFFFFF1D6),
-                            modifier = Modifier
-                                .size(25.dp)
-                                .padding(start = 2.dp)
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.align(Alignment.CenterVertically)
-
-                    ) {
-                        Text(
-                            text = "30",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
-                            letterSpacing = 1.sp,
-                            color = Color(0xFFFFF1D6),
-//                modifier = Modifier.weight(1f)
-                            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
-                        )
-                    }
-                }
-            }
+            Score()
         }
         Row (
 //            modifier = Modifier // Align TopNavBar to the end (right)
@@ -104,4 +68,53 @@ fun TopBar (navController: NavHostController){
         }
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TopBarPreview(){
+    TopBar(navController = rememberNavController())
+}
+
+@Composable
+fun Score(){
+    Column (
+        modifier = Modifier.padding(start = 20.dp, top = 10.dp)
+    ){
+        Row (
+            modifier = Modifier
+                .background(
+                    color = Color(0xFFFF873D), // Orange color
+                    shape = RoundedCornerShape(20.dp) // Rounded corners
+                )
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        ){
+            Column(
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.energy),   // Use Icon directly
+                    contentDescription = "Energy Icon",
+                    tint = Color(0xFFFFF1D6),
+                    modifier = Modifier
+                        .size(25.dp)
+                        .padding(start = 2.dp)
+                )
+            }
+            Column(
+                modifier = Modifier.align(Alignment.CenterVertically)
+
+            ) {
+                Text(
+                    text = "30",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    letterSpacing = 1.sp,
+                    color = Color(0xFFFFF1D6),
+//                modifier = Modifier.weight(1f)
+                    modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                )
+            }
+        }
+    }
 }

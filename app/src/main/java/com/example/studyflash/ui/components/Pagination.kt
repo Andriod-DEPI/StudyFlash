@@ -19,10 +19,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,24 +27,35 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-fun incCurrentIndex(){
+fun incCurrentIndex(index: Int, totalDots: Int): Int{
     println("incrementing index")
+    if(index<totalDots-1)
+        return index + 1
+    else
+        return index
 }
-fun decCurrentIndex(){
+fun decCurrentIndex(index: Int): Int{
     println("decrementing index")
+    if(index>0)
+        return index - 1
+    else
+        return index
 }
 
 @Composable
 fun PaginationDots(
     totalDots: Int,
     currentIndex: Int,
+    onIndexChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ){
+//    var currentQuestionIndex by remember { mutableStateOf(0) }
+//    var totalQuestions = 10
     Row (
         verticalAlignment = Alignment.CenterVertically,
     ){
         Column {
-            IconButton(onClick = { decCurrentIndex() },
+            IconButton(onClick = { onIndexChange(decCurrentIndex(currentIndex)) },
                 modifier = Modifier
 //                    .background(Color.Transparent)
                     .padding(10.dp)
@@ -78,7 +85,7 @@ fun PaginationDots(
             }
         }
         Column {
-            IconButton(onClick = { incCurrentIndex() },
+            IconButton(onClick = { onIndexChange(incCurrentIndex(currentIndex, totalDots)) },
                 modifier = Modifier
                     .padding(10.dp)
                     .background(Color.Transparent)
@@ -93,17 +100,19 @@ fun PaginationDots(
     }
 }
 
-@Composable
-fun Pagination(){
-    var currentQuestionIndex by remember { mutableStateOf(0) }
-    var totalQuestions = 10
-
-}
+//@Composable
+//fun Pagination(){
+//    var currentQuestionIndex by remember { mutableStateOf(0) }
+//    var totalQuestions = 10
+//    Column {
+//
+//    }
+//}
 
 @Preview
 @Composable
 fun PaginationDotsPreview(){
-    PaginationDots(totalDots = 15, currentIndex = 10)
+    PaginationDots(totalDots = 15, currentIndex = 10, onIndexChange = {})
 }
 
 @Composable
@@ -111,9 +120,7 @@ fun QuizCard(){
     Card (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 25.dp)
-//                    .border(BorderStroke(1.dp, Color(0xFFCCCCCC)), RoundedCornerShape(20.dp))
-//                    .background(Color(0xFFEDF5FF), shape = RoundedCornerShape(20.dp))
+            .padding(top = 20.dp, bottom = 30.dp)
             .graphicsLayer {
                 // Adjust shadow properties
                 shadowElevation = 4.dp.toPx()

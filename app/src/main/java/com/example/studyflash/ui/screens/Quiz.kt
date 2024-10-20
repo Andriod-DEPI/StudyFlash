@@ -1,8 +1,11 @@
 package com.example.studyflash.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -25,12 +28,15 @@ import com.example.studyflash.R
 import com.example.studyflash.ui.components.HintButton
 import com.example.studyflash.ui.components.HintList
 import com.example.studyflash.ui.components.Hints
+import com.example.studyflash.ui.components.PaginationDots
 import com.example.studyflash.ui.components.QuizCard
 
 @Preview(showBackground = true)
 @Composable
 fun Quiz (){
     var revealedHint by remember { mutableStateOf(0) }
+    var currentIndex by remember { mutableStateOf(0) }
+    val totalQuestions = 10
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -66,7 +72,7 @@ fun Quiz (){
         Row (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 40.dp, bottom = 20.dp)
+                .padding(top = 45.dp, bottom = 30.dp)
         ){
             Text(text = "Quiz",
                 fontSize = 36.sp
@@ -111,17 +117,32 @@ fun Quiz (){
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
-                    .padding(0.dp)
+                    .padding(bottom = 10.dp)
             ){
                 Text(text = "Check")
             }
         }
-        Spacer(modifier = Modifier.weight(2f))
-        Row {
-            HintList(revealedHint = revealedHint)
-        }
-        Row {
-
+        Spacer(modifier = Modifier.weight(1f))
+        Column (
+        ){
+            Column (
+                modifier = Modifier
+                    .heightIn(max = 200.dp)
+            ){
+                HintList(revealedHint = revealedHint)
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center //only works if the row fills the entire width
+            ) {
+                PaginationDots(
+                    totalDots = 10,
+                    currentIndex = currentIndex,
+                    onIndexChange = { newIndex -> currentIndex = newIndex },
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
