@@ -50,7 +50,7 @@ fun TopNavBar(
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            IconButton(onClick = { navController.navigate("home") },
+            IconButton(onClick = { navController.navigate("homePage") },
                 modifier = Modifier
                     .size(30.dp)
                     .background(Color(0XFF6A31F7), RectangleShape)
