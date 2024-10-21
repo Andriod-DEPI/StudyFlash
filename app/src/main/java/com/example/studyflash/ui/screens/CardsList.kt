@@ -45,7 +45,7 @@ import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 @Composable
 fun CardsListScreen(
-    navController: NavController, catID: Int
+    navController: NavController, catID: String
 ) {
     //get category by id
     val viewModel:CategoryCardViewModel = hiltViewModel()
@@ -54,62 +54,65 @@ fun CardsListScreen(
     Log.d("abc", "CardsListScreen: cats $categories ")
     val category = categories.find { it.id == catID }
     Log.d("abc", "CardsListScreen: category $category ")
-    viewModel.loadCardsForCategory(category!!.id)
+    if(category!=null){viewModel.loadCardsForCategory(category.id)}
     val cards by viewModel.Cards.collectAsState()
-    Column(Modifier.background(BackgroundColor)) {
-        SelectedCategory(category = category)
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2), // 2 columns
-            contentPadding = PaddingValues(20.dp, 3.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.weight(1f)
-        ) {
-            items(cards) {
-                CardListItem(it) {
-                    navController.navigate("individual Card/${it.id}")
-                }
-            }
-        }
+   if(category!=null){
+       Column(Modifier.background(BackgroundColor)) {
+           Spacer(modifier = Modifier.height(35.dp))
+           SelectedCategory(category = category, cards.size)
+           LazyVerticalGrid(
+               columns = GridCells.Fixed(2), // 2 columns
+               contentPadding = PaddingValues(20.dp, 3.dp),
+               horizontalArrangement = Arrangement.spacedBy(20.dp),
+               verticalArrangement = Arrangement.spacedBy(10.dp),
+               modifier = Modifier.weight(1f)
+           ) {
+               items(cards) {
+                   CardListItem(it) {
+                       navController.navigate("individual Card/$catID/${it.id}")
+                   }
+               }
+           }
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
-        ) {
-            Button(
-                // navigate to quiz page
-                onClick = {
-              navController.navigate("")
-                },
-                Modifier
-                    .height(50.dp),
-                shape = RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)
-            )
-            {
-                Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.quiz_ic),
-                        contentDescription = "quiz icon",
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = "Start Quiz",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = BackgroundColor
-                    )
+           Row(
+               horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                   .padding(5.dp)
+                   .fillMaxWidth()
+           ) {
+               Button(
+                   // navigate to quiz page
+                   onClick = {
+                       navController.navigate("")
+                   },
+                   Modifier
+                       .height(50.dp),
+                   shape = RoundedCornerShape(20.dp),
+                   colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)
+               )
+               {
+                   Row {
+                       Image(
+                           painter = painterResource(id = R.drawable.quiz_ic),
+                           contentDescription = "quiz icon",
+                           modifier = Modifier.size(20.dp)
+                       )
+                       Spacer(modifier = Modifier.width(5.dp))
+                       Text(
+                           text = "Start Quiz",
+                           fontSize = 20.sp,
+                           fontWeight = FontWeight.Bold,
+                           color = BackgroundColor
+                       )
 
-                }
-            }
+                   }
+               }
 
-            FloatingActionButton(onClick = {
-              navController.navigate("addCard/$catID")
-            }, containerColor = PrimaryColor, contentColor = BackgroundColor) {
-                Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
-            }
-        }
-    }
+               FloatingActionButton(onClick = {
+                   navController.navigate("addCard/$catID")
+               }, containerColor = PrimaryColor, contentColor = BackgroundColor) {
+                   Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
+               }
+           }
+       }
+   }
 }

@@ -1,12 +1,11 @@
 package com.example.studyflash.classes
 
 data class Category(
-    val id: Int,
+    val id: String,
     val name: String,
     val colorID: Int,
-    val cards: List<Card>,
-    val progress: Int
+    var progress: Int
 ){
     // No-argument constructor for Firestore
-    constructor() : this(0, "", 0, listOf(), 0)
+    constructor() : this("0", "", 0, 0)
 }

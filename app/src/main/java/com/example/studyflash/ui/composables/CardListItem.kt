@@ -33,7 +33,7 @@ import com.example.studyflash.ui.theme.AlexandriaFamily
 @Composable
 @Preview (showSystemUi = true)
 fun preview(){
-    CardListItem(card = (  Card(1,1, "Title1", "content 1", 1, true)),{})
+    CardListItem(card = (  Card("1","1", "Title1", "content 1", 1, true)),{})
 }
 
 
@@ -66,7 +66,7 @@ fun CardListItem(card: Card, onCardClick:()->Unit){
                 text = card.title,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                fontSize = 30.sp,
+                fontSize = 25.sp,
                 color = Colors.getColorById(card.colorID).strokeColor,
                 fontFamily = AlexandriaFamily,
                 fontWeight = FontWeight.Bold,
