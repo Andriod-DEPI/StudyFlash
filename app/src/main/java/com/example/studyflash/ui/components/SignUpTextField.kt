@@ -20,7 +20,7 @@ import com.example.studyflash.ui.theme.textFieldContainer
 import com.example.studyflash.ui.theme.unfocusedTextFieldText
 
 @Composable
-fun LoginTextfield(
+fun SignUpTextField(
     modifier: Modifier = Modifier,
     label: String,
     trailing: String,

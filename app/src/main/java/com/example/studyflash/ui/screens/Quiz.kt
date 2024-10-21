@@ -1,33 +1,42 @@
 package com.example.studyflash.ui.screens
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
+import com.example.studyflash.ui.components.HintButton
+import com.example.studyflash.ui.components.HintList
+import com.example.studyflash.ui.components.Hints
+import com.example.studyflash.ui.components.PaginationDots
+import com.example.studyflash.ui.components.QuizCard
 
 @Preview(showBackground = true)
 @Composable
 fun Quiz (){
+    var revealedHint by remember { mutableStateOf(0) }
+    var currentIndex by remember { mutableStateOf(0) }
+    val totalQuestions = 10
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -63,6 +72,7 @@ fun Quiz (){
         Row (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
+                .padding(top = 45.dp, bottom = 30.dp)
         ){
             Text(text = "Quiz",
                 fontSize = 36.sp
@@ -71,41 +81,9 @@ fun Quiz (){
         Row (
             verticalAlignment = Alignment.CenterVertically
         ){
-            Column {
-                Row (
-                    modifier = Modifier
-                        .background(
-                            color = Color(0xFFFF873D), // Orange color
-                            shape = RoundedCornerShape(20.dp) // Rounded corners
-                        )
-                        .padding(horizontal = 4.dp, vertical = 1.dp)
-                ){
-                    Column(
-                        modifier = Modifier.align(Alignment.CenterVertically)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.bulb),   // Use Icon directly
-                            contentDescription = "Energy Icon",
-                            tint = Color(0xFFFFF1D6),
-                            modifier = Modifier
-                                .size(25.dp)
-                                .padding(start = 0.dp)
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.align(Alignment.CenterVertically)
-
-                    ) {
-                        Text(
-                            text = "30",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                            letterSpacing = 1.sp,
-                            color = Color(0xFFFFF1D6),
-//                modifier = Modifier.weight(1f)
-                            modifier = Modifier.padding(start = 5.dp, end = 5.dp)
-                        )
-                    }
+            HintButton(hints = Hints) {
+                if (revealedHint < Hints.size) {
+                    revealedHint++
                 }
             }
             Spacer(modifier = Modifier.weight(2f))
@@ -131,37 +109,41 @@ fun Quiz (){
                 }
 //            }
         }
-        Row (){
-            Card (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 15.dp)
-                    .border(BorderStroke(1.dp, Color(0xFFCCCCCC)), RoundedCornerShape(20.dp))
-                    .background(Color(0xFFEDF5FF), shape = RoundedCornerShape(20.dp))
-                    .graphicsLayer {
-                        // Adjust shadow properties
-//                        shadowElevation = 4.dp.toPx()
-                        shape = RoundedCornerShape(20.dp) // Set shadow shape
-                        clip = true // Clip the shadow to the shape
-                    },
-//                elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
-            ){
-                Text(text = "Wifi Stands for _________",
-                    modifier = Modifier
-                        .padding(15.dp))
-            }
+        Row {
+            QuizCard()
         }
         Row {
             Spacer(modifier = Modifier.weight(2f))
-//            Button(){
-//                Text(text = "Check")
-//            }
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+            ){
+                Text(text = "Check")
+            }
         }
-        Row {
-
-        }
-        Row {
-
+        Spacer(modifier = Modifier.weight(1f))
+        Column (
+        ){
+            Column (
+                modifier = Modifier
+                    .heightIn(max = 200.dp)
+            ){
+                HintList(revealedHint = revealedHint)
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center //only works if the row fills the entire width
+            ) {
+                PaginationDots(
+                    totalDots = 10,
+                    currentIndex = currentIndex,
+                    onIndexChange = { newIndex -> currentIndex = newIndex },
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
+
