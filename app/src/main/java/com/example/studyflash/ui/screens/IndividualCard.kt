@@ -154,7 +154,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: String?, category: Category,o
                             index++
                         }
                         // increase user's score
-                       
+
                     }
             )
 

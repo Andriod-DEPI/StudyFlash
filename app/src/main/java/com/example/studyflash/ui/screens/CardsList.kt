@@ -68,9 +68,13 @@ fun CardsListScreen(
                modifier = Modifier.weight(1f)
            ) {
                items(cards) {
-                   CardListItem(it) {
+                   CardListItem(it, onCardClick =  {
                        navController.navigate("individual Card/$catID/${it.id}")
-                   }
+                   }, onEditClick = {
+                       navController.navigate("editCard/$catID/${it.id}")
+                                    }, onDeleteClick = {
+                                        viewModel.deleteCard(it.id, catID)
+                                    })
                }
            }
 
