@@ -2,6 +2,7 @@ package com.example.studyflash.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,9 +16,12 @@ import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
 import com.example.studyflash.ui.screens.LogIn
+import com.example.studyflash.ui.screens.Loginscreen
 import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.QuizScreen
 import com.example.studyflash.ui.screens.SignIn
+import com.example.studyflash.ui.screens.SignupScreen
+import com.example.studyflash.viewmodels.LoginViewModel
 
 
 @Composable
@@ -27,7 +31,7 @@ fun NavGraph(
 ) {
 
 
-    NavHost(navController = navController, startDestination = "landPage") {
+    NavHost(navController = navController, startDestination = "Cards List/7OII0IKTEupmw59kPcvy") {
        composable("logIn") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
