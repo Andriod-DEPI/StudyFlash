@@ -66,6 +66,6 @@ fun CardItem(card: Card, boxModifier:Modifier){
 @Preview(showSystemUi = true)
 @Composable
 fun cradPreview(){
-    val card = Card(1,1, "Title", "content", 1, false)
+    val card = Card("1","0", "Title", "content", 1, false)
     CardItem(card = card, boxModifier = Modifier)
 }

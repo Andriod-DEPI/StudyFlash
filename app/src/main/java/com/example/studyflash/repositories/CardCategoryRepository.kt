@@ -11,11 +11,11 @@ interface CardCategoryRepository {
     // suspend fum deleteCard(catId:Int){}
 
     suspend fun getCategories():List<Category>
-    suspend fun getCardsForCategory(categoryId:Int):List<Card>
+    suspend fun getCardsForCategory(categoryId:String):List<Card>
     suspend fun addCategory(category: Category)
     suspend fun updateCategory(category: Category)
-    suspend fun deleteCategory(categoryId: Int)
+    suspend fun deleteCategory(categoryId: String)
     suspend fun addCard(card: Card)
     suspend fun updateCard(card: Card)
-    suspend fun deleteCard(cardId: Int, categoryId: Int)
+    suspend fun deleteCard(cardId: String, categoryId: String)
 }

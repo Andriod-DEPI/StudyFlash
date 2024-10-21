@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,19 +49,7 @@ import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
-import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.BlueStroke
-import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.BrownStroke
-import com.example.studyflash.ui.theme.GreenStroke
-import com.example.studyflash.ui.theme.Green
-import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.PinkStroke
 import com.example.studyflash.ui.theme.PrimaryColor
-import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.PurpleStroke
-import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.ui.theme.YellowStroke
 import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
@@ -68,25 +57,38 @@ import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
-fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
-    var id = 10
+fun Add_Edit_Card_Screen(navController: NavController, catID:String,cardID:String?) {
+
     var isEdit = false
-    if(cardID!=null){
+    if(cardID != null){
         isEdit = true
     }
 
 
     val viewModel:CategoryCardViewModel = hiltViewModel()
+
     viewModel.loadCategories()
-    viewModel.loadCardsForCategory(catID!!)
+    viewModel.loadCardsForCategory(catID)
+
+    val categories by viewModel.Categories.collectAsState()
+
+
+    Log.d("abc", "Add_Edit_Card_Screen: categories $categories  ")
+
+
    var title = "Card Title"
     var content = "Card Content"
     var CurrentCard: Card? = null
     if(isEdit){
         val cards by viewModel.Cards.collectAsState()
+        Log.d("abc", "Add_Edit_Card_Screen: $cards ")
          CurrentCard = cards.find { it.id == cardID }
-        title = CurrentCard!!.title
-        content = CurrentCard.content
+        Log.d("abc", "current card $CurrentCard   $cardID")
+     if(CurrentCard != null){
+         title = CurrentCard.title
+         content = CurrentCard.content
+         Log.d("abc", "title $title  content $content")
+     }
     }
 
     var CardTitle by remember {
@@ -95,6 +97,7 @@ fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
     var CardContent by remember {
         mutableStateOf(content)
     }
+
     Image(
         painter = painterResource(id = R.drawable.add_edit_bck),
         contentDescription = "background",
@@ -196,19 +199,20 @@ fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
                         val newCard = CurrentCard!!.copy(title = CardTitle, content = CardContent, colorID = selectedColor)
                         viewModel.updateCard(newCard)
                     }else {
-                        val newCard = Card(id++, catID, CardTitle, CardContent, selectedColor, false)
+                        val newCard = Card("0", catID, CardTitle, CardContent, selectedColor, false)
                         Log.d("TAG", "Add_Edit_Card_Screen: $newCard")
                         viewModel.addCard(newCard)
 
                     }
-                  navController.popBackStack("Cards List", false)
+                  navController.popBackStack()
+
                 },
                     Modifier
                         .width(200.dp)
                         .shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
                     , colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
                     Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
-                    
+
                 }
             }
 
@@ -221,5 +225,5 @@ fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
 @Preview(showSystemUi = true)
 @Composable
 fun preview(){
-    Add_Edit_Card_Screen(navController = rememberNavController(), null,null)
+    Add_Edit_Card_Screen(navController = rememberNavController(), "",null)
 }
