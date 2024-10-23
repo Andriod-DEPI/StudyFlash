@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -36,10 +37,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.studyflash.R
 import com.example.studyflash.R.drawable.background
 import com.example.studyflash.R.drawable.profile
 import com.example.studyflash.classes.User
 import com.example.studyflash.ui.components.LoginTextfield
+import androidx.compose.ui.platform.LocalContext
+import android.app.Activity
+import setLocale
+import java.util.Locale
 
 // UI Function
 @Composable
@@ -50,11 +56,15 @@ fun LoginScreenContent(
     onPasswordChange: (String) -> Unit,
     onLoginClick: (String, String) -> Unit,
     loginErrorMessage: String = "",
-    onCreateAccountClick: () -> Unit
+    onCreateAccountClick: () -> Unit,
+
+    activity: Activity?
 ) {
+    val context = LocalContext.current
     Surface {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(contentAlignment = Alignment.TopCenter) {
+
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = background),
@@ -70,7 +80,7 @@ fun LoginScreenContent(
                     contentScale = ContentScale.FillBounds
                 )
                 Text(
-                    text = "Login",
+                    text = stringResource(id = R.string.login), // Localized "Login" text
                     modifier = Modifier.offset(y = 320.dp),
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
@@ -93,7 +103,7 @@ fun LoginScreenContent(
                                     fontWeight = FontWeight.Normal
                                 )
                             ) {
-                                append("Don't have account ?")
+                                append(stringResource(id = R.string.dont_have_account)) // Localized "Don't have an account?"
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -102,44 +112,41 @@ fun LoginScreenContent(
                                     fontWeight = FontWeight.Medium
                                 )
                             ) {
-                                append(" Create new account")
+                                append(stringResource(id = R.string.create_new_account)) // Localized "Create new account"
                             }
                         },
-                        modifier = Modifier.clickable { onCreateAccountClick() }  // Trigger navigation
-
+                        modifier = Modifier.clickable { onCreateAccountClick() }
                     )
                 }
 
                 Column(
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
-                        .fillMaxSize().offset(y=430.dp)
+                        .fillMaxSize()
+                        .offset(y = 430.dp)
                         .padding(horizontal = 30.dp)
                 ) {
                     LoginTextfield(
-                        label = "Email",
-                        value = email,  // Bind email state to TextField
-                        onValueChange = { newEmail -> onEmailChange(newEmail) } // Update email state using callback
+                        label = stringResource(id = R.string.email), // Localized "Email" text
+                        value = email,
+                        onValueChange = { newEmail -> onEmailChange(newEmail) }
                     )
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    // Password TextField
                     LoginTextfield(
-                        label = "Password",
-                        value = password,  // Bind password state to TextField
-                        onValueChange = { newPassword -> onPasswordChange(newPassword) } // Update password state using callback
+                        label = stringResource(id = R.string.password), // Localized "Password" text
+                        value = password,
+                        onValueChange = { newPassword -> onPasswordChange(newPassword) }
                     )
-
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Login Button
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 30.dp)
-                            .offset(y = (-30).dp),
+                            .offset(y = (-50).dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
@@ -154,11 +161,37 @@ fun LoginScreenContent(
                             ),
                             shape = RoundedCornerShape(size = 17.dp)
                         ) {
-                            Text(text = "Login")
+                            Text(text = stringResource(id = R.string.login)) // Localized "Login" text
                         }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 30.dp)
+                                .offset(x = 130.dp,y = (-630).dp),
+                            contentAlignment = Alignment.Center
+                        ){
+                        Button(
+                            modifier = Modifier
+                                .width(100.dp)
+                                .height(80.dp)
+                                .padding(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (isSystemInDarkTheme()) Color(0xFF6A31F7) else Color(0xFF6A31F7),
+                                contentColor = Color.White
+                            ),
+                            onClick = {
+                                // Change the language (for example, to Arabic)
+                                val newLanguage = if (Locale.getDefault().language == "ar") "en" else "ar"
+                                setLocale(context, newLanguage)
+
+                                activity?.recreate()  // This will recreate the activity with the new locale
+
+                            }
+                        ) {
+                            Text(text = stringResource(id = R.string.language_toggle))
+                        }}
                     }
 
-                    // Show error message if login fails
                     if (loginErrorMessage.isNotEmpty()) {
                         Text(
                             text = loginErrorMessage,
@@ -171,7 +204,6 @@ fun LoginScreenContent(
         }
     }
 }
-
 // Preview function for the UI
 @Preview(showSystemUi = true)
 @Composable
@@ -186,12 +218,17 @@ fun LoginscreenPreview() {
         onPasswordChange = { newPassword -> passwordState.value = newPassword },
         onLoginClick = { _, _ -> /* Do nothing in preview */ }, // Mock action for preview
         loginErrorMessage = "",
-        onCreateAccountClick = {}
+        onCreateAccountClick = {},
+        activity = null
     )
 }
 // Use this in the actual screen logic to pass real Firebase login functionality
 @Composable
-fun Loginscreen(viewModel: LoginViewModel, navController: NavHostController) {
+fun Loginscreen(
+    viewModel: LoginViewModel,
+    navController: NavHostController,
+    activity: Activity?
+) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val loginErrorMessage = viewModel.loginErrorMessage.value
@@ -214,6 +251,6 @@ fun Loginscreen(viewModel: LoginViewModel, navController: NavHostController) {
         loginErrorMessage = loginErrorMessage,
         onCreateAccountClick = {
             navController.navigate("signUp") // Navigate to Signup screen
-        }
-    )
-}
+        },
+        activity = activity // Pass the activity instance here
+    )}
