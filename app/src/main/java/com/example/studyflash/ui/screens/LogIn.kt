@@ -63,7 +63,7 @@ fun LoginScreenContent(
                 Image(
                     modifier = Modifier
                         .size(100.dp)
-                        .offset(y = 160.dp),
+                        .offset(y = 170.dp),
                     painter = painterResource(id = profile),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -117,7 +117,6 @@ fun LoginScreenContent(
                 ) {
                     LoginTextfield(
                         label = "Email",
-                        trailing = "",
                         value = email,  // Bind email state to TextField
                         onValueChange = { newEmail -> onEmailChange(newEmail) } // Update email state using callback
                     )
@@ -127,7 +126,6 @@ fun LoginScreenContent(
                     // Password TextField
                     LoginTextfield(
                         label = "Password",
-                        trailing = "Forgot?",
                         value = password,  // Bind password state to TextField
                         onValueChange = { newPassword -> onPasswordChange(newPassword) } // Update password state using callback
                     )
@@ -140,7 +138,7 @@ fun LoginScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 30.dp)
-                            .offset(y = -30.dp),
+                            .offset(y = (-30).dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
@@ -148,7 +146,7 @@ fun LoginScreenContent(
                                 .width(230.dp)
                                 .height(80.dp)
                                 .padding(12.dp),
-                            onClick = { onLoginClick(email, password) },  // Trigger login on button click
+                            onClick = { onLoginClick(email, password) },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isSystemInDarkTheme()) Color(0xFFAC81F1) else Color(0xFFAC81F1),
                                 contentColor = Color.White
@@ -196,7 +194,13 @@ fun Loginscreen(viewModel: LoginViewModel, navController: NavHostController) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val loginErrorMessage = viewModel.loginErrorMessage.value
+    val loginSuccess = viewModel.loginSuccess.value
 
+    if (loginSuccess) {
+        navController.navigate("HomePage") {
+            popUpTo("login") { inclusive = true }  // Removes login screen from backstack
+        }
+    }
     LoginScreenContent(
         email = email.value,
         password = password.value,
