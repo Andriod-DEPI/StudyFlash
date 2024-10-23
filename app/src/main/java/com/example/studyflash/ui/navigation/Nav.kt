@@ -60,8 +60,23 @@ fun NavGraph(
         composable("quiz"){
             QuizScreen(navController)
         }
-        composable("quiz_score_screen"){
-            QuizScore()
+        composable(
+            route = "quiz_score_screen/{correctAns}/{totalQuestions}",
+            arguments = listOf(
+                navArgument("correctAns") {
+                    type = NavType.IntType
+                },
+                navArgument("totalQuestions") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            // Retrieve arguments passed via the route
+            val correctAnswers = backStackEntry.arguments?.getInt("correctAns") ?: 0
+            val totalQuestions = backStackEntry.arguments?.getInt("totalQuestions") ?: 0
+
+            // Call the QuizScore Composable to display the score
+            QuizScore(correctAnswers, totalQuestions)
         }
 
         composable("addCard/{categId}", arguments = listOf(

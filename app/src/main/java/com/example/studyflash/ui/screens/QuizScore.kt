@@ -51,7 +51,7 @@ fun MyIcon(score: Int){
 }
 
 @Composable
-fun QuizScore(){
+fun QuizScore(correctAns: Int, totalQuestions: Int){
     Box (
         modifier= Modifier
             .fillMaxSize()
@@ -100,7 +100,7 @@ fun QuizScore(){
                         .weight(1f),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Text(text = "You answered 3/5",
+                    Text(text = "You answered ${correctAns} / ${totalQuestions}",
                         modifier = Modifier
                             .padding(bottom = 10.dp),
                         fontSize = 24.sp,
@@ -135,5 +135,5 @@ fun QuizScore(){
 @Preview
 @Composable
 fun QuizScorePreview(){
-    QuizScore()
+    QuizScore(4,10)
 }

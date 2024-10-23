@@ -99,8 +99,9 @@ fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit, currentIndex: Int, r
 }
 
 @Composable
-fun HintList(revealedHint: Int, quizList: List<Quiz>, currentIndex: Int,) {
+fun HintList(revealedHint: Int, quizList: List<Quiz>, currentIndex: Int) {
 val listState = rememberLazyListState()
+    Log.d("HintList", "Current question index: $currentIndex, Number of hints: ${quizList[currentIndex].Hints.size}, Revealed hints: $revealedHint")
     LazyColumn (
         state = listState,
         modifier = Modifier
@@ -156,7 +157,7 @@ val listState = rememberLazyListState()
 @Composable
 fun PreviewHintButton() {
     Column {
-//        HintButton(hints = Hints, onRevealHint = {})
+        HintButton(hints = Hints, onRevealHint = {}, currentIndex = 2, remaining = 5)
 //        HintList(revealedHint = 1)
     }
 }

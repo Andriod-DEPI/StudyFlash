@@ -16,7 +16,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -28,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.studyflash.viewmodels.Questions
 import com.example.studyflash.viewmodels.Quiz
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -110,15 +111,6 @@ fun PaginationDots(
 }
 
 
-//@Preview
-//@Composable
-//fun PaginationDotsPreview(){
-//    Column{
-////        QuizCard(quizList[page])
-//        QuizPage(quizList = Questions, currentIndex = 5, onIndexChange = {}, modifier = Modifier, onSubmitQuiz = { () -> Unit } )
-//        PaginationDots(totalDots = 15, currentIndex = 10, onIndexChange = {})
-//    }
-//}
 
 @Composable
 fun QuizCard(quiz: Quiz) {
@@ -152,7 +144,7 @@ fun QuizPage (
     onIndexChange: (Int) -> Unit,
     modifier: Modifier,
     isWrong: Boolean = false,
-    onSubmitQuiz: () -> Unit
+//    onSubmitQuiz: () -> Unit
 ){
     val pagerState = rememberPagerState() // Pager state to track the current page
     val coroutineScope = rememberCoroutineScope()
@@ -168,7 +160,7 @@ fun QuizPage (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // QuizPager Composable to show questions
-        if (currentIndex < quizList.size - 1) {
+        if (currentIndex < quizList.size) {
             HorizontalPager(
                 count = quizList.size,
                 state = pagerState,
@@ -179,15 +171,15 @@ fun QuizPage (
                 QuizCard(quiz = quizList[page])
             }
         }
-        else {
-            // Show the Submit button when it's the last question
-            Button(
-                onClick = { onSubmitQuiz() },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(text = "Submit Quiz")
-            }
-        }
+//        else {
+//            // Show the Submit button when it's the last question
+//            Button(
+//                onClick = { onSubmitQuiz() },
+//                modifier = Modifier.padding(16.dp)
+//            ) {
+//                Text(text = "Submit Quiz")
+//            }
+//        }
 
 
 
@@ -200,6 +192,14 @@ fun QuizPage (
     }
 }
 
+@Preview
+@Composable
+fun QuizPagePreview() {
+    Column {
+//        QuizCard(quizList[page])
+        QuizPage(quizList = Questions, currentIndex = 5, onIndexChange = {}, modifier = Modifier)
+    }
+}
 
 //@Composable
 //fun QuizCard(){
@@ -231,5 +231,14 @@ fun QuizPage (
 //    var totalQuestions = 10
 //    Column {
 //
+//    }
+//}
+//@Preview
+//@Composable
+//fun PaginationDotsPreview(){
+//    Column{
+////        QuizCard(quizList[page])
+//        QuizPage(quizList = Questions, currentIndex = 5, onIndexChange = {}, modifier = Modifier, onSubmitQuiz = { () -> Unit } )
+//        PaginationDots(totalDots = 15, currentIndex = 10, onIndexChange = {})
 //    }
 //}

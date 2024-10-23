@@ -65,6 +65,7 @@ fun QuizScreen(navController: NavHostController) {
                     .padding(15.dp)
             ){
                 Quiz(navController = navController)
+//                Quiz(navController = navController)
             }
         }
     }
