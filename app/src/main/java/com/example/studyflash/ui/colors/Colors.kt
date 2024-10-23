@@ -42,7 +42,6 @@ enum class Colors (val id:Int, val color: Color, val strokeColor: Color){
     companion object {
         fun getColorById(id:Int):Colors{
             return entries.find { it.id == id }!!
-
         }
     }
 }
