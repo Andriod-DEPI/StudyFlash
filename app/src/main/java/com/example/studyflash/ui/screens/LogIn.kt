@@ -57,7 +57,7 @@ fun LoginScreenContent(
     onLoginClick: (String, String) -> Unit,
     loginErrorMessage: String = "",
     onCreateAccountClick: () -> Unit,
-
+    //Language 
     activity: Activity?
 ) {
     val context = LocalContext.current
@@ -163,6 +163,7 @@ fun LoginScreenContent(
                         ) {
                             Text(text = stringResource(id = R.string.login)) // Localized "Login" text
                         }
+                        //////////////////////////Language //////////////////////////
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -180,11 +181,10 @@ fun LoginScreenContent(
                                 contentColor = Color.White
                             ),
                             onClick = {
-                                // Change the language (for example, to Arabic)
                                 val newLanguage = if (Locale.getDefault().language == "ar") "en" else "ar"
                                 setLocale(context, newLanguage)
 
-                                activity?.recreate()  // This will recreate the activity with the new locale
+                                activity?.recreate()  
 
                             }
                         ) {
@@ -216,10 +216,10 @@ fun LoginscreenPreview() {
         password = "password123",
         onEmailChange = { newEmail -> emailState.value = newEmail },
         onPasswordChange = { newPassword -> passwordState.value = newPassword },
-        onLoginClick = { _, _ -> /* Do nothing in preview */ }, // Mock action for preview
+        onLoginClick = { _, _ -> /* Do nothing in preview */ }, 
         loginErrorMessage = "",
         onCreateAccountClick = {},
-        activity = null
+        activity = null //Language 
     )
 }
 // Use this in the actual screen logic to pass real Firebase login functionality
@@ -227,7 +227,7 @@ fun LoginscreenPreview() {
 fun Loginscreen(
     viewModel: LoginViewModel,
     navController: NavHostController,
-    activity: Activity?
+    activity: Activity?//Language 
 ) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -252,5 +252,5 @@ fun Loginscreen(
         onCreateAccountClick = {
             navController.navigate("signUp") // Navigate to Signup screen
         },
-        activity = activity // Pass the activity instance here
+        activity = activity //Language 
     )}
