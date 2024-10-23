@@ -24,12 +24,17 @@ import com.example.studyflash.ui.screens.SignupScreen
 fun NavHostGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    activity: Activity
 ) {
     NavHost(navController = navController, startDestination = "landPage") {
 
         composable("logIn") {
             val loginViewModel: LoginViewModel = viewModel()
-            Loginscreen(viewModel = loginViewModel, navController = navController)
+            Loginscreen(
+                viewModel = loginViewModel,
+                navController = navController,
+                activity = activity
+            )
         }
         composable("signUp") {
             SignupScreen(
