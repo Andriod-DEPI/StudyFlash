@@ -174,7 +174,11 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                             if (task.isSuccessful) {
                                                 // Sign-up successful
                                                 Toast.makeText(context, "Sign-up successful", Toast.LENGTH_SHORT).show()
-                                                // Navigate to the next screen or update UI
+
+                                                // Navigate to the login screen
+                                                navController.navigate("login") {
+                                                    popUpTo("signup") { inclusive = true }  // Remove signup from the backstack
+                                                }
                                             } else {
                                                 // Sign-up failed
                                                 Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
