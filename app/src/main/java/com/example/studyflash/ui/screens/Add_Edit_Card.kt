@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,178 +49,198 @@ import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.composables.ChooseColor
 import com.example.studyflash.ui.theme.AlexandriaFamily
 import com.example.studyflash.ui.theme.BackgroundColor
-import com.example.studyflash.ui.theme.Blue
-import com.example.studyflash.ui.theme.BlueStroke
-import com.example.studyflash.ui.theme.Brown
-import com.example.studyflash.ui.theme.BrownStroke
-import com.example.studyflash.ui.theme.GreenStroke
-import com.example.studyflash.ui.theme.Green
-import com.example.studyflash.ui.theme.Pink
-import com.example.studyflash.ui.theme.PinkStroke
 import com.example.studyflash.ui.theme.PrimaryColor
-import com.example.studyflash.ui.theme.Purple
-import com.example.studyflash.ui.theme.PurpleStroke
-import com.example.studyflash.ui.theme.Yellow
-import com.example.studyflash.ui.theme.YellowStroke
 import com.example.studyflash.ui.theme.add_edit_bck
 import com.example.studyflash.ui.theme.add_edit_border
 import com.example.studyflash.ui.theme.add_edit_txtField_bck
 import com.example.studyflash.viewmodels.CategoryCardViewModel
 
-
 @Composable
-fun Add_Edit_Card_Screen(navController: NavController, catID:Int?,cardID:Int?) {
-    var id = 10
-    var isEdit = false
-    if(cardID!=null){
-        isEdit = true
+fun Add_Edit_Card_Screen(navController: NavController, catID: String, cardID: String?) {
+    val viewModel: CategoryCardViewModel = hiltViewModel()
+
+    // Local state to track loading and card
+    var isLoading by remember { mutableStateOf(true) }
+    var currentCard by remember { mutableStateOf<Card?>(null) }
+
+    // Fetch categories and cards when the screen is opened
+    LaunchedEffect(Unit) {
+        viewModel.loadCategories()
+        viewModel.loadCardsForCategory(catID)
     }
 
+    // Collect the card data after cards are loaded
+    val cards by viewModel.Cards.collectAsState()
 
-    val viewModel:CategoryCardViewModel = hiltViewModel()
-    viewModel.loadCategories()
-    viewModel.loadCardsForCategory(catID!!)
-   var title = "Card Title"
-    var content = "Card Content"
-    var CurrentCard: Card? = null
-    if(isEdit){
-        val cards by viewModel.Cards.collectAsState()
-         CurrentCard = cards.find { it.id == cardID }
-        title = CurrentCard!!.title
-        content = CurrentCard.content
-    }
-
-    var CardTitle by remember {
-        mutableStateOf(title)
-    }
-    var CardContent by remember {
-        mutableStateOf(content)
-    }
-    Image(
-        painter = painterResource(id = R.drawable.add_edit_bck),
-        contentDescription = "background",
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
-    )
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(modifier = Modifier
-            .shadow(
-                elevation = 10.dp,
-                spotColor = Color.Black,
-                shape = RectangleShape,
-                clip = false
-            )
-            .padding(5.dp)  ) {
-            Column(
-                modifier = Modifier
-                    .width(300.dp)
-                    .height(500.dp)
-                    .background(color = add_edit_bck)
-                    .border(3.dp, color = add_edit_border),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(35.dp))
-                Text(
-                    text = "Card",
-                    modifier = Modifier.fillMaxWidth(),
-                    color = PrimaryColor,
-                    fontSize = 20.sp,
-                    fontFamily = AlexandriaFamily,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                BasicTextField(
-                    value = CardTitle, onValueChange = {CardTitle = it}, modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .width(250.dp)
-                        .background(color = add_edit_txtField_bck)
-                        .padding(8.dp),
-                    textStyle = TextStyle(
-                        fontSize = 16.sp,
-                            fontFamily = AlexandriaFamily,
-                            fontWeight = FontWeight.Normal,
-                    )
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                BasicTextField(
-                    value = CardContent, onValueChange = {CardContent = it}, modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .width(250.dp)
-                        .background(color = add_edit_txtField_bck)
-                        .padding(8.dp), textStyle = TextStyle(
-                        fontSize = 16.sp,
-                        fontFamily = AlexandriaFamily,
-                        fontWeight = FontWeight.Normal,
-                    )
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-
-                var selectedColor by remember {
-                    mutableStateOf(1)
-                }
-
-                val colors = listOf(Colors.GreenColor, Colors.YellowColor, Colors.BlueColor, Colors.PinkColor, Colors.PurpleColor, Colors.BrownColor)
-
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(30.dp, 0.dp)
-                ) {
-                    for (i in 0..2) {
-                        ChooseColor(color = colors[i].color, colors[i].id, colors[i].id == selectedColor) {
-                            selectedColor = colors[i].id
-                        }
-                    }
-
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(30.dp, 0.dp)
-                ) {
-                    for (i in 3..5) {
-                        ChooseColor(color = colors[i].color, colors[i].id, colors[i].id == selectedColor) {
-                            selectedColor = colors[i].id
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(50.dp))
-                Button(onClick = {
-                    //add / edit card in firebase using card viewmodel
-                    if(isEdit){
-                        val newCard = CurrentCard!!.copy(title = CardTitle, content = CardContent, colorID = selectedColor)
-                        viewModel.updateCard(newCard)
-                    }else {
-                        val newCard = Card(id++, catID, CardTitle, CardContent, selectedColor, false)
-                        Log.d("TAG", "Add_Edit_Card_Screen: $newCard")
-                        viewModel.addCard(newCard)
-
-                    }
-                  navController.popBackStack("Cards List", false)
-                },
-                    Modifier
-                        .width(200.dp)
-                        .shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp))
-                    , colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)) {
-                    Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
-                    
-                }
-            }
-
+    // Check if the card is being edited and find the specific card in the list
+    LaunchedEffect(cards) {
+        if (cardID != null) {
+            currentCard = cards.find { it.id == cardID }
+            isLoading = false // Data is loaded
+        } else {
+            isLoading = false // New card scenario
         }
     }
 
+    // Local states for card title, content, and color (set only when data is available)
+    var cardTitle by remember { mutableStateOf(currentCard?.title ?: "Card Title") }
+    var cardContent by remember { mutableStateOf(currentCard?.content ?: "Card Content") }
+    var selectedColor by remember { mutableStateOf(currentCard?.colorID ?: 1) }
 
+    // Ensure data is fully loaded before showing the UI
+    if (isLoading) {
+        // Show a loading indicator (you can customize this part)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Loading...", color = Color.Gray)
+        }
+    } else {
+        // Show the card data (once it's loaded)
+        Image(
+            painter = painterResource(id = R.drawable.add_edit_bck),
+            contentDescription = "background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .shadow(10.dp, spotColor = Color.Black, shape = RectangleShape)
+                    .padding(5.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .width(300.dp)
+                        .height(500.dp)
+                        .background(color = add_edit_bck)
+                        .border(3.dp, color = add_edit_border),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(35.dp))
+                    Text(
+                        text = "Card",
+                        modifier = Modifier.fillMaxWidth(),
+                        color = PrimaryColor,
+                        fontSize = 20.sp,
+                        fontFamily = AlexandriaFamily,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(50.dp))
+
+                    // Text field for card title
+                    BasicTextField(
+                        value = cardTitle,
+                        onValueChange = { cardTitle = it },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .width(250.dp)
+                            .background(color = add_edit_txtField_bck)
+                            .padding(8.dp),
+                        textStyle = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = AlexandriaFamily,
+                            fontWeight = FontWeight.Normal
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Text field for card content
+                    BasicTextField(
+                        value = cardContent,
+                        onValueChange = { cardContent = it },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .width(250.dp)
+                            .background(color = add_edit_txtField_bck)
+                            .padding(8.dp),
+                        textStyle = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = AlexandriaFamily,
+                            fontWeight = FontWeight.Normal
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(50.dp))
+
+                    // Color selection for the card
+                    val colors = listOf(
+                        Colors.GreenColor, Colors.YellowColor, Colors.BlueColor,
+                        Colors.PinkColor, Colors.PurpleColor, Colors.BrownColor
+                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        modifier = Modifier.fillMaxWidth().padding(30.dp, 0.dp)
+                    ) {
+                        for (i in 0..2) {
+                            ChooseColor(
+                                color = colors[i].color,
+                                index = colors[i].id,
+                                isSelected = colors[i].id == selectedColor
+                            ) { selectedColor = colors[i].id }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        modifier = Modifier.fillMaxWidth().padding(30.dp, 0.dp)
+                    ) {
+                        for (i in 3..5) {
+                            ChooseColor(
+                                color = colors[i].color,
+                                index = colors[i].id,
+                                isSelected = colors[i].id == selectedColor
+                            ) { selectedColor = colors[i].id }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(50.dp))
+
+                    // Save Button
+                    Button(
+                        onClick = {
+                            if (cardID != null) {
+                                // Edit existing card
+                                val updatedCard = currentCard!!.copy(
+                                    title = cardTitle,
+                                    content = cardContent,
+                                    colorID = selectedColor
+                                )
+                                viewModel.updateCard(updatedCard)
+                            } else {
+                                // Add new card
+                                val newCard = Card("0", catID, cardTitle, cardContent, selectedColor, false)
+                                viewModel.addCard(newCard)
+                            }
+                            navController.popBackStack() // Navigate back after saving
+                        },
+                        modifier = Modifier
+                            .width(200.dp)
+                            .shadow(5.dp, spotColor = Color.Black, shape = RoundedCornerShape(20.dp)),
+                        colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryColor)
+                    ) {
+                        Text(text = "Save", fontSize = 16.sp, color = BackgroundColor)
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun preview(){
-    Add_Edit_Card_Screen(navController = rememberNavController(), null,null)
+fun preview() {
+    Add_Edit_Card_Screen(navController = rememberNavController(), "", null)
 }
+

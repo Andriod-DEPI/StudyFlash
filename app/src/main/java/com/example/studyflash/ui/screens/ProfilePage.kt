@@ -33,6 +33,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -54,10 +56,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.classes.Category
+import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.components.TopBar
 import com.example.studyflash.ui.theme.GradientColor
 import com.example.studyflash.ui.theme.LightBlue
@@ -71,10 +76,20 @@ import com.example.studyflash.ui.theme.StudyFlashTheme
 import com.example.studyflash.ui.theme.TopBarBg
 import com.example.studyflash.ui.theme.Wording
 import com.example.studyflash.ui.theme.WordingBtn
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
 fun ProfilePage(navController: NavHostController) {
+
+    val viewModel: CategoryCardViewModel = hiltViewModel()
+    // Collect the category list from the ViewModel
+    val categoryList by viewModel.Categories.collectAsState()
+
+    // Load the categories when the composable is first composed
+    LaunchedEffect(Unit) {
+        viewModel.loadCategories()
+    }
 
     var isDarkMode by remember { mutableStateOf(false) }
 
@@ -111,18 +126,32 @@ fun ProfilePage(navController: NavHostController) {
         )
 
         ScoreDisplay(30)
+//
+//        val categoryList = listOf(
+//            Category(
+//                id = 1,
+//                name = "Math",
+//                colorID = 1, // Example color (Red 300)
+//                cards = listOf(),
+//                progress = 50
+//            ),
+//            Category(
+//                id = 2,
+//                name = "Science",
+//                colorID = 2, // Example color (Green 300)
+//                cards = listOf(),
+//                progress = 70
+//            ),
+//            Category(
+//                id = 3,
+//                name = "History",
+//                colorID = 3, // Example color (Blue 300)
+//                cards = listOf(),
+//                progress = 30
+//            )
+//        )
 
-        val subjects = listOf(
-            Subject("Technology", 1f),
-            Subject("Science", 0f),
-            Subject("Mathematics", 0.5f),
-            Subject("English", 0.4f),
-            Subject("Chemistry", 0.3f),
-            Subject("Chemasdsad", 0.3f),
-            Subject("Chgggggggg", 0f)
-        )
-
-        BarChartWithPagination(subjects)
+        BarChartWithPagination(categoryList)
 
         Button(
             onClick = {
@@ -258,7 +287,7 @@ fun ScoreDisplay(score: Int) {
 }
 
 @Composable
-fun BarChartWithPagination(subjects: List<Subject>) {
+fun BarChartWithPagination(subjects: List<Category>) {
     var currentPage by remember { mutableIntStateOf(0) }
     val itemsPerPage = 5
     val totalPages = (subjects.size + itemsPerPage - 1) / itemsPerPage // Total number of pages
@@ -289,13 +318,13 @@ fun BarChartWithPagination(subjects: List<Subject>) {
                 },
                 enabled = currentPage < totalPages - 1
             ) {
-                if(currentPage==0) ArrowIcon(isLeft = false)
+                if(currentPage<totalPages-1) ArrowIcon(isLeft = false)
             }
         }
 }
 
 @Composable
-fun BarChart(subjects: List<Subject>) {
+fun BarChart(subjects: List<Category>) {
 
     val barWidth = 70f
     val spacing = 10f
@@ -303,14 +332,8 @@ fun BarChart(subjects: List<Subject>) {
     Canvas(modifier = Modifier.size(150.dp,200.dp).padding(top=4.dp)) {
         subjects.forEachIndexed { index, subject ->
             val offsetX = index * (barWidth + spacing)
-            drawBar(subject.progress,
-                when (index) {
-                    0 -> LightGreen
-                    1 -> LightOrange
-                    2-> LightBlue
-                    3-> RoseCircle
-                    else -> PurpleCircle
-                },
+            drawBar(subject.progress.toFloat()/100,// assume total score 100
+                Colors.getColorById(subject.colorID).strokeColor,
                 offsetX)
         }
     }
@@ -331,16 +354,10 @@ fun DrawScope.drawBar(percentage: Float, color: Color, offsetX: Float) {
 }
 
 @Composable
-fun Legend(subjects: List<Subject>) {
+fun Legend(subjects: List<Category>) {
     Column(modifier = Modifier.height(200.dp), verticalArrangement = Arrangement.Top) {
-        subjects.forEachIndexed{index, subject ->
-            LegendItem(color = when (index) {
-                0 -> LightGreen
-                1 -> LightOrange
-                2-> LightBlue
-                3-> RoseCircle
-                else -> PurpleCircle
-            }, text = subject.name)
+        subjects.forEach{subject ->
+            LegendItem(color = Colors.getColorById(subject.colorID).strokeColor, text = subject.name)
         }
     }
 }

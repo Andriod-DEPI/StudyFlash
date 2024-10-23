@@ -1,6 +1,5 @@
 package com.example.studyflash.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -56,7 +55,7 @@ import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
-fun Add_Edit_Category(navController: NavController, catID:Int?) {
+fun Add_Edit_Category(navController: NavController, catID:String?) {
     val viewModel:CategoryCardViewModel = hiltViewModel()
     viewModel.loadCategories()
     val categories by viewModel.Categories.collectAsState()
@@ -163,14 +162,12 @@ fun Add_Edit_Category(navController: NavController, catID:Int?) {
                       val newCategory = category.copy(name = CategoryName, colorID = selectedColor)
                       viewModel.updateCategory(newCategory)
                   }else{
-                      val newCategory = Category(2,CategoryName, selectedColor, mutableListOf(), 0)
+                      val newCategory = Category("0", CategoryName, selectedColor, 0)
                       viewModel.addCategory(newCategory)
 
                   }
                         //back to categories list page
-//                      navController.popBackStack("", false)
-
-                      navController.navigate("categories")
+                      navController.popBackStack()
                     },
                     Modifier
                         .width(200.dp)

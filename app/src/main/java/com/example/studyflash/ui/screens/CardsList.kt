@@ -47,7 +47,7 @@ import com.example.studyflash.ui.theme.PrimaryColor
 
 @Composable
 fun CardsListScreen(
-    navController: NavController, catID: Int
+    navController: NavController, catID: String
 ) {
     //get category by id
 //    val viewModel:CategoryCardViewModel = hiltViewModel()
@@ -81,23 +81,30 @@ fun CardsListScreen(
     Log.d("abc", "CardsListScreen: cats $categories ")
     val category = categories.find { it.id == catID }
     Log.d("abc", "CardsListScreen: category $category ")
-    viewModel.loadCardsForCategory(category!!.id)
+    if(category!=null){viewModel.loadCardsForCategory(category.id)}
     val cards by viewModel.Cards.collectAsState()
-    Column(Modifier.background(BackgroundColor)) {
-        SelectedCategory(category = category)
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2), // 2 columns
-            contentPadding = PaddingValues(20.dp, 3.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.weight(1f)
-        ) {
-            items(cards) {
-                CardListItem(it) {
-                    navController.navigate("individual Card/${it.id}")
-                }
-            }
-        }
+   if(category!=null){
+       Column(Modifier.background(BackgroundColor)) {
+           Spacer(modifier = Modifier.height(35.dp))
+           SelectedCategory(category = category, cards.size)
+           LazyVerticalGrid(
+               columns = GridCells.Fixed(2), // 2 columns
+               contentPadding = PaddingValues(20.dp, 3.dp),
+               horizontalArrangement = Arrangement.spacedBy(20.dp),
+               verticalArrangement = Arrangement.spacedBy(10.dp),
+               modifier = Modifier.weight(1f)
+           ) {
+               items(cards) {
+                   CardListItem(it, onCardClick =  {
+                       navController.navigate("individual Card/$catID/${it.id}")
+                   }, onEditClick = {
+                       navController.navigate("editCard/$catID/${it.id}")
+                                    }, onDeleteClick = {
+                                        viewModel.deleteCard(it.id, catID)
+                                    })
+               }
+           }
+
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
@@ -129,16 +136,17 @@ fun CardsListScreen(
                         color = BackgroundColor
                     )
 
-                }
-            }
+                   }
+               }
 
-            FloatingActionButton(onClick = {
-              navController.navigate("addCard/$catID")
-            }, containerColor = PrimaryColor, contentColor = BackgroundColor) {
-                Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
-            }
-        }
-    }
+               FloatingActionButton(onClick = {
+                   navController.navigate("addCard/$catID")
+               }, containerColor = PrimaryColor, contentColor = BackgroundColor) {
+                   Text(text = "+", fontSize = 40.sp, color = BackgroundColor)
+               }
+           }
+       }
+   }
 }
 @Preview
 @Composable

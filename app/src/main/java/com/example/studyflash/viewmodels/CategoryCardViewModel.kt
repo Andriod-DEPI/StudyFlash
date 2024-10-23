@@ -1,5 +1,6 @@
 package com.example.studyflash.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.studyflash.classes.Card
@@ -25,8 +26,8 @@ class CategoryCardViewModel @Inject constructor(private val repository: CardCate
         _categories.value = repository.getCategories()
     }
 
-    fun loadCardsForCategory(categryID:Int) = viewModelScope.launch {
-        _cards.value = repository.getCardsForCategory(categryID)
+    fun loadCardsForCategory(categoryID:String) = viewModelScope.launch {
+        _cards.value = repository.getCardsForCategory(categoryID)
     }
 
     fun addCategory(category: Category)=viewModelScope.launch {
@@ -39,7 +40,7 @@ class CategoryCardViewModel @Inject constructor(private val repository: CardCate
         loadCategories()
     }
 
-    fun deleteCategory(categryID: Int)=viewModelScope.launch {
+    fun deleteCategory(categryID: String)=viewModelScope.launch {
         repository.deleteCategory(categryID)
         loadCategories()
     }
@@ -53,7 +54,7 @@ class CategoryCardViewModel @Inject constructor(private val repository: CardCate
         repository.updateCard(card)
         loadCardsForCategory(card.categoryID)
     }
-    fun deleteCard(cardId:Int, categryID: Int)=viewModelScope.launch {
+    fun deleteCard(cardId:String, categryID: String)=viewModelScope.launch {
         repository.deleteCard(cardId,categryID)
         loadCardsForCategory(categryID)
     }
