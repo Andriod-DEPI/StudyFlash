@@ -31,7 +31,7 @@ fun NavGraph(
 ) {
 
 
-    NavHost(navController = navController, startDestination = "Cards List/7OII0IKTEupmw59kPcvy") {
+    NavHost(navController = navController, startDestination = "landPage") {
        composable("logIn") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
