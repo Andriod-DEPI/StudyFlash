@@ -22,12 +22,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
+
+        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true)
+
+        if (isFirstLaunch) {
+            setLocale(this, "en")
+
+            sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
+
+            recreate()
+        }
+
+        Firebase.auth
         enableEdgeToEdge()
         setContent {
             StudyFlashTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavGraph(navController = navController,
+                    NavGraph(navController = navController,activity = this
                     modifier = Modifier.padding(innerPadding))
                 }
             }

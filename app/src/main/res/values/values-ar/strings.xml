@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">تسجيل الدخول</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="dont_have_account">لا تملك حساباً؟</string>
+    <string name="create_new_account">إنشاء حساب جديد</string>
+    <string name="app_name">مذكرة الدراسة</string>
+    <string name="language_toggle">En</string>
+</resources>
