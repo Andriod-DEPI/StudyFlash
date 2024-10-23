@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.studyflash.R
 import com.example.studyflash.ui.components.HintButton
 import com.example.studyflash.ui.components.HintList
@@ -49,14 +49,20 @@ fun Check(currentIndex: Int, userAns: String): Boolean{
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun Quiz (){
+fun Quiz (
+    navController: NavHostController
+){
+    fun onSubmitQuiz() {
+        navController.navigate("quiz_score_screen")
+    }
     var revealedHint by remember { mutableStateOf(0) }
     var currentIndex by remember { mutableStateOf(0) }
     var correctQuestions by remember { mutableStateOf(0) }
     var isWrong by remember { mutableStateOf(false) }
     val totalQuestions = 10
+
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -145,7 +151,8 @@ fun Quiz (){
                 currentIndex = currentIndex,
                 onIndexChange = { newIndex -> currentIndex = newIndex },
                 modifier = Modifier.weight(1f),
-                isWrong = isWrong
+                isWrong = isWrong,
+                onSubmitQuiz = ::onSubmitQuiz
             )
         }
         var text by remember { mutableStateOf("") }
