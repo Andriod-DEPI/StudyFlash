@@ -40,11 +40,12 @@ import com.example.studyflash.R.drawable.signup
 import com.example.studyflash.ui.components.SignUpTextField
 import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.ui.platform.LocalContext
+import com.example.studyflash.classes.User
 
 @Composable
 fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
     Surface {
-        var username by remember { mutableStateOf("") }
+        var username by remember { mutableStateOf("") }  // Username state
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
@@ -102,7 +103,7 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                 append("Sign in")
                             }
                         },
-                                modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
+                        modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
                     )
                 }
 
@@ -121,6 +122,7 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                         fontSize = 30.sp,
                     )
 
+                    // Username input field
                     SignUpTextField(
                         label = "Username",
                         trailing = " ",
@@ -163,7 +165,11 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                 .padding(12.dp),
                             onClick = {
                                 if (password == confirmPassword) {
-                                    auth.createUserWithEmailAndPassword(email, password)
+                                    // Create a User object with username, email, and password
+                                    val user = User(username = username, email = email, password = password)
+
+                                    // Use the User object for Firebase signup
+                                    auth.createUserWithEmailAndPassword(user.email, user.password)
                                         .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
                                                 // Sign-up successful
