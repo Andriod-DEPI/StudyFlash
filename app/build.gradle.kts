@@ -81,6 +81,10 @@ dependencies {
     implementation (libs.androidx.foundation)
     implementation (libs.material3)
 
+    implementation ("com.google.accompanist:accompanist-pager:0.30.1") // For HorizontalPager
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1") // For HorizontalPagerIndicator
+
+
     //hilt dependency injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

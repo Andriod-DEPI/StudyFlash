@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,13 +30,32 @@ import com.example.studyflash.ui.components.HintButton
 import com.example.studyflash.ui.components.HintList
 import com.example.studyflash.ui.components.Hints
 import com.example.studyflash.ui.components.PaginationDots
-import com.example.studyflash.ui.components.QuizCard
+import com.example.studyflash.ui.components.QuizPage
+import com.example.studyflash.viewmodels.Questions
+
+
+fun Check(currentIndex: Int, userAns: String): Boolean{
+    var ans = Questions[currentIndex].Answer.toLowerCase()
+    var isCorrect: Boolean = false
+    if(userAns.toLowerCase() == ans){
+        Questions[currentIndex].IsDone = true
+        Questions[currentIndex].isCorrect = true
+        return true
+    }
+    else{
+        Questions[currentIndex].IsDone = true
+        Questions[currentIndex].isCorrect = false
+        return false
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun Quiz (){
     var revealedHint by remember { mutableStateOf(0) }
     var currentIndex by remember { mutableStateOf(0) }
+    var correctQuestions by remember { mutableStateOf(0) }
+    var isWrong by remember { mutableStateOf(false) }
     val totalQuestions = 10
     Column {
         Row(
@@ -81,18 +101,28 @@ fun Quiz (){
         Row (
             verticalAlignment = Alignment.CenterVertically
         ){
-            HintButton(hints = Hints) {
-                if (revealedHint < Hints.size) {
-                    revealedHint++
-                }
-            }
+            var revealedHint by remember { mutableStateOf(0) }
+
+            // Calculate the remaining hints
+
+            HintButton(
+                hints = Questions[currentIndex].Hints,
+                currentIndex = currentIndex,
+                onRevealHint = {
+                    if (revealedHint < Hints.size) {
+                        revealedHint++  // Increase the revealed hint count when the button is clicked
+                    }
+                },
+                remaining = Questions[currentIndex].Hints.size - revealedHint
+            )
             Spacer(modifier = Modifier.weight(2f))
 //            Column {
                 Row (
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(
-                        text = "1/5",
+//                        text = "1/5",
+                        text = "${correctQuestions}/${totalQuestions}",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -110,12 +140,43 @@ fun Quiz (){
 //            }
         }
         Row {
-            QuizCard()
+            QuizPage(
+                quizList = Questions,
+                currentIndex = currentIndex,
+                onIndexChange = { newIndex -> currentIndex = newIndex },
+                modifier = Modifier.weight(1f),
+                isWrong = isWrong
+            )
+        }
+        var text by remember { mutableStateOf("") }
+        Row (){
+            OutlinedTextField(
+                value = text,
+                onValueChange = { newText -> text = newText },
+                label = { Text("Enter your answer") },
+                modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth()
+            )
         }
         Row {
             Spacer(modifier = Modifier.weight(2f))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                   val isCorrect = Check(currentIndex, text)
+                    if(isCorrect){
+                        correctQuestions++
+                        text = ""
+                        if(currentIndex<Questions.size-1){
+                            currentIndex++
+                        }
+                        isWrong = false
+//                        onIndexChange(currentIndex)
+                    }
+                    else{
+                        isWrong = true
+                    }
+                },
                 modifier = Modifier
                     .padding(bottom = 10.dp)
             ){
@@ -129,7 +190,7 @@ fun Quiz (){
                 modifier = Modifier
                     .heightIn(max = 200.dp)
             ){
-                HintList(revealedHint = revealedHint)
+                HintList(revealedHint = revealedHint, quizList = Questions, currentIndex = currentIndex)
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(
@@ -137,7 +198,7 @@ fun Quiz (){
                 horizontalArrangement = Arrangement.Center //only works if the row fills the entire width
             ) {
                 PaginationDots(
-                    totalDots = 10,
+                    totalDots = Questions.size,
                     currentIndex = currentIndex,
                     onIndexChange = { newIndex -> currentIndex = newIndex },
                     modifier = Modifier.weight(1f)

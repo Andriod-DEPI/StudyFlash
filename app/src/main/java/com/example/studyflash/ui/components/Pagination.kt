@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +20,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +29,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.studyflash.viewmodels.Questions
+import com.example.studyflash.viewmodels.Quiz
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 fun incCurrentIndex(index: Int, totalDots: Int): Int{
     println("incrementing index")
@@ -53,6 +62,7 @@ fun PaginationDots(
 //    var totalQuestions = 10
     Row (
         verticalAlignment = Alignment.CenterVertically,
+//        horizontalArrangement = Arrangement.Center,
     ){
         Column {
             IconButton(onClick = { onIndexChange(decCurrentIndex(currentIndex)) },
@@ -100,23 +110,19 @@ fun PaginationDots(
     }
 }
 
-//@Composable
-//fun Pagination(){
-//    var currentQuestionIndex by remember { mutableStateOf(0) }
-//    var totalQuestions = 10
-//    Column {
-//
-//    }
-//}
 
 @Preview
 @Composable
 fun PaginationDotsPreview(){
-    PaginationDots(totalDots = 15, currentIndex = 10, onIndexChange = {})
+    Column{
+//        QuizCard(quizList[page])
+        QuizPage(quizList = Questions, currentIndex = 5, onIndexChange = {}, modifier = Modifier )
+        PaginationDots(totalDots = 15, currentIndex = 10, onIndexChange = {})
+    }
 }
 
 @Composable
-fun QuizCard(){
+fun QuizCard(quiz: Quiz) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -128,13 +134,88 @@ fun QuizCard(){
                 clip = true // Clip the shadow to the shape
             },
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFEDF5FF)
+            containerColor = if (!quiz.isCorrect && quiz.IsDone) Color(0xFFFFCDD2) else Color(0xFFEDF5FF)  // Red if wrong, else default color
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
     ){
-        Text(text = "Wifi Stands for _________",
+        Text(text = quiz.Question,
             modifier = Modifier
                 .padding(vertical = 20.dp, horizontal = 20.dp)
         )
     }
 }
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun QuizPage (
+    quizList: List<Quiz>,
+    currentIndex: Int,
+    onIndexChange: (Int) -> Unit,
+    modifier: Modifier,
+    isWrong: Boolean = false
+){
+    val pagerState = rememberPagerState() // Pager state to track the current page
+    val coroutineScope = rememberCoroutineScope()
+
+    // Handle changes in page swipe
+    LaunchedEffect(pagerState.currentPage) {
+        onIndexChange(pagerState.currentPage)
+    }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // QuizPager Composable to show questions
+        HorizontalPager(
+            count = quizList.size,
+            state = pagerState,
+            modifier = Modifier
+//                .weight(1f) // Make it fill the available vertical space
+                .heightIn(max = 400.dp)
+        ) { page ->
+            QuizCard(quiz = quizList[page])
+        }
+
+        LaunchedEffect(currentIndex) {
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(currentIndex)
+            }
+        }
+    }
+}
+
+
+//@Composable
+//fun QuizCard(){
+//    Card (
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(top = 20.dp, bottom = 30.dp)
+//            .graphicsLayer {
+//                // Adjust shadow properties
+//                shadowElevation = 4.dp.toPx()
+//                shape = RoundedCornerShape(20.dp) // Set shadow shape
+//                clip = true // Clip the shadow to the shape
+//            },
+//        colors = CardDefaults.cardColors(
+//            containerColor = Color(0xFFEDF5FF)
+//        ),
+//        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
+//    ){
+//        Text(text = "Wifi Stands for _________",
+//            modifier = Modifier
+//                .padding(vertical = 20.dp, horizontal = 20.dp)
+//        )
+//    }
+//}
+
+//@Composable
+//fun Pagination(){
+//    var currentQuestionIndex by remember { mutableStateOf(0) }
+//    var totalQuestions = 10
+//    Column {
+//
+//    }
+//}
