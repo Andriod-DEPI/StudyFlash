@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.studyflash.R.drawable.background
 import com.example.studyflash.R.drawable.profile
+import com.example.studyflash.classes.User
 import com.example.studyflash.ui.components.LoginTextfield
 
 // UI Function
@@ -207,7 +208,8 @@ fun Loginscreen(viewModel: LoginViewModel, navController: NavHostController) {
         onEmailChange = { newEmail -> email.value = newEmail },  // Update email state
         onPasswordChange = { newPassword -> password.value = newPassword },  // Update password state
         onLoginClick = { emailValue, passwordValue ->
-            viewModel.login(emailValue, passwordValue)
+            val user = User(email = emailValue, password = passwordValue, username = null)
+            viewModel.login(user)
         },
         loginErrorMessage = loginErrorMessage,
         onCreateAccountClick = {
