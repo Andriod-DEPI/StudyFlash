@@ -41,7 +41,7 @@ fun CategoriesList(navController: NavHostController) {
     val items by viewModel.Categories.collectAsState()
     LazyColumn {
         items(items){
-            item ->
+                item ->
             Card (
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
@@ -76,7 +76,7 @@ fun CategoriesList(navController: NavHostController) {
                             Icon(painter = painterResource(id = R.drawable.cards),
                                 contentDescription = "Layers",
                                 modifier = Modifier.size(15.dp)
-                                )
+                            )
                             Text(text = "${1}", fontSize = 12.sp, modifier = Modifier
                                 .padding(start = 1.dp))
                         }
@@ -95,7 +95,7 @@ fun CategoriesList(navController: NavHostController) {
 
 
 
-        //            Column(
+            //            Column(
 //            modifier = Modifier
 //                .fillMaxWidth()
 //                .padding(16.dp) // Adjust padding as needed

@@ -21,6 +21,7 @@ import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.QuizScore
 import com.example.studyflash.ui.screens.QuizScreen
 import com.example.studyflash.ui.screens.SignupScreen
+import com.example.studyflash.viewmodels.LoginViewModel
 
 
 @Composable
@@ -32,16 +33,16 @@ fun NavGraph(
 
 
     NavHost(navController = navController, startDestination = "landPage") {
-       composable("login") {
+        composable("login") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
 
             // Pass the NavController to Loginscreen
-           Loginscreen(
-               viewModel = loginViewModel,
-               navController = navController,
-               activity = activity
-           )
+            Loginscreen(
+                viewModel = loginViewModel,
+                navController = navController,
+                activity = activity
+            )
 
         }
         composable("signUp") {
@@ -65,7 +66,7 @@ fun NavGraph(
             Add_Edit_Category(navController, null)
         }
         composable("quiz"){
-            QuizScreen(navController)
+            QuizScreen()
         }
         composable(
             route = "quiz_score_screen/{correctAns}/{totalQuestions}",
@@ -83,12 +84,12 @@ fun NavGraph(
             val totalQuestions = backStackEntry.arguments?.getInt("totalQuestions") ?: 0
 
             // Call the QuizScore Composable to display the score
-            QuizScore(correctAnswers, totalQuestions, navController)
+//            QuizScore(correctAnswers, totalQuestions, navController)
         }
 
         composable("addCard/{categId}", arguments = listOf(
             navArgument("categId") {
-               type = NavType.StringType
+                type = NavType.StringType
             }
         )) {backStack->
             val catID = backStack.arguments?.getString("categId")
@@ -119,10 +120,10 @@ fun NavGraph(
 
         composable("individual Card/{catId}/{cardId}", arguments = listOf(
             navArgument("catId") {
-               type = NavType.StringType
+                type = NavType.StringType
             },
             navArgument("cardId") {
-               type=  NavType.StringType
+                type=  NavType.StringType
             }
         )) {backStack->
             val catId = backStack.arguments?.getString("catId")

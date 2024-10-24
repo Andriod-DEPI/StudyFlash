@@ -14,12 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,8 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
 import com.example.studyflash.ui.components.Score
 
@@ -57,33 +51,13 @@ fun MyIcon(score: Int){
 }
 
 @Composable
-fun QuizScore(correctAns: Int, totalQuestions: Int, navController: NavController){
+fun QuizScore(){
     Box (
         modifier= Modifier
             .fillMaxSize()
             .background(Color(0xFFEDF5FF))
     ){
-
         topRectangle()
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp), // Adjust padding as needed
-            horizontalArrangement = Arrangement.Start
-        ) {
-            IconButton(
-                onClick = { navController.navigate("categories") } // Navigate back to categories
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack, // Replace with your back arrow icon
-                    contentDescription = "Back to Categories",
-                    tint = Color(0xFFEDF5FF), // Adjust the color if needed
-                    modifier = Modifier.size(45.dp)
-                )
-            }
-        }
-
         Card (
             modifier = Modifier
                 .width(325.dp)
@@ -126,7 +100,7 @@ fun QuizScore(correctAns: Int, totalQuestions: Int, navController: NavController
                         .weight(1f),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Text(text = "You answered ${correctAns} / ${totalQuestions}",
+                    Text(text = "You answered 3/5",
                         modifier = Modifier
                             .padding(bottom = 10.dp),
                         fontSize = 24.sp,
@@ -151,31 +125,8 @@ fun QuizScore(correctAns: Int, totalQuestions: Int, navController: NavController
                         .weight(1.5f),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Score()
+                Score()
                 }
-//                Row (
-//                    modifier = Modifier
-//                        .fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center
-//                ){
-////                    Spacer(modifier = Modifier.weight(2f))
-//                    Column{
-//                        Button(
-//                            onClick = {
-////                            navController.navigate("quiz_score_screen/${correctQuestions}/${totalQuestions}")
-////                                navController.navigate("quiz")
-//                            },
-//                            modifier = Modifier
-//                                .padding(bottom = 10.dp)
-//                                .width(150.dp),
-//                            colors = ButtonDefaults.buttonColors(
-//                                containerColor = Color(0xFF33B4FF),
-//                            )
-//                        ) {
-//                            Text(text = "Reset Quiz")
-//                        }
-//                    }
-//                }
             }
         }
     }
@@ -184,5 +135,5 @@ fun QuizScore(correctAns: Int, totalQuestions: Int, navController: NavController
 @Preview
 @Composable
 fun QuizScorePreview(){
-    QuizScore(4,10, navController = rememberNavController())
+    QuizScore()
 }
