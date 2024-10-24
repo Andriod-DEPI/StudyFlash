@@ -109,7 +109,7 @@ fun LandPage(navController: NavHostController) {
         Button(
             onClick = {
                 // got to signup page
-                navController.navigate("SignIn")
+                navController.navigate("signUp")
             },
             modifier = Modifier
                 .padding(start = 100.dp, top = 50.dp)
