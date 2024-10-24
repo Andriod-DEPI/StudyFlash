@@ -1,5 +1,6 @@
 package com.example.studyflash
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,10 +14,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph
 import androidx.navigation.compose.rememberNavController
-import com.example.studyflash.ui.navigation.NavGraph
+import com.example.studyflash.ui.navigation.NavHostGraph
 import com.example.studyflash.ui.theme.StudyFlashTheme
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
+import setLocale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -41,7 +47,7 @@ class MainActivity : ComponentActivity() {
             StudyFlashTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavGraph(navController = navController,activity = this
+                    NavHostGraph (navController = navController,activity = this,
                     modifier = Modifier.padding(innerPadding))
                 }
             }

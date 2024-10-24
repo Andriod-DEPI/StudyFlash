@@ -245,7 +245,7 @@ fun Loginscreen(
         onEmailChange = { newEmail -> email.value = newEmail },  // Update email state
         onPasswordChange = { newPassword -> password.value = newPassword },  // Update password state
         onLoginClick = { emailValue, passwordValue ->
-            val user = User(email = emailValue, password = passwordValue, username = null)
+            val user = User(email = emailValue, password = passwordValue, username = null.toString())
             viewModel.login(user)
         },
         loginErrorMessage = loginErrorMessage,
