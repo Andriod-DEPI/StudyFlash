@@ -1,6 +1,6 @@
 package com.example.studyflash.ui.screens
 
-import com.example.studyflash.viewmodels.LoginViewModel
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -42,8 +43,7 @@ import com.example.studyflash.R.drawable.background
 import com.example.studyflash.R.drawable.profile
 import com.example.studyflash.classes.User
 import com.example.studyflash.ui.components.LoginTextfield
-import androidx.compose.ui.platform.LocalContext
-import android.app.Activity
+import com.example.studyflash.viewmodels.LoginViewModel
 import setLocale
 import java.util.Locale
 
@@ -98,7 +98,7 @@ fun LoginScreenContent(
                         text = buildAnnotatedString {
                             withStyle(
                                 style = SpanStyle(
-                                    color = Color.Black,
+                                    color = Color(0xFFEDF5FF),
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal
                                 )
@@ -107,7 +107,7 @@ fun LoginScreenContent(
                             }
                             withStyle(
                                 style = SpanStyle(
-                                    color = Color.Black,
+                                    color = Color(0xFFEDF5FF),
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Medium
                                 )

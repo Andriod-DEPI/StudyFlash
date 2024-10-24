@@ -4,7 +4,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="dont_have_account">Don\'t have an account?</string>
-    <string name="create_new_account">Create a new account</string>
+    <string name="create_new_account"> Create a new account</string>
     <string name="app_name">StudyFlash</string>
     //signup
     <string name="username">Username</string>
@@ -15,6 +15,6 @@
     <string name="sign_in">Sign in</string>
     <string name="signup">Sign Up</string>
     //button
-    <string name="language_toggle">عربى</string>
+    <string name="language_toggle">Arabic</string>
 
 </resources>
