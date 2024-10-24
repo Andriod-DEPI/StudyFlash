@@ -1,5 +1,8 @@
 package com.example.studyflash.ui.colors
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.studyflash.ui.theme.Blue
 import com.example.studyflash.ui.theme.BlueStroke

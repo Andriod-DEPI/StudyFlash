@@ -43,6 +43,7 @@ import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
 import com.example.studyflash.ui.theme.PrimaryColor
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 
 @Composable
@@ -75,7 +76,7 @@ fun CardsListScreen(
 //     )
 //    val cards = category.cards
 
-    val viewModel:CategoryCardViewModel = hiltViewModel()
+    val viewModel: CategoryCardViewModel = hiltViewModel()
     viewModel.loadCategories()
     val categories by viewModel.Categories.collectAsState()
     Log.d("abc", "CardsListScreen: cats $categories ")
@@ -151,5 +152,5 @@ fun CardsListScreen(
 @Preview
 @Composable
 fun PreviewCardsListScreen() {
-    CardsListScreen(navController = rememberNavController(), catID = 1)
+    CardsListScreen(navController = rememberNavController(), catID = "")
 }

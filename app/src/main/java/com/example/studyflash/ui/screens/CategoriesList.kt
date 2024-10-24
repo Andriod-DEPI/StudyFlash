@@ -17,6 +17,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -26,20 +28,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.studyflash.R
-import com.example.studyflash.viewmodels.Category
-
-val items = listOf(
-    Category("Math", numberOfCards = 10, numberOfCompleted = 5, id = 1),
-    Category("Science", numberOfCards = 15, numberOfCompleted = 8, id = 2),
-    Category("History", numberOfCards = 20, numberOfCompleted = 12, id =3),
-    Category("Art", numberOfCards = 5, numberOfCompleted = 2, id = 4)
-)
+import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 //@Preview
 @Composable
 fun CategoriesList(navController: NavHostController) {
+    val viewModel:CategoryCardViewModel = hiltViewModel()
+    viewModel.loadCategories()
+    val items by viewModel.Categories.collectAsState()
     LazyColumn {
         items(items){
             item ->
@@ -48,10 +47,7 @@ fun CategoriesList(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp)
-                    .height(70.dp)
-//                    .clickable {
-//                        navController.navigate("Cards List/${item.id}")
-//                    }
+                    .height(100.dp)
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onTap = {
@@ -65,13 +61,15 @@ fun CategoriesList(navController: NavHostController) {
                         )
                     }
             ){
+
+
                 Row(modifier = Modifier.padding(15.dp)) {
                     Column (
 //                        horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.SpaceBetween,
                     ){
                         Row {
-                            Text(text = "${item.name}", fontSize = 20.sp)
+                            Text(text = item.name, fontSize = 20.sp)
                         }
                         Spacer(modifier = Modifier.weight(1f))
                         Row {
@@ -79,13 +77,13 @@ fun CategoriesList(navController: NavHostController) {
                                 contentDescription = "Layers",
                                 modifier = Modifier.size(15.dp)
                                 )
-                            Text(text = "${item.numberOfCards}", fontSize = 12.sp, modifier = Modifier
+                            Text(text = "${1}", fontSize = 12.sp, modifier = Modifier
                                 .padding(start = 1.dp))
                         }
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     CustomCircularProgressIndicator(
-                        progress = item.numberOfCompleted.toFloat() / item.numberOfCards.toFloat(),
+                        progress = item.progress.toFloat() / 10.toFloat(),
                         size = 40.dp, // Size of the progress indicator
                         strokeWidth = 6.dp, // Thickness of the progress indicator
                         backgroundColor = Color.LightGray, // Background color for the unfinished progress

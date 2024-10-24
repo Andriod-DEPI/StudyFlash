@@ -29,4 +29,8 @@ class LoginViewModel : ViewModel() {
                 }
         }
     }
+
+    fun resetLoginSuccess(){
+        loginSuccess.value =false
+    }
 }

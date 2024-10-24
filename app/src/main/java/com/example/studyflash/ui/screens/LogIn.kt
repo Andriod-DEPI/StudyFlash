@@ -74,7 +74,7 @@ fun LoginScreenContent(
                 Image(
                     modifier = Modifier
                         .size(100.dp)
-                        .offset(y = 170.dp),
+                        .offset(y = 135.dp),
                     painter = painterResource(id = profile),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -232,12 +232,12 @@ fun Loginscreen(
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val loginErrorMessage = viewModel.loginErrorMessage.value
-    val loginSuccess = viewModel.loginSuccess.value
+    var loginSuccess = viewModel.loginSuccess.value
 
     if (loginSuccess) {
-        navController.navigate("HomePage") {
-            popUpTo("login") { inclusive = true }  // Removes login screen from backstack
-        }
+        navController.popBackStack()
+        navController.navigate("HomePage")
+        viewModel.resetLoginSuccess()
     }
     LoginScreenContent(
         email = email.value,
@@ -245,7 +245,7 @@ fun Loginscreen(
         onEmailChange = { newEmail -> email.value = newEmail },  // Update email state
         onPasswordChange = { newPassword -> password.value = newPassword },  // Update password state
         onLoginClick = { emailValue, passwordValue ->
-            val user = User(email = emailValue, password = passwordValue, username = null)
+            val user = User(email = emailValue, password = passwordValue, username = null.toString())
             viewModel.login(user)
         },
         loginErrorMessage = loginErrorMessage,
