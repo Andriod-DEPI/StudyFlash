@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.navigation
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,10 +16,12 @@ import com.example.studyflash.ui.screens.CategoriesScreen
 import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
+import com.example.studyflash.ui.screens.LogIn
 import com.example.studyflash.ui.screens.Loginscreen
 import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.QuizScore
 import com.example.studyflash.ui.screens.QuizScreen
+import com.example.studyflash.ui.screens.SignIn
 import com.example.studyflash.ui.screens.SignupScreen
 import com.example.studyflash.viewmodels.LoginViewModel
 
@@ -27,15 +30,22 @@ import com.example.studyflash.viewmodels.LoginViewModel
 fun NavGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    activity: Activity
 ) {
 
-    NavHost(navController = navController, startDestination = "quiz"){
+
+    NavHost(navController = navController, startDestination = "landPage") {
        composable("logIn") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
 
             // Pass the NavController to Loginscreen
-            Loginscreen(viewModel = loginViewModel, navController = navController)
+           Loginscreen(
+               viewModel = loginViewModel,
+               navController = navController,
+               activity = activity
+           )
+
         }
         composable("signUp") {
             SignupScreen(
@@ -81,51 +91,57 @@ fun NavGraph(
 
         composable("addCard/{categId}", arguments = listOf(
             navArgument("categId") {
-               type = NavType.IntType
+               type = NavType.StringType
             }
         )) {backStack->
-            val catID = backStack.arguments?.getInt("categId")
+            val catID = backStack.arguments?.getString("categId")
             catID?.let { Add_Edit_Card_Screen(navController, catID, null) }
         }
         composable("editCategory/{categId}", arguments = listOf(
             navArgument("categId") {
-                type = NavType.IntType
+                type = NavType.StringType
             }
-        )) {
-            val catID = it.arguments?.getInt("categId")
-            Add_Edit_Category(navController, catID)
+        )) {backStack->
+            val catID = backStack.arguments?.getString("categId")
+            catID?.let { Add_Edit_Category(navController, catID) }
         }
         composable("editCard/{catId}/{cardId}", arguments = listOf(
             navArgument("catId") {
-                type = NavType.IntType
+                type = NavType.StringType
             },
             navArgument("cardId") {
-                type = NavType.IntType
+                type = NavType.StringType
             }
-        )) {
-            val cardID = it.arguments?.getInt("cardId")
-            val catId = it.arguments?.getInt("catId")
-            Add_Edit_Card_Screen(navController, catId, cardID)
+        )) {backStack->
+            val cardID = backStack.arguments?.getString("cardId")
+            val catId = backStack.arguments?.getString("catId")
+            if (cardID != null && catId != null) {
+                Add_Edit_Card_Screen(navController, catId, cardID)
+            }
         }
 
         composable("individual Card/{catId}/{cardId}", arguments = listOf(
             navArgument("catId") {
-               type = NavType.IntType
+               type = NavType.StringType
             },
             navArgument("cardId") {
-               type=  NavType.IntType
-            }
-        )) {
-            val catId = it.arguments?.getInt("catId")
-            val cardID = it.arguments?.getInt("cardId")
-            IndividualCardScreen(navController, catId, cardID)
-        }
-        composable("Cards List/{categId}", arguments = listOf(
-            navArgument("categId") {
-                type = NavType.IntType
+               type=  NavType.StringType
             }
         )) {backStack->
-            val catID = backStack.arguments?.getInt("categId")
+            val catId = backStack.arguments?.getString("catId")
+            val cardID = backStack.arguments?.getString("cardId")
+            if (cardID != null && catId != null) {
+                IndividualCardScreen(navController, catId, cardID)
+            }
+        }
+
+
+        composable("Cards List/{categId}", arguments = listOf(
+            navArgument("categId") {
+                type = NavType.StringType
+            }
+        )) {backStack->
+            val catID = backStack.arguments?.getString("categId")
             catID?.let { CardsListScreen(navController, catID) }
         }
     }

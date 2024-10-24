@@ -103,6 +103,15 @@ dependencies {
     implementation(libs.firebase.firestore)
     // required to avoid crash on Android 12 API 31
     implementation (libs.androidx.work.runtime.ktx)
+
+
+
+    implementation (libs.androidx.ui.v105)
+    implementation (libs.androidx.ui.tooling.v105)
+    implementation (libs.androidx.foundation.v105)
+    implementation (libs.androidx.material.v105)
+    implementation (libs.androidx.ui.text)
+
 }
 kapt {
     correctErrorTypes = true

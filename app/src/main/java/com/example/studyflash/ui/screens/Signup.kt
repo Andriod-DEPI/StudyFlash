@@ -1,5 +1,6 @@
 package com.example.studyflash.ui.screens
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -40,7 +41,12 @@ import com.example.studyflash.R.drawable.signup
 import com.example.studyflash.ui.components.SignUpTextField
 import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.ui.platform.LocalContext
-
+import androidx.compose.ui.res.stringResource
+import com.example.studyflash.R
+import com.example.studyflash.classes.User
+import setLocale
+import java.util.Locale
+import com.google.firebase.database.FirebaseDatabase
 @Composable
 fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
     Surface {
@@ -50,6 +56,8 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
         var confirmPassword by remember { mutableStateOf("") }
         val auth = FirebaseAuth.getInstance()
         val context = LocalContext.current
+        val activity = context as? Activity
+        val resources = context.resources
 
         Column(modifier = Modifier.fillMaxSize()) {
             val uniColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black
@@ -69,17 +77,7 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    color = Color.Black,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Normal
-                                )
-                            ) {
-                                append("Already have an account ?")
-                            }
-                        }
+                        text = stringResource(id = R.string.already_have_account)
                     )
                 }
 
@@ -90,19 +88,8 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    color = Color.Black,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Medium
-                                )
-                            ) {
-                                append(" ")
-                                append("Sign in")
-                            }
-                        },
-                                modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
+                        text = stringResource(id = R.string.sign_in),
+                        modifier = Modifier.clickable { onSignInClick() }
                     )
                 }
 
@@ -113,37 +100,37 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                         .padding(horizontal = 30.dp)
                 ) {
                     Text(
-                        text = "Sign Up",
+                        text = stringResource(id = R.string.signup),
                         modifier = Modifier
-                            .offset(y = 120.dp, x = -120.dp),
+                            .offset(y = 140.dp, x = (-120).dp),
                         color = Color.White,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 30.sp,
                     )
 
                     SignUpTextField(
-                        label = "Username",
+                        label = stringResource(id = R.string.username),
                         trailing = " ",
                         value = username,
                         onValueChange = { username = it },
                         modifier = Modifier.fillMaxWidth().offset(y = 210.dp)
                     )
                     SignUpTextField(
-                        label = "E-Mail",
+                        label = stringResource(id = R.string.email),
                         trailing = " ",
                         value = email,
                         onValueChange = { email = it },
                         modifier = Modifier.fillMaxWidth().offset(y = 220.dp)
                     )
                     SignUpTextField(
-                        label = "Password",
+                        label = stringResource(id = R.string.password),
                         trailing = " ",
                         value = password,
                         onValueChange = { password = it },
                         modifier = Modifier.fillMaxWidth().offset(y = 230.dp)
                     )
                     SignUpTextField(
-                        label = "Confirm Password",
+                        label = stringResource(id = R.string.confirm_password),
                         trailing = " ",
                         value = confirmPassword,
                         onValueChange = { confirmPassword = it },
@@ -153,46 +140,107 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 30.dp)
-                            .offset(y = 210.dp),
+                            .offset(x = 150.dp, y = -400.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
                             modifier = Modifier
-                                .width(230.dp)
-                                .height(80.dp)
+                                .width(100.dp)
+                                .height(60.dp)
                                 .padding(12.dp),
-                            onClick = {
-                                if (password == confirmPassword) {
-                                    auth.createUserWithEmailAndPassword(email, password)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                // Sign-up successful
-                                                Toast.makeText(context, "Sign-up successful", Toast.LENGTH_SHORT).show()
-                                                // Navigate to the next screen or update UI
-                                            } else {
-                                                // Sign-up failed
-                                                Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-                                } else {
-                                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                                }
-                            },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFAC81F1),
-                                contentColor = Color.White
+                                containerColor = if (isSystemInDarkTheme()) Color(0xFFD0DDFC) else Color(0xFFD0DDFC),
+                                contentColor = Color.Black
                             ),
-                            shape = RoundedCornerShape(size = 17.dp)
+                            onClick = {
+                                val newLanguage = if (Locale.getDefault().language == "ar") "en" else "ar"
+                                setLocale(context, newLanguage)
+                                activity?.recreate()
+                            }
                         ) {
-                            Text(text = "Sign Up")
+                            Text(text = if (Locale.getDefault().language == "ar") "En" else "عربى")
                         }
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 30.dp)
+                        .offset(y = 600.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(230.dp)
+                            .height(80.dp)
+                            .padding(12.dp),
+                        onClick = {
+                            if (password == confirmPassword) {
+                                auth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            // Get the Firebase user ID
+                                            val userId = auth.currentUser?.uid
+                                            if (userId != null) {
+                                                // Create a User object with the Firebase user ID
+                                                val user = User(
+                                                    id = userId,  // Assign Firebase-generated user ID
+                                                    username = username,
+                                                    email = email,
+                                                    password = password,
+                                                    score = 0  // Initial score set to 0
+                                                )
+
+                                                // Store user info in the Firebase database
+                                                val database = FirebaseDatabase.getInstance().reference
+                                                database.child("users").child(userId).setValue(user)
+                                                    .addOnCompleteListener { databaseTask ->
+                                                        if (databaseTask.isSuccessful) {
+                                                            Toast.makeText(
+                                                                context,
+                                                                resources.getString(R.string.signup_success),
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+
+                                                            // Navigate to the login screen
+                                                            navController.navigate("login") {
+                                                                popUpTo("signup") { inclusive = true }
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(
+                                                                context,
+                                                                databaseTask.exception?.message ?: "Error saving user data",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+                                            }
+                                        } else {
+                                            Toast.makeText(
+                                                context,
+                                                task.exception?.message ?: "Sign-up failed",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                            } else {
+                                Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFAC81F1),
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(size = 17.dp)
+                    ) {
+                        Text(text = stringResource(id = R.string.signup))
                     }
                 }
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun SignupScreenPreview() {

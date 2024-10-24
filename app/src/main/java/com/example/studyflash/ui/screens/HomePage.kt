@@ -21,6 +21,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -31,29 +34,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.studyflash.classes.Category
+import com.example.studyflash.ui.colors.Colors
 import com.example.studyflash.ui.components.TopBar
-import com.example.studyflash.ui.theme.BlueCircle
-import com.example.studyflash.ui.theme.GoldenCircle
-import com.example.studyflash.ui.theme.GreenCircle
-import com.example.studyflash.ui.theme.LightBlue
-import com.example.studyflash.ui.theme.LightBlueText
-import com.example.studyflash.ui.theme.LightGreen
-import com.example.studyflash.ui.theme.LightGreenText
-import com.example.studyflash.ui.theme.LightOrange
-import com.example.studyflash.ui.theme.LightOrangeText
-import com.example.studyflash.ui.theme.PurpleCircle
 import com.example.studyflash.ui.theme.ReadexProFamily
 import com.example.studyflash.ui.theme.RedRoseFamily
-import com.example.studyflash.ui.theme.RoseCircle
 import com.example.studyflash.ui.theme.StudyFlashTheme
 import com.example.studyflash.ui.theme.TopBarBg
 import com.example.studyflash.ui.theme.Wording
+import com.example.studyflash.viewmodels.CategoryCardViewModel
+
+//data class Subject(val name: String, val progress: Float)       // will be updated
 
 
 @Composable
 fun HomePage(navController: NavHostController) {
+
+    val viewModel: CategoryCardViewModel = hiltViewModel()
+    // Collect the category list from the ViewModel
+    val categoryList by viewModel.Categories.collectAsState()
+
+    // Load the categories when the composable is first composed
+    LaunchedEffect(Unit) {
+        viewModel.loadCategories()
+    }
+
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -76,29 +84,44 @@ fun HomePage(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        val items = listOf("Technology", "Science", "Mathematics", "Engineering")
+//        val categoryList = listOf(
+//            Category(
+//                id = 1,
+//                name = "Math",
+//                colorID = 1, // Example color (Red 300)
+//                cards = listOf(),
+//                progress = 50
+//            ),
+//            Category(
+//                id = 2,
+//                name = "Science",
+//                colorID = 2, // Example color (Green 300)
+//                cards = listOf(),
+//                progress = 70
+//            ),
+//            Category(
+//                id = 3,
+//                name = "History",
+//                colorID = 3, // Example color (Blue 300)
+//                cards = listOf(),
+//                progress = 30
+//            )
+//        )
+
+        val categoryNameColorPairs: List<Pair<String, Int>> = categoryList.map { category ->
+            category.name to category.colorID
+        }
         CardsRow(
-            items,
-            onCardClick = { clickedItem ->
-                println("Clicked on: $clickedItem")
-            },
+            categoryNameColorPairs,
             navController
         )
 
-        val subjects = listOf(
-            Subject("Technology", 0.75f),
-            Subject("Mathematics", 0.60f),
-            Subject("Chemistry", 0.40f),
-            Subject("Science", 0.50f),
-            Subject("English", 0.30f),
-            Subject("History", 0.20f)
-        )
-        SubjectProgressList(subjects = subjects)
+        SubjectProgressList(subjects = categoryList)
     }
 }
 
 @Composable
-fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, navController: NavHostController) {
+fun CardsRow(items: List<Pair<String,Int>>, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,20 +145,13 @@ fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, navController: 
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items.take(3).forEachIndexed { index, item ->
+        items.take(3).forEachIndexed{index,item ->
             CardItem(
-                backgroundColor = when (index) {
-                    0 -> LightGreen
-                    1 -> LightOrange
-                    else -> LightBlue
-                },
-                backgroundTextColor = when (index) {
-                    0 -> LightGreenText
-                    1 -> LightOrangeText
-                    else -> LightBlueText
-                },
-                text = item,
-                navController= navController)} // navigate to cards list pag
+                index,
+                backgroundColor = Colors.getColorById(item.second).color,
+                backgroundTextColor = Colors.getColorById(item.second).strokeColor,
+                text = item.first,
+                navController= navController)}
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = "Next",
@@ -149,6 +165,7 @@ fun CardsRow(items: List<String>, onCardClick: (String) -> Unit, navController: 
 
 @Composable
 fun CardItem(
+    ID:Int,
     backgroundColor: Color,
     backgroundTextColor: Color,
     text: String,
@@ -158,7 +175,7 @@ fun CardItem(
         modifier = Modifier
             .size(100.dp, 150.dp)
             .padding(8.dp)
-            .clickable { navController.navigate("Cards List/1") }, // NEEDS TO BE FIXED
+            .clickable { navController.navigate("Cards List/${ID}") },
         shape = RoundedCornerShape(20),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
@@ -178,10 +195,8 @@ fun CardItem(
     }
 }
 
-data class Subject(val name: String, val progress: Float)       // will be updated
-
 @Composable
-fun SubjectProgressList(subjects: List<Subject>) {
+fun SubjectProgressList(subjects: List<Category>) {
 
     val limitedSubjects = subjects.take(5)
 
@@ -196,14 +211,10 @@ fun SubjectProgressList(subjects: List<Subject>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            limitedSubjects.take(3).forEachIndexed {index, subject ->
+            limitedSubjects.take(3).forEach{subject ->
                 CircularSubjectIndicator(
-                    progress = subject.progress,
-                    color = when (index) {
-                        0 -> GreenCircle
-                        1 -> BlueCircle
-                        else -> PurpleCircle
-                    },
+                    progress = subject.progress.toFloat(),
+                    color = Colors.getColorById(subject.colorID).strokeColor,
                     subject = subject.name
                 )
             }
@@ -215,13 +226,10 @@ fun SubjectProgressList(subjects: List<Subject>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            limitedSubjects.drop(3).forEachIndexed {index, subject ->
+            limitedSubjects.drop(3).forEach{subject ->
                 CircularSubjectIndicator(
-                    progress = subject.progress,
-                    color =  when (index) {
-                        0 -> GoldenCircle
-                        else -> RoseCircle
-                    },
+                    progress = subject.progress.toFloat(),
+                    color = Colors.getColorById(subject.colorID).strokeColor,
                     subject = subject.name
                 )
             }
@@ -248,7 +256,7 @@ fun CircularSubjectIndicator(progress: Float, color: Color, subject: String) {
             // Foreground circle (colored)
             CircularProgressIndicator(
                 progress = {
-                    progress
+                    progress/100   // assuming his total score is 100
                 },
                 modifier = Modifier.size(65.dp),
                 color = color,

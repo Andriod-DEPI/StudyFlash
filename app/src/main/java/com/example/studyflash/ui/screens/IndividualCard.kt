@@ -28,20 +28,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.studyflash.R
 import com.example.studyflash.classes.Card
+import com.example.studyflash.classes.Category
 import com.example.studyflash.ui.composables.CardItem
 import com.example.studyflash.viewmodels.CategoryCardViewModel
 
 @Composable
-fun IndividualCardScreen(navController: NavController, catId:Int?, cardID:Int?) {
+fun IndividualCardScreen(navController: NavController, catId:String, cardID:String?) {
     val viewModel: CategoryCardViewModel = hiltViewModel()
     viewModel.loadCategories()
-    viewModel.loadCardsForCategory(catId!!)
+    viewModel.loadCardsForCategory(catId)
+    val categories by viewModel.Categories.collectAsState()
+    val currentCategory = categories.find { it.id == catId }
     val cards by viewModel.Cards.collectAsState()
-    IndividualCardContent(cards,cardID,{navController.popBackStack()}, onUpdateCard = viewModel::updateCard)
+    if(cards.isNotEmpty() && currentCategory!=null){
+        IndividualCardContent(
+            cards,
+            cardID,
+            currentCategory,
+            { navController.popBackStack() },
+            onUpdateCard = viewModel::updateCard, onUpdateCategory = viewModel::updateCategory
+        )
+    }
 }
 
 @Composable
-fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, onUpdateCard:(Card)->Unit){
+fun IndividualCardContent(cards:List<Card>,cardID: String?, category: Category,onBackclick:()->Unit, onUpdateCard:(Card)->Unit, onUpdateCategory:(Category)->Unit){
     val card = cards.find { it.id == cardID }
     var index by rememberSaveable {
         mutableStateOf(cards.indexOf(card))
@@ -112,6 +123,10 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, o
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        if(cards[index].isChecked){
+                            category.progress--
+                            onUpdateCategory(category)
+                        }
                         // update in firebase
                         cards[index].isChecked = false
                         onUpdateCard(cards[index])
@@ -123,7 +138,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, o
             )
             Image(
                 painter = painterResource(id = R.drawable.right_icon),
-                contentDescription = "Not Memorized Card",
+                contentDescription = "Memorized Card",
                 modifier = Modifier
                     .size(100.dp)
                     .weight(1f)
@@ -131,11 +146,15 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, o
                         // update in firebase
                         cards[index].isChecked = true
                         onUpdateCard(cards[index])
+                        category.progress++
+                        onUpdateCategory(category)
+
 
                         if (index < cards.size - 1) {
                             index++
                         }
                         // increase user's score
+
                     }
             )
 
@@ -147,15 +166,5 @@ fun IndividualCardContent(cards:List<Card>,cardID: Int?, onBackclick:()->Unit, o
 @Preview(showSystemUi = true)
 @Composable
 fun previewIndividualCard(){
-    val cards = listOf(
-        Card(1,1, "Title1", "content 1", 1, false),
-        Card(2,1, "Title2", "content 2", 2, false),
-        Card(3,1, "Title3", "content 1", 3, false),
-        Card(4,1, "Title4", "content 2", 4, false),
-        Card(5,1, "Title5", "content 1", 5, false),
-        Card(6,1, "Title6", "content 2", 6, false),
-    )
-    IndividualCardContent(cards = cards, cardID = 1 , {}) {
-        
-    }
+
 }

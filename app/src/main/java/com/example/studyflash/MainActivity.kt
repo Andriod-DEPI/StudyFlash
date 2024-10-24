@@ -1,5 +1,6 @@
 package com.example.studyflash
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,18 +17,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.ui.navigation.NavGraph
 import com.example.studyflash.ui.theme.StudyFlashTheme
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.auth
 import dagger.hilt.android.AndroidEntryPoint
+import setLocale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
+
+        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true)
+
+        if (isFirstLaunch) {
+            setLocale(this, "en")
+
+            sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
+
+            recreate()
+        }
+
+        Firebase.auth
         enableEdgeToEdge()
         setContent {
             StudyFlashTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavGraph(navController = navController,
+                    NavGraph(navController = navController,activity = this,
                     modifier = Modifier.padding(innerPadding))
                 }
             }
