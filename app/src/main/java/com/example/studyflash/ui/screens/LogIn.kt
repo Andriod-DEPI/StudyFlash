@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import android.app.Activity
 import setLocale
 import java.util.Locale
+import kotlin.math.log
 
 // UI Function
 @Composable
@@ -238,6 +239,7 @@ fun Loginscreen(
         navController.navigate("HomePage") {
             popUpTo("login") { inclusive = true }  // Removes login screen from backstack
         }
+        viewModel.resetLoginSuccess()
     }
     LoginScreenContent(
         email = email.value,

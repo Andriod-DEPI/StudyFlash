@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.rememberNavController
-import com.example.studyflash.ui.navigation.NavHostGraph
+import com.example.studyflash.ui.navigation.NavGraph
 import com.example.studyflash.ui.theme.StudyFlashTheme
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
             StudyFlashTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavHostGraph (navController = navController,activity = this,
+                    NavGraph (navController = navController,activity = this,
                     modifier = Modifier.padding(innerPadding))
                 }
             }
