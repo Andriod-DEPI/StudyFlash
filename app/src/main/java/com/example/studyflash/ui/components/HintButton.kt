@@ -1,6 +1,5 @@
 package com.example.studyflash.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.studyflash.R
 import com.example.studyflash.viewmodels.Hint
-import com.example.studyflash.viewmodels.Quiz
 
 val Hints = listOf(
     Hint(id = 1, text = "connecting devices to internet without using wires connecting devices to internet without using wires "),
@@ -44,11 +42,10 @@ val Hints = listOf(
 
 //@Preview(showBackground = true)
 @Composable
-fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit, currentIndex: Int, remaining: Int){
+fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit){
     Column {
         Button(
             onClick = {
-                Log.d("HintButton", "Button clicked!")
                 onRevealHint()
             },
             enabled = hints.isNotEmpty(),
@@ -72,7 +69,7 @@ fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit, currentIndex: Int, r
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.bulb),   // Use Icon directly
-                            contentDescription = "Bulb",
+                            contentDescription = "Energy Icon",
                             tint = Color(0xFFFFF1D6),
                             modifier = Modifier
                                 .size(25.dp)
@@ -81,9 +78,10 @@ fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit, currentIndex: Int, r
                     }
                     Column(
                         modifier = Modifier.align(Alignment.CenterVertically)
+
                     ) {
                         Text(
-                            text = remaining.toString(),
+                            text = "30",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
                             letterSpacing = 1.sp,
@@ -99,9 +97,8 @@ fun HintButton(hints: List<Hint>, onRevealHint: () -> Unit, currentIndex: Int, r
 }
 
 @Composable
-fun HintList(revealedHint: Int, quizList: List<Quiz>, currentIndex: Int) {
+fun HintList(revealedHint: Int) {
 val listState = rememberLazyListState()
-    Log.d("HintList", "Current question index: $currentIndex, Number of hints: ${quizList[currentIndex].Hints.size}, Revealed hints: $revealedHint")
     LazyColumn (
         state = listState,
         modifier = Modifier
@@ -138,7 +135,7 @@ val listState = rememberLazyListState()
                             .padding(start = 5.dp)
                     )
                     Text(
-                        text = quizList[currentIndex].Hints[index].text,
+                        text = Hints[index].text,
                         fontSize = 10.sp,
                         modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)
                     )
@@ -157,7 +154,7 @@ val listState = rememberLazyListState()
 @Composable
 fun PreviewHintButton() {
     Column {
-        HintButton(hints = Hints, onRevealHint = {}, currentIndex = 2, remaining = 5)
-//        HintList(revealedHint = 1)
+        HintButton(hints = Hints, onRevealHint = {})
+        HintList(revealedHint = 1)
     }
 }

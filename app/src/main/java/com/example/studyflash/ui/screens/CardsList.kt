@@ -22,8 +22,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R
+import com.example.studyflash.classes.Card
+import com.example.studyflash.classes.Category
 import com.example.studyflash.ui.composables.CardListItem
 import com.example.studyflash.ui.composables.SelectedCategory
 import com.example.studyflash.ui.theme.BackgroundColor
@@ -71,7 +76,7 @@ fun CardsListScreen(
 //     )
 //    val cards = category.cards
 
-    val viewModel: CategoryCardViewModel = hiltViewModel()
+    val viewModel:CategoryCardViewModel = hiltViewModel()
     viewModel.loadCategories()
     val categories by viewModel.Categories.collectAsState()
     Log.d("abc", "CardsListScreen: cats $categories ")
@@ -147,5 +152,5 @@ fun CardsListScreen(
 @Preview
 @Composable
 fun PreviewCardsListScreen() {
-    CardsListScreen(navController = rememberNavController(), catID = "")
+
 }
