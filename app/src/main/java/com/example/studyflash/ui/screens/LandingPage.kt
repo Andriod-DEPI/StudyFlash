@@ -84,7 +84,7 @@ fun LandPage(navController: NavHostController) {
             style = TextStyle(
                 fontSize = 28.sp,
                 fontFamily = SignikaFamily,
-                fontWeight = FontWeight.Bold,
+//                fontWeight = FontWeight.Bold,
                 color = TopBarBg,
             )
         )
@@ -134,7 +134,7 @@ fun LandPage(navController: NavHostController) {
         Button(
             onClick = {
                 // got to login page
-                navController.navigate("logIn")
+                navController.navigate("login")
             },
             modifier = Modifier
                 .padding(start = 100.dp, top = 20.dp)

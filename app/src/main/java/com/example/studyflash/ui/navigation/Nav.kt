@@ -16,13 +16,11 @@ import com.example.studyflash.ui.screens.CategoriesScreen
 import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
-import com.example.studyflash.ui.screens.LogIn
 import com.example.studyflash.ui.screens.Loginscreen
 import com.example.studyflash.ui.screens.ProfilePage
+import com.example.studyflash.ui.screens.QuizScore
 import com.example.studyflash.ui.screens.QuizScreen
-import com.example.studyflash.ui.screens.SignIn
 import com.example.studyflash.ui.screens.SignupScreen
-import com.example.studyflash.viewmodels.LoginViewModel
 
 
 @Composable
@@ -34,7 +32,7 @@ fun NavGraph(
 
 
     NavHost(navController = navController, startDestination = "landPage") {
-       composable("logIn") {
+       composable("login") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
 
@@ -51,7 +49,7 @@ fun NavGraph(
                 navController = navController,
                 onSignInClick = { navController.navigate("logIn") })
         }
-        composable("homePage") {
+        composable("HomePage") {
             HomePage(navController = navController)
         }
         composable("categories") {
@@ -67,9 +65,26 @@ fun NavGraph(
             Add_Edit_Category(navController, null)
         }
         composable("quiz"){
-            QuizScreen()
+            QuizScreen(navController)
         }
+        composable(
+            route = "quiz_score_screen/{correctAns}/{totalQuestions}",
+            arguments = listOf(
+                navArgument("correctAns") {
+                    type = NavType.IntType
+                },
+                navArgument("totalQuestions") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            // Retrieve arguments passed via the route
+            val correctAnswers = backStackEntry.arguments?.getInt("correctAns") ?: 0
+            val totalQuestions = backStackEntry.arguments?.getInt("totalQuestions") ?: 0
 
+            // Call the QuizScore Composable to display the score
+            QuizScore(correctAnswers, totalQuestions, navController)
+        }
 
         composable("addCard/{categId}", arguments = listOf(
             navArgument("categId") {

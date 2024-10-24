@@ -66,7 +66,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.firebase.database.ktx)
+    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,6 +81,10 @@ dependencies {
     implementation (libs.ui.tooling)
     implementation (libs.androidx.foundation)
     implementation (libs.material3)
+
+    implementation ("com.google.accompanist:accompanist-pager:0.30.1") // For HorizontalPager
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1") // For HorizontalPagerIndicator
+
 
     //hilt dependency injection
     implementation(libs.hilt.android)

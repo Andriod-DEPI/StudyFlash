@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    //login
     <string name="login">تسجيل الدخول</string>
     <string name="email">البريد الإلكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="dont_have_account">لا تملك حساباً؟</string>
     <string name="create_new_account">إنشاء حساب جديد</string>
     <string name="app_name">مذكرة الدراسة</string>
+    //signup
+    <string name="username">اسم المستخدم</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="signup_success">تم التسجيل بنجاح</string>
+    <string name="password_mismatch">كلمات المرور غير متطابقة</string>
+    <string name="signup">تسجيل</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="already_have_account">هل لديك حساب؟</string>
+    //button
     <string name="language_toggle">En</string>
+
 </resources>
