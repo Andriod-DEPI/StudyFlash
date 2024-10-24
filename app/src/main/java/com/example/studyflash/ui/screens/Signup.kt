@@ -27,7 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -37,16 +39,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.studyflash.R
 import com.example.studyflash.R.drawable.signup
+import com.example.studyflash.classes.User
 import com.example.studyflash.ui.components.SignUpTextField
 import com.google.firebase.auth.FirebaseAuth
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import com.example.studyflash.R
-import com.example.studyflash.classes.User
+import com.google.firebase.database.FirebaseDatabase
 import setLocale
 import java.util.Locale
-import com.google.firebase.database.FirebaseDatabase
+
 @Composable
 fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
     Surface {
@@ -77,21 +78,42 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(id = R.string.already_have_account)
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .offset(y = 750.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.sign_in),
+//                        text = stringResource(id = R.string.already_have_account),
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Color(0xFFEDF5FF),
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
+                            ) {
+                                append(stringResource(id = R.string.already_have_account)) // Localized "Don't have an account?"
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Color(0xFFEDF5FF),
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            ) {
+                                append(stringResource(id = R.string.sign_in)) // Localized "Create new account"
+                            }
+                        },
                         modifier = Modifier.clickable { onSignInClick() }
                     )
                 }
+
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .offset(y = 750.dp),
+//                    contentAlignment = Alignment.Center
+//                ) {
+//                    Text(
+//                        text = stringResource(id = R.string.sign_in),
+//                        modifier = Modifier.clickable { onSignInClick() }
+//                    )
+//                }
 
                 Column(
                     horizontalAlignment = Alignment.End,

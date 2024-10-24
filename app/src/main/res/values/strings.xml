@@ -12,9 +12,9 @@
     <string name="signup_success">Sign-up successful</string>
     <string name="password_mismatch">Passwords do not match</string>
     <string name="already_have_account">Already have an account?</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in"> Sign in</string>
     <string name="signup">Sign Up</string>
     //button
-    <string name="language_toggle">Arabic</string>
+    <string name="language_toggle">Ar</string>
 
 </resources>
