@@ -16,12 +16,10 @@ import com.example.studyflash.ui.screens.CategoriesScreen
 import com.example.studyflash.ui.screens.HomePage
 import com.example.studyflash.ui.screens.IndividualCardScreen
 import com.example.studyflash.ui.screens.LandPage
-import com.example.studyflash.ui.screens.LogIn
 import com.example.studyflash.ui.screens.Loginscreen
 import com.example.studyflash.ui.screens.ProfilePage
 import com.example.studyflash.ui.screens.QuizScore
 import com.example.studyflash.ui.screens.QuizScreen
-import com.example.studyflash.ui.screens.SignIn
 import com.example.studyflash.ui.screens.SignupScreen
 import com.example.studyflash.viewmodels.LoginViewModel
 
@@ -35,7 +33,7 @@ fun NavGraph(
 
 
     NavHost(navController = navController, startDestination = "landPage") {
-       composable("logIn") {
+       composable("login") {
             // Create or retrieve an instance of LoginViewModel
             val loginViewModel: LoginViewModel = viewModel()
 
@@ -52,7 +50,7 @@ fun NavGraph(
                 navController = navController,
                 onSignInClick = { navController.navigate("logIn") })
         }
-        composable("homePage") {
+        composable("HomePage") {
             HomePage(navController = navController)
         }
         composable("categories") {
