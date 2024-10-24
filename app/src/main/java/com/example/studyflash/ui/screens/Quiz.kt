@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -102,19 +103,20 @@ fun Quiz (
                 )
             }
             Spacer(modifier = Modifier.weight(2f))
-            Row {
-                Text(
-                    text = "20:00",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 5.dp)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.hourglass1),
-                    contentDescription = "categories",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+
+//            Row {
+//                Text(
+//                    text = "20:00",
+//                    fontSize = 16.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.padding(start = 5.dp)
+//                )
+//                Icon(
+//                    painter = painterResource(id = R.drawable.hourglass1),
+//                    contentDescription = "categories",
+//                    modifier = Modifier.size(20.dp)
+//                )
+//            }
         }
         Row (
             modifier = Modifier
@@ -192,8 +194,10 @@ fun Quiz (
 
             )
         }
-        Row {
-            Spacer(modifier = Modifier.weight(2f))
+        Row (
+
+        ){
+            Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
                    val (isCorrect, correctAgain) = Check(currentIndex, text.trim())
@@ -216,12 +220,29 @@ fun Quiz (
                     }
                 },
                 modifier = Modifier
-                    .padding(bottom = 10.dp),
+                    .padding(bottom = 5.dp)
+                    .width(200.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF33B4FF),
                 )
             ){
-                Text(text = "Check")
+                Text(text = "Check Answer")
+            }
+        }
+        Row {
+            Spacer(modifier = Modifier.weight(2f))
+            Button(
+                onClick = {
+                   navController.navigate("quiz_score_screen/${correctQuestions}/${totalQuestions}")
+                },
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+                    .width(200.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF33B4FF),
+                )
+            ){
+                Text(text = "Submit Quiz")
             }
         }
 //        Spacer(modifier = Modifier.weight(1f))

@@ -76,7 +76,7 @@ fun NavGraph(
             val totalQuestions = backStackEntry.arguments?.getInt("totalQuestions") ?: 0
 
             // Call the QuizScore Composable to display the score
-            QuizScore(correctAnswers, totalQuestions)
+            QuizScore(correctAnswers, totalQuestions, navController)
         }
 
         composable("addCard/{categId}", arguments = listOf(
