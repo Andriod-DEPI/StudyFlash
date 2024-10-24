@@ -57,7 +57,7 @@ fun LoginScreenContent(
     onLoginClick: (String, String) -> Unit,
     loginErrorMessage: String = "",
     onCreateAccountClick: () -> Unit,
-    //Language 
+
     activity: Activity?
 ) {
     val context = LocalContext.current
@@ -74,7 +74,7 @@ fun LoginScreenContent(
                 Image(
                     modifier = Modifier
                         .size(100.dp)
-                        .offset(y = 135.dp),
+                        .offset(y = 170.dp),
                     painter = painterResource(id = profile),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds
@@ -163,7 +163,6 @@ fun LoginScreenContent(
                         ) {
                             Text(text = stringResource(id = R.string.login)) // Localized "Login" text
                         }
-                        //////////////////////////Language //////////////////////////
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -174,17 +173,18 @@ fun LoginScreenContent(
                         Button(
                             modifier = Modifier
                                 .width(100.dp)
-                                .height(80.dp)
+                                .height(60.dp)
                                 .padding(12.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isSystemInDarkTheme()) Color(0xFF6A31F7) else Color(0xFF6A31F7),
                                 contentColor = Color.White
                             ),
                             onClick = {
+                                // Change the language (for example, to Arabic)
                                 val newLanguage = if (Locale.getDefault().language == "ar") "en" else "ar"
                                 setLocale(context, newLanguage)
 
-                                activity?.recreate()  
+                                activity?.recreate()  // This will recreate the activity with the new locale
 
                             }
                         ) {
@@ -216,10 +216,10 @@ fun LoginscreenPreview() {
         password = "password123",
         onEmailChange = { newEmail -> emailState.value = newEmail },
         onPasswordChange = { newPassword -> passwordState.value = newPassword },
-        onLoginClick = { _, _ -> /* Do nothing in preview */ }, 
+        onLoginClick = { _, _ -> /* Do nothing in preview */ }, // Mock action for preview
         loginErrorMessage = "",
         onCreateAccountClick = {},
-        activity = null //Language 
+        activity = null
     )
 }
 // Use this in the actual screen logic to pass real Firebase login functionality
@@ -227,17 +227,17 @@ fun LoginscreenPreview() {
 fun Loginscreen(
     viewModel: LoginViewModel,
     navController: NavHostController,
-    activity: Activity?//Language 
+    activity: Activity?
 ) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val loginErrorMessage = viewModel.loginErrorMessage.value
-    var loginSuccess = viewModel.loginSuccess.value
+    val loginSuccess = viewModel.loginSuccess.value
 
     if (loginSuccess) {
-        navController.popBackStack()
-        navController.navigate("HomePage")
-        viewModel.resetLoginSuccess()
+        navController.navigate("HomePage") {
+            popUpTo("login") { inclusive = true }  // Removes login screen from backstack
+        }
     }
     LoginScreenContent(
         email = email.value,
@@ -245,12 +245,12 @@ fun Loginscreen(
         onEmailChange = { newEmail -> email.value = newEmail },  // Update email state
         onPasswordChange = { newPassword -> password.value = newPassword },  // Update password state
         onLoginClick = { emailValue, passwordValue ->
-            val user = User(email = emailValue, password = passwordValue, username = null.toString())
+            val user = User(email = emailValue, password = passwordValue, username = null, score = 0)
             viewModel.login(user)
         },
         loginErrorMessage = loginErrorMessage,
         onCreateAccountClick = {
             navController.navigate("signUp") // Navigate to Signup screen
         },
-        activity = activity //Language 
+        activity = activity // Pass the activity instance here
     )}
