@@ -77,14 +77,22 @@ import com.example.studyflash.ui.theme.TopBarBg
 import com.example.studyflash.ui.theme.Wording
 import com.example.studyflash.ui.theme.WordingBtn
 import com.example.studyflash.viewmodels.CategoryCardViewModel
+import com.example.studyflash.viewmodels.UserViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
 fun ProfilePage(navController: NavHostController) {
 
     val viewModel: CategoryCardViewModel = hiltViewModel()
+    val userViewModel: UserViewModel = hiltViewModel()
+    userViewModel.fetchCurrentUserDetails()
     // Collect the category list from the ViewModel
     val categoryList by viewModel.Categories.collectAsState()
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
+    val userName by userViewModel.username
+    val userScore by userViewModel.userScore
 
     // Load the categories when the composable is first composed
     LaunchedEffect(Unit) {
@@ -99,25 +107,16 @@ fun ProfilePage(navController: NavHostController) {
     ) {
         TopBar(navController)
 
-//        Row(
-//            modifier = Modifier.fillMaxWidth().padding(top=14.dp,end=16.dp),
-//            horizontalArrangement = Arrangement.End,
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            ThemeToggleButton(isDarkMode = isDarkMode) {
-//                isDarkMode = !isDarkMode
-//            }
-//        }
 
         Spacer(modifier = Modifier.height(6.dp))
         ProfileItem(
             icon = Icons.Filled.Person,
-            label = "Sandy Magdy"
+            label = userName
         )
 
         ProfileItem(
             icon = Icons.Filled.Email,
-            label = "sandymagdy@gmail.com"
+            label = currentUser?.email?:"Email"
         )
 
         ProfileItem(
@@ -125,31 +124,7 @@ fun ProfilePage(navController: NavHostController) {
             label = "********"
         )
 
-        ScoreDisplay(30)
-//
-//        val categoryList = listOf(
-//            Category(
-//                id = 1,
-//                name = "Math",
-//                colorID = 1, // Example color (Red 300)
-//                cards = listOf(),
-//                progress = 50
-//            ),
-//            Category(
-//                id = 2,
-//                name = "Science",
-//                colorID = 2, // Example color (Green 300)
-//                cards = listOf(),
-//                progress = 70
-//            ),
-//            Category(
-//                id = 3,
-//                name = "History",
-//                colorID = 3, // Example color (Blue 300)
-//                cards = listOf(),
-//                progress = 30
-//            )
-//        )
+        ScoreDisplay(userScore)
 
         BarChartWithPagination(categoryList)
 

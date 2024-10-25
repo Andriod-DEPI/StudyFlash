@@ -4,14 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -39,7 +32,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.studyflash.R.drawable.signup
 import com.example.studyflash.ui.components.SignUpTextField
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
@@ -49,6 +44,7 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
         val auth = FirebaseAuth.getInstance()
+        val db = FirebaseFirestore.getInstance() // Initialize Firestore
         val context = LocalContext.current
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -102,7 +98,7 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                 append("Sign in")
                             }
                         },
-                                modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
+                        modifier = Modifier.clickable { onSignInClick() } // Trigger navigation
                     )
                 }
 
@@ -167,8 +163,25 @@ fun SignupScreen(navController: NavHostController, onSignInClick: () -> Unit) {
                                         .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
                                                 // Sign-up successful
-                                                Toast.makeText(context, "Sign-up successful", Toast.LENGTH_SHORT).show()
-                                                // Navigate to the next screen or update UI
+                                                val userId = auth.currentUser?.uid
+                                                // Store username and score in Firestore
+                                                userId?.let {
+                                                    val userMap = hashMapOf(
+                                                        "username" to username,
+                                                        "email" to email,
+                                                        "score" to 0 // Initial score
+                                                    )
+                                                    db.collection("users").document(it)
+                                                        .set(userMap)
+                                                        .addOnSuccessListener {
+                                                            Toast.makeText(context, "Sign-up successful", Toast.LENGTH_SHORT).show()
+                                                            // Navigate to the next screen or update UI
+                                                            navController.navigate("login")
+                                                        }
+                                                        .addOnFailureListener { e ->
+                                                            Toast.makeText(context, "Failed to store user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                }
                                             } else {
                                                 // Sign-up failed
                                                 Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()

@@ -31,6 +31,7 @@ import com.example.studyflash.classes.Card
 import com.example.studyflash.classes.Category
 import com.example.studyflash.ui.composables.CardItem
 import com.example.studyflash.viewmodels.CategoryCardViewModel
+import com.example.studyflash.viewmodels.UserViewModel
 
 @Composable
 fun IndividualCardScreen(navController: NavController, catId:String, cardID:String?) {
@@ -54,6 +55,9 @@ fun IndividualCardScreen(navController: NavController, catId:String, cardID:Stri
 @Composable
 fun IndividualCardContent(cards:List<Card>,cardID: String?, category: Category,onBackclick:()->Unit, onUpdateCard:(Card)->Unit, onUpdateCategory:(Category)->Unit){
     val card = cards.find { it.id == cardID }
+    val userViewModel:UserViewModel = hiltViewModel()
+    userViewModel.fetchCurrentUserDetails()
+
     var index by rememberSaveable {
         mutableStateOf(cards.indexOf(card))
     }
@@ -123,7 +127,7 @@ fun IndividualCardContent(cards:List<Card>,cardID: String?, category: Category,o
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
-                        if(cards[index].isChecked){
+                        if (cards[index].isChecked) {
                             category.progress--
                             onUpdateCategory(category)
                         }
@@ -143,17 +147,23 @@ fun IndividualCardContent(cards:List<Card>,cardID: String?, category: Category,o
                     .size(100.dp)
                     .weight(1f)
                     .clickable {
+                        if (cards[index].isChecked != true) {
+                            category.progress++
+                            userViewModel.updateUserScore(1.0)
+
+                        }
                         // update in firebase
                         cards[index].isChecked = true
                         onUpdateCard(cards[index])
-                        category.progress++
+
                         onUpdateCategory(category)
 
 
                         if (index < cards.size - 1) {
                             index++
                         }
-                        // increase user's score
+
+
 
                     }
             )

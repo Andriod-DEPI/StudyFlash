@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
 fun topRectangle(){
@@ -29,9 +29,9 @@ fun topRectangle(){
     )
 }
 
-@Preview
+//@Preview
 @Composable
-fun QuizScreen() {
+fun QuizScreen(navController: NavHostController) {
     Box (
         modifier= Modifier
             .fillMaxSize()
@@ -59,12 +59,13 @@ fun QuizScreen() {
                 containerColor = Color(0xFFEDF5FF)
             ),
 
-        ){
+            ){
             Column (
                 modifier = Modifier
                     .padding(15.dp)
             ){
-                Quiz()
+                Quiz(navController = navController)
+//                Quiz(navController = navController)
             }
         }
     }

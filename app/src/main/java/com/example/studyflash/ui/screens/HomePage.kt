@@ -175,8 +175,8 @@ fun CardItem(
         modifier = Modifier
             .size(100.dp, 150.dp)
             .padding(8.dp)
-            .clickable { navController.navigate("Cards List/${ID}") },
-        shape = RoundedCornerShape(20),
+//            .clickable { navController.navigate("Cards List/${ID}") },
+        ,shape = RoundedCornerShape(20),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
