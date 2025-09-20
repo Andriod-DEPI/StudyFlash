@@ -32,8 +32,6 @@ This project was created as part of the **Android Development track @ DEPI**.
 
 ## 📸 Some Screenshots  
 
-## 📸 Some Screenshots  
-
 <div align="center">
   <img src="https://github.com/user-attachments/assets/81f5786b-80b3-4cc4-b334-7d2714001897" width="100" />
   <img src="https://github.com/user-attachments/assets/3c6e261a-7201-4d03-b5d6-fd9d50865cd3" width="100" />
