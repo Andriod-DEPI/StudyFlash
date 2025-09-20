@@ -1,9 +1,5 @@
 # 📚 StudyFlash  
 
-<div align="center">
-  <img width="800" alt="StudyFlash Banner" src="https://github.com/user-attachments/assets/6ceaba1a-61d1-412b-be76-7e224c9e3fe8" />
-</div>
-
 ## 🚀 About  
 
 **StudyFlash** is an Android application built with **Jetpack Compose** that helps students create, manage, and study flashcards with ease.  
@@ -34,10 +30,15 @@ This project was created as part of the **Android Development track @ DEPI**.
 
 ---
 
-## 📸 Screenshots  
+## 📸 Some Screenshots  
+
+## 📸 Some Screenshots  
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/6ceaba1a-61d1-412b-be76-7e224c9e3fe8" width="600" />
+  <img src="https://github.com/user-attachments/assets/81f5786b-80b3-4cc4-b334-7d2714001897" width="200" />
+  <img src="https://github.com/user-attachments/assets/3c6e261a-7201-4d03-b5d6-fd9d50865cd3" width="200" />
+  <img src="https://github.com/user-attachments/assets/e0066ec2-977a-4408-a4f0-04589e1cc2a8" width="200" />
+  <img src="https://github.com/user-attachments/assets/3c6e261a-7201-4d03-b5d6-fd9d50865cd3" width="200" />
 </div>
 
 ---
